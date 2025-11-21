@@ -31,6 +31,12 @@ class WebViewWidget(Gtk.Box):
         self._last_html = ""
         self._last_is_dark = None
 
+        # Connect to decide-policy signal to handle link clicks
+        self.webview.connect("decide-policy", self._on_decide_policy)
+
+        # Connect to context-menu signal to handle right-click actions
+        self.webview.connect("context-menu", self._on_context_menu)
+
         self.webview.load_html("<p></p>", "file:///")  # Load empty content
 
         # Listen to Adw.StyleManager for theme changes
@@ -45,6 +51,129 @@ class WebViewWidget(Gtk.Box):
         is_dark = style_manager.get_dark()
         if self._last_html and is_dark != self._last_is_dark:
             self.load_html(self._last_html, is_dark=is_dark)
+
+    def _on_decide_policy(self, webview, decision, decision_type):
+        """Handle navigation decisions - open external links in browser."""
+        if decision_type == WebKit.PolicyDecisionType.NAVIGATION_ACTION:
+            nav_action = decision.get_navigation_action()
+            request = nav_action.get_request()
+            uri = request.get_uri()
+
+            # Allow file:// URIs (our local content)
+            if uri and uri.startswith("file://"):
+                decision.use()
+                return False
+
+            # Open external links (http://, https://) in default browser
+            if uri and (uri.startswith("http://") or uri.startswith("https://")):
+                print(f"Opening external link: {uri}")
+                Gtk.show_uri(None, uri, 0)
+                decision.ignore()
+                return True
+
+            # Allow other URIs to be handled by WebView
+            decision.use()
+            return False
+
+        return False
+
+    def _on_context_menu(self, webview, context_menu, hit_test_result):
+        """Handle context menu - customize to open links in external browser."""
+        # Get the items in the context menu
+        items = context_menu.get_items()
+
+        # Remove reload and other navigation items
+        for item in list(items):
+            action = item.get_stock_action()
+            if action in [
+                WebKit.ContextMenuAction.RELOAD,
+                WebKit.ContextMenuAction.GO_BACK,
+                WebKit.ContextMenuAction.GO_FORWARD,
+                WebKit.ContextMenuAction.STOP,
+            ]:
+                context_menu.remove(item)
+
+        # Check if we're on a link
+        if hit_test_result.context_is_link():
+            link_uri = hit_test_result.get_link_uri()
+
+            # Remove all default link-related items
+            for item in list(
+                items
+            ):  # Convert to list to avoid modification during iteration
+                action = item.get_stock_action()
+                # Remove: Open Link, Open Link in New Window, Download Linked File, Copy Link
+                if action in [
+                    WebKit.ContextMenuAction.OPEN_LINK,
+                    WebKit.ContextMenuAction.OPEN_LINK_IN_NEW_WINDOW,
+                    WebKit.ContextMenuAction.DOWNLOAD_LINK_TO_DISK,
+                    WebKit.ContextMenuAction.COPY_LINK_TO_CLIPBOARD,
+                ]:
+                    context_menu.remove(item)
+
+            # Add custom "Open Link in Browser" action at the top
+            if link_uri and (
+                link_uri.startswith("http://") or link_uri.startswith("https://")
+            ):
+                # Create a custom action using Gio.SimpleAction
+                from gi.repository import Gio
+
+                action = Gio.SimpleAction.new("open-in-browser", None)
+                action.connect("activate", lambda a, p: Gtk.show_uri(None, link_uri, 0))
+
+                open_action = WebKit.ContextMenuItem.new_from_gaction(
+                    action, "Open Link in Browser", None
+                )
+                context_menu.prepend(open_action)
+
+                # Add "Copy Link" action
+                copy_action_obj = Gio.SimpleAction.new("copy-link", None)
+                copy_action_obj.connect(
+                    "activate", lambda a, p: self._copy_to_clipboard(link_uri)
+                )
+
+                copy_action = WebKit.ContextMenuItem.new_from_gaction(
+                    copy_action_obj, "Copy Link", None
+                )
+                context_menu.append(copy_action)
+
+        # Check if we're on an image
+        if hit_test_result.context_is_image():
+            image_uri = hit_test_result.get_image_uri()
+
+            # Remove default image actions and add custom ones
+            for item in list(
+                items
+            ):  # Convert to list to avoid modification during iteration
+                action = item.get_stock_action()
+                if action in [
+                    WebKit.ContextMenuAction.OPEN_IMAGE_IN_NEW_WINDOW,
+                    WebKit.ContextMenuAction.DOWNLOAD_IMAGE_TO_DISK,
+                ]:
+                    context_menu.remove(item)
+
+            # Add custom "Open Image in Browser" if it's an external image
+            if image_uri and (
+                image_uri.startswith("http://") or image_uri.startswith("https://")
+            ):
+                from gi.repository import Gio
+
+                img_action = Gio.SimpleAction.new("open-image-in-browser", None)
+                img_action.connect(
+                    "activate", lambda a, p: Gtk.show_uri(None, image_uri, 0)
+                )
+
+                open_img_action = WebKit.ContextMenuItem.new_from_gaction(
+                    img_action, "Open Image in Browser", None
+                )
+                context_menu.append(open_img_action)
+
+        return False
+
+    def _copy_to_clipboard(self, text):
+        """Copy text to clipboard."""
+        clipboard = self.get_clipboard()
+        clipboard.set(text)
 
     def is_dark_mode(self) -> bool:
         """Check if the current theme is dark using Adw.StyleManager."""
@@ -72,6 +201,40 @@ class WebViewWidget(Gtk.Box):
             return f'<div class="alert alert-{alert_type.lower()}" data-alert-type="{alert_type}">{full_content}</div>'
 
         return alert_pattern.sub(replace_alert, html)
+
+    def _process_mermaid_blocks(self, html: str) -> str:
+        """Convert mermaid code blocks to mermaid divs."""
+        # Try multiple patterns to catch different markdown renderers
+        patterns = [
+            # Pattern 1: <pre><code class="language-mermaid">...</code></pre>
+            re.compile(
+                r'<pre><code class="language-mermaid">(.*?)</code></pre>', re.DOTALL
+            ),
+            # Pattern 2: <pre lang="mermaid"><code>...</code></pre>
+            re.compile(r'<pre lang="mermaid"><code>(.*?)</code></pre>', re.DOTALL),
+            # Pattern 3: <code class="language-mermaid">...</code> without pre
+            re.compile(r'<code class="language-mermaid">(.*?)</code>', re.DOTALL),
+            # Pattern 4: Just looking for ```mermaid in plain text (fallback)
+            re.compile(r"```mermaid\s*(.*?)\s*```", re.DOTALL),
+        ]
+
+        def replace_mermaid(match):
+            mermaid_code = match.group(1).strip()
+            # Unescape HTML entities that might be in the code
+            mermaid_code = (
+                mermaid_code.replace("&lt;", "<")
+                .replace("&gt;", ">")
+                .replace("&amp;", "&")
+                .replace("&quot;", '"')
+            )
+            return f'<div class="mermaid">\n{mermaid_code}\n</div>'
+
+        # Apply all patterns in sequence
+        result = html
+        for pattern in patterns:
+            result = pattern.sub(replace_mermaid, result)
+
+        return result
 
     def set_theme(self, is_dark: bool):
         """Inject CSS instantly without reloading."""
@@ -102,12 +265,26 @@ class WebViewWidget(Gtk.Box):
         if is_dark is None:
             is_dark = self.is_dark_mode()
 
-        # Store the HTML content and theme state
+        # Store the ORIGINAL HTML content and theme state (before processing)
         self._last_html = html
         self._last_is_dark = is_dark
 
+        # Debug: Check if mermaid code exists in input
+        if "mermaid" in html.lower():
+            print(f"DEBUG: Found mermaid in HTML (length: {len(html)})")
+
+        # Process Mermaid blocks FIRST (before GitHub alerts)
+        processed_html = self._process_mermaid_blocks(html)
+
+        # Debug: Check if conversion happened
+        if (
+            'class="mermaid"' in processed_html
+            or '<div class="mermaid">' in processed_html
+        ):
+            print("DEBUG: Successfully converted to mermaid div")
+
         # Process GitHub-style alerts
-        html = self._process_github_alerts(html)
+        processed_html = self._process_github_alerts(processed_html)
 
         bg_color = "#1e1e1e" if is_dark else "#ffffff"
         text_color = "#d4d4d4" if is_dark else "#1e1e1e"
@@ -223,10 +400,22 @@ th {{
     background: {code_bg};
     font-weight: 600;
 }}
+
+/* Mermaid diagram container */
 .mermaid {{
     text-align: center;
     margin: 20px 0;
     background: transparent;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100px;
+}}
+
+/* Ensure SVG from mermaid is visible */
+.mermaid svg {{
+    max-width: 100%;
+    height: auto;
 }}
 
 /* GitHub-style alerts */
@@ -337,48 +526,15 @@ mjx-container[display="true"] {{
 }}
 </style>
 
-<!-- MathJax for LaTeX (Full Support) -->
-<script>
-window.MathJax = {{
-    tex: {{
-        inlineMath: [['$', '$'], ['\\\\(', '\\\\)']],
-        displayMath: [['$$', '$$'], ['\\\\[', '\\\\]']],
-        processEscapes: true,
-        processEnvironments: true,
-        packages: {{'[+]': ['ams', 'newcommand', 'configmacros', 'action', 'unicode']}},
-        tags: 'ams',
-        macros: {{
-            RR: '{{\\\\mathbb{{R}}}}',
-            NN: '{{\\\\mathbb{{N}}}}',
-            ZZ: '{{\\\\mathbb{{Z}}}}',
-            QQ: '{{\\\\mathbb{{Q}}}}',
-            CC: '{{\\\\mathbb{{C}}}}'
-        }}
-    }},
-    svg: {{
-        fontCache: 'global'
-    }},
-    options: {{
-        skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
-        ignoreHtmlClass: 'no-mathjax'
-    }},
-    startup: {{
-        pageReady: () => {{
-            return MathJax.startup.defaultPageReady();
-        }}
-    }}
-}};
-</script>
-<script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
-
-<!-- Mermaid for diagrams (Latest Version v11) -->
+<!-- Mermaid for diagrams (Latest Version v11) - Load FIRST -->
 <script type="module">
 import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs';
 
 mermaid.initialize({{ 
-    startOnLoad: true,
+    startOnLoad: false,  // Changed to false for manual control
     theme: '{mermaid_theme}',
     securityLevel: 'loose',
+    logLevel: 'debug',  // Changed to debug to see what's happening
     flowchart: {{
         useMaxWidth: true,
         htmlLabels: true,
@@ -423,7 +579,71 @@ mermaid.initialize({{
     }}
 }});
 
-// Ensure MathJax renders after page load
+// Render Mermaid diagrams - try multiple times to ensure rendering
+async function renderMermaid() {{
+    try {{
+        const mermaidElements = document.querySelectorAll('.mermaid');
+        console.log('Found mermaid elements:', mermaidElements.length);
+        
+        if (mermaidElements.length > 0) {{
+            mermaidElements.forEach(el => {{
+                console.log('Mermaid content:', el.textContent.substring(0, 100));
+            }});
+            
+            await mermaid.run({{
+                querySelector: '.mermaid'
+            }});
+            console.log('Mermaid rendering complete');
+        }}
+    }} catch (error) {{
+        console.error('Mermaid rendering error:', error);
+    }}
+}}
+
+// Try rendering on multiple events to ensure it works
+window.addEventListener('DOMContentLoaded', renderMermaid);
+window.addEventListener('load', renderMermaid);
+
+// Also expose function globally in case we need to trigger it manually
+window.renderMermaid = renderMermaid;
+</script>
+
+<!-- MathJax for LaTeX (Full Support) -->
+<script>
+window.MathJax = {{
+    tex: {{
+        inlineMath: [['$', '$'], ['\\\\(', '\\\\)']],
+        displayMath: [['$$', '$$'], ['\\\\[', '\\\\]']],
+        processEscapes: true,
+        processEnvironments: true,
+        packages: {{'[+]': ['ams', 'newcommand', 'configmacros', 'action', 'unicode']}},
+        tags: 'ams',
+        macros: {{
+            RR: '{{\\\\mathbb{{R}}}}',
+            NN: '{{\\\\mathbb{{N}}}}',
+            ZZ: '{{\\\\mathbb{{Z}}}}',
+            QQ: '{{\\\\mathbb{{Q}}}}',
+            CC: '{{\\\\mathbb{{C}}}}'
+        }}
+    }},
+    svg: {{
+        fontCache: 'global'
+    }},
+    options: {{
+        skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+        ignoreHtmlClass: 'no-mathjax'
+    }},
+    startup: {{
+        pageReady: () => {{
+            return MathJax.startup.defaultPageReady();
+        }}
+    }}
+}};
+</script>
+<script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+
+<!-- Ensure MathJax renders after page load -->
+<script>
 window.addEventListener('load', () => {{
     if (window.MathJax) {{
         MathJax.typesetPromise().catch((err) => console.log('MathJax error:', err));
@@ -432,7 +652,7 @@ window.addEventListener('load', () => {{
 </script>
 </head>
 <body>
-{html}
+{processed_html}
 </body>
 </html>"""
 
