@@ -1,11 +1,15 @@
 import gi
 
+import md_to_html
+
 gi.require_version(namespace="Gtk", version="4.0")
 gi.require_version(namespace="Adw", version="1")
 
 from gi.repository import Adw, Gtk
 from sidebar import SidebarWidget
 from webview import WebViewWidget
+from md_to_html import md
+import comrak
 
 UI_FILE = "ui/window.ui"
 
@@ -29,17 +33,25 @@ class Window(Adw.ApplicationWindow):
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
 
+        from gi.repository import GLib
+
         self.is_mobile = False
 
         # Connect sidebar toggle button
         self.toggle_sidebar_btn.connect("clicked", self._on_toggle_sidebar)
 
-        # Create widgets
+        #  widgets
         self.sidebar_widget = SidebarWidget()
         self.webview_widget = WebViewWidget()
-        self.webview_widget.load_uri("https://www.example.com")
 
-        # Add to desktop view initially
+        # Connect to text buffer changes
+        buffer = self.sidebar_widget.textview.get_buffer()
+        buffer.connect("changed", self._on_text_changed)
+
+        # starting text to start
+        self.sidebar_widget.set_text("starting writing")
+
+        # desktop view initially
         self.sidebar_container.append(self.sidebar_widget)
         self.webview_container.append(self.webview_widget)
 
@@ -54,8 +66,18 @@ class Window(Adw.ApplicationWindow):
         # Set initial layout
         self._on_layout_changed(self.adw_multi_layout_view, None)
 
+    def _on_text_changed(self, buffer):
+        """Called whenever the text in the sidebar changes."""
+
+        text = self.sidebar_widget.get_text()
+        opts = comrak.ExtensionOptions()
+        self.md = comrak.render_markdown(text, extension_options=opts)
+        self.webview_widget.load_html(self.md)
+        return text
+
     def _on_toggle_sidebar(self, button: Gtk.Button) -> None:
         """Toggle sidebar visibility."""
+
         self.adw_overlay_split_view.set_show_sidebar(
             not self.adw_overlay_split_view.get_show_sidebar()
         )
@@ -83,7 +105,7 @@ class Window(Adw.ApplicationWindow):
         if parent:
             parent.remove(self.webview_widget)
 
-        # Add to mobile containers
+        # mobile containers
         self.mobile_sidebar_container.append(self.sidebar_widget)
         self.mobile_webview_container.append(self.webview_widget)
 

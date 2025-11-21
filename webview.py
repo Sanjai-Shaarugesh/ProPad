@@ -37,16 +37,16 @@ class WebViewWidget(Gtk.Box):
         # Add to container
         self.webview_container.append(self.webview)
 
-        # Connect signals
-        self.webview.connect("load-changed", self._on_load_changed)
+        # # Connect signals
+        # self.webview.connect("load-changed", self._on_load_changed)
 
     def load_uri(self, uri: str) -> None:
         """Load a URI in the webview."""
         self.webview.load_uri(uri)
 
-    def load_html(self, html: str, base_uri: Optional[str] = None) -> None:
+    def load_html(self, html: str):
         """Load HTML content in the webview."""
-        self.webview.load_html(html, base_uri)
+        self.webview.load_html(html, "file:///")
 
     def reload(self) -> None:
         """Reload the current page."""
@@ -65,12 +65,3 @@ class WebViewWidget(Gtk.Box):
     def get_uri(self) -> Optional[str]:
         """Get the current URI."""
         return self.webview.get_uri()
-
-    def _on_load_changed(
-        self, webview: WebKit.WebView, load_event: WebKit.LoadEvent
-    ) -> None:
-        """Handle load state changes."""
-        if load_event == WebKit.LoadEvent.FINISHED:
-            uri = self.get_uri()
-            if uri:
-                print(f"Page loaded: {uri}")

@@ -18,13 +18,16 @@ class SidebarWidget(Gtk.Box):
             kwargs["orientation"] = Gtk.Orientation.VERTICAL
         super().__init__(**kwargs)
 
+        # Initialize buffer reference
         self.buffer = self.textview.get_buffer()
 
     def get_text(self):
         """Get the current text from the TextView."""
-        start_iter = self.buffer.get_start_iter()
-        end_iter = self.buffer.get_end_iter()
-        return self.buffer.get_text(start_iter, end_iter, True)
+        buffer = self.textview.get_buffer()
+        start_iter = buffer.get_start_iter()
+        end_iter = buffer.get_end_iter()
+        text_content = buffer.get_text(start_iter, end_iter, True)
+        return text_content
 
     def set_text(self, text: str):
         """Set text in the TextView."""

@@ -33,6 +33,9 @@ corresponding .blp file and regenerate this file with blueprint-compiler.
                 <property name="pixels-above-lines">8</property>
                 <property name="pixels-below-lines">4</property>
                 <property name="indent">0</property>
+                <property name="buffer">
+                  <object class="GtkTextBuffer"></object>
+                </property>
               </object>
             </child>
           </object>
