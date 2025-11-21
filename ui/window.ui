@@ -22,7 +22,6 @@ corresponding .blp file and regenerate this file with blueprint-compiler.
                 <property name="sidebar">
                   <object class="AdwLayoutSlot" id="slot_sidebar">
                     <property name="id">slot_sidebar</property>
-                    <property name="visible">false</property>
                   </object>
                 </property>
                 <property name="content">
@@ -58,12 +57,12 @@ corresponding .blp file and regenerate this file with blueprint-compiler.
                   <object class="AdwViewStack" id="stack">
                     <child>
                       <object class="AdwViewStackPage">
-                        <property name="name">page1</property>
-                        <property name="title">Page 01</property>
+                        <property name="name">webview_page</property>
+                        <property name="title">WebView</property>
                         <property name="icon-name">user-desktop-symbolic</property>
                         <property name="child">
                           <object class="AdwStatusPage">
-                            <property name="title">Page 01</property>
+                            <property name="title">WebView Page</property>
                           </object>
                         </property>
                       </object>
@@ -130,9 +129,11 @@ corresponding .blp file and regenerate this file with blueprint-compiler.
               </object>
             </child>
             <property name="content">
-              <object class="AdwStatusPage">
-                <property name="title">Adw.MultiLayoutView.</property>
-                <property name="description" translatable="yes">Adw.Layout - Adw.LayoutSlot</property>
+              <object class="GtkBox" id="webview_container">
+                <property name="name">webview_container</property>
+                <property name="orientation">1</property>
+                <property name="hexpand">true</property>
+                <property name="vexpand">true</property>
               </object>
             </property>
           </object>

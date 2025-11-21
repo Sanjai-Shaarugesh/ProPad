@@ -6,8 +6,10 @@ import sys
 
 gi.require_version(namespace="Gtk", version="4.0")
 gi.require_version(namespace="Adw", version="1")
+gi.require_version(namespace="WebKit", version="6.0")
 
-from gi.repository import Adw, Gio, Gtk
+from gi.repository import Adw, Gio, Gtk, WebKit
+
 
 UI_FILE = "ui/window.ui"
 
@@ -21,6 +23,7 @@ class Window(Adw.ApplicationWindow):
 
     toggle_sidebar_btn = Gtk.Template.Child()
     adw_overlay_split_view = Gtk.Template.Child()
+    webview_container = Gtk.Template.Child()
 
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
@@ -32,6 +35,17 @@ class Window(Adw.ApplicationWindow):
             ),
         )
 
+        # Create WebView directly
+        self.webview = WebKit.WebView.new()
+        settings = self.webview.get_settings()
+        settings.set_enable_javascript(True)
+
+        self.webview.set_hexpand(True)
+        self.webview.set_vexpand(True)
+
+        self.webview_container.append(self.webview)
+        self.webview.load_uri("https://www.example.com")
+
 
 class Application(Adw.Application):
     def __init__(self):
@@ -39,7 +53,7 @@ class Application(Adw.Application):
             application_id="org.propad.com", flags=Gio.ApplicationFlags.DEFAULT_FLAGS
         )
 
-        self.create_action("quite", self.exit_app, ["<primary>q"])
+        self.create_action("quit", self.exit_app, ["<primary>q"])
 
     def do_activate(self):
         win = self.props.active_window

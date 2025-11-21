@@ -38,10 +38,11 @@ reportImplicitOverride = "none"
 reportAny = "none"
 reportUnusedCallResult = "none"
 reportUnknownLambdaType ="none"
+reportUnusedImport="none"
 
 
 [tool.ruff]
-lint.ignore = ["E402"]
+lint.ignore = ["E402","F401"]
 
 [tool.ruff.lint.isort]
 known-first-party = ["gi"]

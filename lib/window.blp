@@ -1,12 +1,13 @@
 using Gtk 4.0;
 using Adw 1;
 
+
 template $Window :Adw.ApplicationWindow {
   title: "propad";
   default-width: 683;
   default-height: 384;
   
-  content: Adw.MultiLayoutView  adw_multi_layout_view {
+  content: Adw.MultiLayoutView adw_multi_layout_view {
       Adw.Layout {
         name: "desktop";
         
@@ -15,8 +16,6 @@ template $Window :Adw.ApplicationWindow {
          max-sidebar-width: 500;
             sidebar: Adw.LayoutSlot slot_sidebar {
               id: "slot_sidebar";
-              visible: false;
-            
           
           };
           content: Adw.LayoutSlot {
@@ -46,12 +45,12 @@ template $Window :Adw.ApplicationWindow {
       
           content: Adw.ViewStack stack {
             Adw.ViewStackPage {
-              name: "page1";
-              title: "Page 01";
+              name: "webview_page";
+              title: "WebView";
               icon-name: "user-desktop-symbolic";
       
               child: Adw.StatusPage {
-                title: "Page 01";
+                title: "WebView Page";
               };
             }
       
@@ -60,7 +59,7 @@ template $Window :Adw.ApplicationWindow {
               title: "Page 02";
               icon-name: "user-home-symbolic";
       
-              child:TextView {
+              child: TextView {
               
               };
             }
@@ -71,7 +70,7 @@ template $Window :Adw.ApplicationWindow {
       [slot_sidebar]
       Gtk.Box {
       
-        orientation:vertical;
+        orientation: vertical;
         hexpand: true;
         vexpand: true;
         ScrolledWindow {
@@ -109,19 +108,20 @@ template $Window :Adw.ApplicationWindow {
           }
         }
         
-        content:Adw.StatusPage {
-          title:'Adw.MultiLayoutView.';
-          description: _("Adw.Layout - Adw.LayoutSlot");
-          
+        content: Gtk.Box webview_container {
+          name: "webview_container";
+          orientation: vertical;
+          hexpand: true;
+          vexpand: true;
         };
-      }
+      } 
   };
   
   Adw.Breakpoint {
     condition ("max-width:600")
     
     setters {
-      adw_multi_layout_view.layout-name:"mobile";
+      adw_multi_layout_view.layout-name: "mobile";
       switcher_bar.reveal: true;
       header_bar.title-widget: null;
     }
