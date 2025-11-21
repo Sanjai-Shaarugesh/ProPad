@@ -5,6 +5,34 @@ template $SidebarWidget: Gtk.Box {
   hexpand: true;
   vexpand: true;
 
+  // Header with hide button
+  Gtk.Box {
+    orientation: horizontal;
+    spacing: 8;
+    margin-start: 12;
+    margin-end: 12;
+    margin-top: 8;
+    margin-bottom: 8;
+
+    Gtk.Label {
+      label: "Editor";
+      hexpand: true;
+      halign: start;
+      styles ["heading"]
+    }
+
+    Gtk.Button hide_webview_btn {
+      icon-name: "window-close-symbolic";
+      tooltip-text: "Hide Preview";
+      valign: center;
+      styles ["flat"]
+    }
+  }
+
+  Gtk.Separator {
+    orientation: horizontal;
+  }
+
   ScrolledWindow {
     hexpand: true;
     vexpand: true;

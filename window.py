@@ -35,24 +35,22 @@ class Window(Adw.ApplicationWindow):
         from gi.repository import GLib
 
         self.is_mobile = False
+        self.webview_hidden = False  # Track webview visibility state
 
         # Connect sidebar toggle button
         self.toggle_sidebar_btn.connect("clicked", self._on_toggle_sidebar)
 
-        #  widgets
+        # Create widgets
         self.sidebar_widget = SidebarWidget()
         self.webview_widget = WebViewWidget()
 
-        # REMOVED: buffer.connect("changed", self._on_text_changed)
-        # This was causing the issue - it didn't pass is_dark parameter
-
-        # starting text to start
+        # Starting text to start
         initial_text = "starting writing"
         initial_html = comrak.render_markdown(
             initial_text, extension_options=comrak.ExtensionOptions()
         )
 
-        # desktop view initially
+        # Desktop view initially
         self.sidebar_container.append(self.sidebar_widget)
         self.webview_container.append(self.webview_widget)
 
@@ -69,6 +67,9 @@ class Window(Adw.ApplicationWindow):
             self.webview_widget.load_html(html, is_dark=self.is_dark_mode())
 
         self.sidebar_widget.connect_text_changed(on_text_update)
+
+        # Connect hide webview button
+        self.sidebar_widget.connect_hide_webview(self._on_hide_webview)
 
         # Show sidebar by default on desktop
         self.adw_overlay_split_view.set_show_sidebar(True)
@@ -89,10 +90,40 @@ class Window(Adw.ApplicationWindow):
 
     def _on_toggle_sidebar(self, button: Gtk.Button) -> None:
         """Toggle sidebar visibility."""
-
         self.adw_overlay_split_view.set_show_sidebar(
             not self.adw_overlay_split_view.get_show_sidebar()
         )
+
+    def _on_hide_webview(self) -> None:
+        """Toggle webview visibility - hide/show the entire right panel."""
+        self.webview_hidden = not self.webview_hidden
+
+        if self.webview_hidden:
+            # Hide the entire right side
+            if not self.is_mobile:
+                # On desktop, collapse the split view to show only sidebar
+                self.adw_overlay_split_view.set_collapsed(True)
+                self.adw_overlay_split_view.set_show_sidebar(True)
+            else:
+                # On mobile, just hide the webview container
+                self.mobile_webview_container.set_visible(False)
+
+            # Update button to show "Show Preview"
+            self.sidebar_widget.hide_webview_btn.set_icon_name("view-reveal-symbolic")
+            self.sidebar_widget.hide_webview_btn.set_tooltip_text("Show Preview")
+        else:
+            # Show the entire right side
+            if not self.is_mobile:
+                # On desktop, uncollapse the split view
+                self.adw_overlay_split_view.set_collapsed(False)
+                self.adw_overlay_split_view.set_show_sidebar(True)
+            else:
+                # On mobile, show the webview container
+                self.mobile_webview_container.set_visible(True)
+
+            # Update button to show "Hide Preview"
+            self.sidebar_widget.hide_webview_btn.set_icon_name("window-close-symbolic")
+            self.sidebar_widget.hide_webview_btn.set_tooltip_text("Hide Preview")
 
     def _on_layout_changed(self, multi_layout: Adw.MultiLayoutView, _) -> None:
         """Handle layout changes between desktop and mobile."""
@@ -117,9 +148,12 @@ class Window(Adw.ApplicationWindow):
         if parent:
             parent.remove(self.webview_widget)
 
-        # mobile containers
+        # Add to mobile containers
         self.mobile_sidebar_container.append(self.sidebar_widget)
         self.mobile_webview_container.append(self.webview_widget)
+
+        # Apply current visibility state
+        self.mobile_webview_container.set_visible(not self.webview_hidden)
 
     def _switch_to_desktop(self) -> None:
         """Switch to desktop layout."""
@@ -139,8 +173,13 @@ class Window(Adw.ApplicationWindow):
         self.sidebar_container.append(self.sidebar_widget)
         self.webview_container.append(self.webview_widget)
 
-        # Show sidebar on desktop
-        self.adw_overlay_split_view.set_show_sidebar(True)
+        # Apply current visibility state
+        if self.webview_hidden:
+            self.adw_overlay_split_view.set_collapsed(True)
+            self.adw_overlay_split_view.set_show_sidebar(True)
+        else:
+            self.adw_overlay_split_view.set_collapsed(False)
+            self.adw_overlay_split_view.set_show_sidebar(True)
 
     def get_sidebar(self) -> SidebarWidget:
         """Get the sidebar widget."""
