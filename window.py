@@ -10,8 +10,9 @@ from gi.repository import Adw, Gtk, Gio, GLib
 from sidebar import SidebarWidget
 from webview import WebViewWidget
 from state_manager import StateManager
-from file_manager import FileManagerDialog
+from file_manager import FileManagerDialog, FileHistory
 from export_dialog import ExportDialog
+from shortcuts_window import ShortcutsWindow
 
 import comrak
 import os
@@ -24,6 +25,7 @@ class Window(Adw.ApplicationWindow):
     __gtype_name__ = "Window"
 
     toggle_sidebar_btn = Gtk.Template.Child()
+    toggle_sync_scroll_btn = Gtk.Template.Child()
     adw_overlay_split_view = Gtk.Template.Child()
     adw_multi_layout_view = Gtk.Template.Child()
 
@@ -42,14 +44,18 @@ class Window(Adw.ApplicationWindow):
         self.webview_hidden = False
         self.content_modified = False
         self.current_file = None
+        self.sync_scroll_enabled = True
 
         # Thread pool for parallel operations
-        self._thread_pool = ThreadPoolExecutor(max_workers=4)
+        self._thread_pool = ThreadPoolExecutor(max_workers=6)
 
         # Debounce timer for text updates
         self._update_timer_id = None
         self._pending_text = None
         self._rendering_lock = threading.Lock()
+
+        # Initialize file history
+        self.file_history = FileHistory()
 
         # Initialize state manager
         self.state_manager = StateManager()
@@ -59,6 +65,9 @@ class Window(Adw.ApplicationWindow):
 
         # Connect sidebar toggle button
         self.toggle_sidebar_btn.connect("clicked", self._on_toggle_sidebar)
+
+        # Connect scroll sync toggle button
+        self.toggle_sync_scroll_btn.connect("clicked", self._on_toggle_sync_scroll)
 
         # Create widgets
         self.sidebar_widget = SidebarWidget(parent_window=self)
@@ -84,12 +93,17 @@ class Window(Adw.ApplicationWindow):
         if not self.sidebar_widget.get_text():
             initial_text = """# Welcome to ProPad
 
-## Table Example
+## Features
 
-| Column 1 | Column 2 | Column 3 |
-|----------|----------|----------|
-| Data 1   | Data 2   | Data 3   |
-| Data 4   | Data 5   | Data 6   |
+- **Live Preview** with synchronized scrolling
+- **Markdown Tables** support
+- **Mermaid Diagrams** rendering
+- **LaTeX Math** equations
+- **GitHub Alerts** (Note, Tip, Important, Warning, Caution)
+- **File History** with tags
+
+> [!NOTE]
+> This is a GitHub-style note alert!
 
 Start editing to see the preview!"""
 
@@ -105,10 +119,17 @@ Start editing to see the preview!"""
             self.content_modified = True
             self._update_title()
 
+            # Track file edits
+            if self.current_file:
+                self.file_history.add_file(self.current_file, "edited")
+
         self.sidebar_widget.connect_text_changed(on_text_update)
 
         # Connect hide webview button
         self.sidebar_widget.connect_hide_webview(self._on_hide_webview)
+
+        # Setup bidirectional scroll sync
+        self._setup_bidirectional_scroll_sync()
 
         # Show sidebar by default on desktop
         sidebar_visible = self.state_manager.is_sidebar_visible()
@@ -125,11 +146,70 @@ Start editing to see the preview!"""
         # Update title
         self._update_title()
 
+        # Update sync scroll button state
+        self._update_sync_scroll_button()
+
         # Connect window close event to save state
         self.connect("close-request", self._on_close_request)
 
         # Auto-save timer (every 30 seconds)
         GLib.timeout_add_seconds(30, self._auto_save_state)
+
+    def _setup_bidirectional_scroll_sync(self):
+        """Setup scroll synchronization (sidebar -> webview only)."""
+        # Initialize scroll tracking
+        self._last_sidebar_percentage = 0.0
+        self._scroll_lock = False
+
+        print("Setting up scroll sync...")
+
+        # Sidebar -> WebView (one-way sync - more reliable)
+        def on_sidebar_scroll(percentage):
+            if self.sync_scroll_enabled and not self._scroll_lock:
+                # Only sync if change is meaningful
+                if abs(percentage - self._last_sidebar_percentage) > 0.005:
+                    print(f"Scrolling webview to {percentage:.2%}")
+                    self._last_sidebar_percentage = percentage
+                    self._scroll_lock = True
+                    self.webview_widget.scroll_to_percentage(percentage)
+                    # Short unlock delay for smooth scrolling
+                    GLib.timeout_add(50, lambda: setattr(self, "_scroll_lock", False))
+
+        self.sidebar_widget.connect_scroll_changed(on_sidebar_scroll)
+        print("Scroll sync setup complete!")
+
+        # Note: WebView -> Sidebar sync is disabled due to WebKitGTK API limitations
+        # The one-way sync (sidebar -> webview) provides the main functionality
+
+    def _on_toggle_sync_scroll(self, button):
+        """Toggle scroll synchronization."""
+        self.sync_scroll_enabled = not self.sync_scroll_enabled
+
+        # Update both widgets
+        self.sidebar_widget.set_sync_scroll_enabled(self.sync_scroll_enabled)
+        self.webview_widget.set_sync_scroll_enabled(self.sync_scroll_enabled)
+
+        # Save to state
+        self.state_manager.state["sync_scroll_enabled"] = self.sync_scroll_enabled
+        self.state_manager.save_state()
+
+        # Update button
+        self._update_sync_scroll_button()
+
+    def _update_sync_scroll_button(self):
+        """Update sync scroll button appearance."""
+        if self.sync_scroll_enabled:
+            self.toggle_sync_scroll_btn.set_icon_name("view-dual-symbolic")
+            self.toggle_sync_scroll_btn.set_tooltip_text(
+                "Sync Scroll Enabled (Ctrl+Alt+S)"
+            )
+            self.toggle_sync_scroll_btn.remove_css_class("dim-label")
+        else:
+            self.toggle_sync_scroll_btn.set_icon_name("view-paged-symbolic")
+            self.toggle_sync_scroll_btn.set_tooltip_text(
+                "Sync Scroll Disabled (Ctrl+Alt+S)"
+            )
+            self.toggle_sync_scroll_btn.add_css_class("dim-label")
 
     def _debounced_render(self, text):
         """Debounce text rendering to avoid excessive updates."""
@@ -138,8 +218,8 @@ Start editing to see the preview!"""
         if self._update_timer_id:
             GLib.source_remove(self._update_timer_id)
 
-        # Wait 150ms before rendering (fast enough to feel instant)
-        self._update_timer_id = GLib.timeout_add(150, self._process_pending_text)
+        # Wait 100ms before rendering (faster for better responsiveness)
+        self._update_timer_id = GLib.timeout_add(100, self._process_pending_text)
 
     def _process_pending_text(self):
         """Process pending text after debounce period."""
@@ -155,7 +235,7 @@ Start editing to see the preview!"""
         def render():
             with self._rendering_lock:
                 try:
-                    # Render markdown
+                    # Render markdown with GPU acceleration
                     html = comrak.render_markdown(
                         text, extension_options=self.extension_options
                     )
@@ -194,8 +274,15 @@ Start editing to see the preview!"""
         save_as_action.connect("activate", self._on_save_as)
         self.add_action(save_as_action)
 
+        # Toggle sync scroll action (Ctrl+Alt+S)
+        toggle_sync_action = Gio.SimpleAction.new("toggle-sync-scroll", None)
+        toggle_sync_action.connect(
+            "activate", lambda a, p: self._on_toggle_sync_scroll(None)
+        )
+        self.add_action(toggle_sync_action)
+
     def _on_new_file(self, action, param):
-        """Create new file."""
+        """Create new file and track in history."""
         if self.content_modified:
             dialog = Adw.MessageDialog.new(self)
             dialog.set_heading("Save Changes?")
@@ -219,8 +306,9 @@ Start editing to see the preview!"""
         if response == "save":
             if self.current_file:
                 self._save_to_file(self.current_file)
-                self._create_new_file()
+                GLib.timeout_add(100, self._create_new_file)
             else:
+                self._save_as_for_new = True
                 self._on_save_as(None, None)
         elif response == "discard":
             self._create_new_file()
@@ -231,6 +319,7 @@ Start editing to see the preview!"""
         self.current_file = None
         self.content_modified = False
         self._update_title()
+        return False
 
     def _on_open_file(self, action, param):
         """Open file dialog."""
@@ -271,6 +360,9 @@ Start editing to see the preview!"""
                         GLib.idle_add(lambda: self._finish_file_load(filepath, content))
                     except Exception as e:
                         print(f"Error loading file: {e}")
+                        GLib.idle_add(
+                            lambda: self._show_error_toast(f"Error loading file: {e}")
+                        )
 
                 self._thread_pool.submit(load_file_async)
         except Exception as e:
@@ -284,6 +376,9 @@ Start editing to see the preview!"""
         self.content_modified = False
         self._update_title()
         self.state_manager.save_current_file(filepath)
+
+        # Track in file history
+        self.file_history.add_file(filepath, "opened")
 
     def _on_save_file(self, action, param):
         """Save current file."""
@@ -314,14 +409,20 @@ Start editing to see the preview!"""
                 if not filepath.endswith((".md", ".markdown", ".txt")):
                     filepath += ".md"
 
-                self._save_to_file(filepath)
+                is_new = not os.path.exists(filepath)
+                self._save_to_file(filepath, is_new=is_new)
                 self.current_file = filepath
                 self._update_title()
+
+                if hasattr(self, "_save_as_for_new") and self._save_as_for_new:
+                    self._save_as_for_new = False
+                    GLib.timeout_add(200, self._create_new_file)
+
         except Exception as e:
             if "dismissed" not in str(e).lower():
                 print(f"Error saving file: {e}")
 
-    def _save_to_file(self, filepath):
+    def _save_to_file(self, filepath, is_new=False):
         """Save content to file in background."""
         content = self.sidebar_widget.get_text()
 
@@ -330,17 +431,26 @@ Start editing to see the preview!"""
                 with open(filepath, "w", encoding="utf-8") as f:
                     f.write(content)
 
-                GLib.idle_add(lambda: self._finish_file_save(filepath))
+                GLib.idle_add(lambda: self._finish_file_save(filepath, is_new))
             except Exception as e:
                 print(f"Error saving file: {e}")
+                GLib.idle_add(lambda: self._show_error_toast(f"Error saving: {e}"))
 
         self._thread_pool.submit(save_async)
 
-    def _finish_file_save(self, filepath):
+    def _finish_file_save(self, filepath, is_new=False):
         """Finish saving file in main thread."""
         self.content_modified = False
         self._update_title()
         print(f"File saved: {filepath}")
+
+        # Track in file history
+        action = "created" if is_new else "edited"
+        self.file_history.add_file(filepath, action)
+
+    def _show_error_toast(self, message):
+        """Show error message."""
+        print(f"Error: {message}")
 
     def _on_file_manager_activate(self, action, param):
         """Show file manager dialog."""
@@ -354,13 +464,18 @@ Start editing to see the preview!"""
         dialog = ExportDialog(self)
         dialog.present()
 
+    def _on_shortcuts_activate(self, action, param):
+        """Show keyboard shortcuts window."""
+        shortcuts_window = ShortcutsWindow(parent=self)
+        shortcuts_window.present()
+
     def _on_about_activate(self, action, param):
         """Show about dialog."""
         about = Adw.AboutDialog.new()
         about.set_application_name("ProPad")
         about.set_application_icon("text-editor-symbolic")
         about.set_developer_name("ProPad Team")
-        about.set_version("1.0.0")
+        about.set_version("2.0.0")
         about.set_website("https://github.com/yourusername/propad")
         about.set_issue_url("https://github.com/yourusername/propad/issues")
         about.set_copyright("© 2024 ProPad Team")
@@ -368,8 +483,9 @@ Start editing to see the preview!"""
         about.set_developers(["ProPad Contributors", "Built with PyGObject and GTK4"])
         about.set_comments(
             "A modern Markdown editor with live preview, "
-            "supporting tables, Mermaid diagrams, LaTeX math, "
-            "and more."
+            "GPU-accelerated rendering, synchronized scrolling, "
+            "file history tracking, and support for tables, "
+            "Mermaid diagrams, LaTeX math, and GitHub alerts."
         )
         about.present(self)
 
@@ -391,6 +507,14 @@ Start editing to see the preview!"""
 
         self.current_file = self.state_manager.get_current_file()
         self.webview_hidden = self.state_manager.is_webview_hidden()
+        self.sync_scroll_enabled = self.state_manager.state.get(
+            "sync_scroll_enabled", True
+        )
+
+        # Update widgets with sync scroll state
+        self.sidebar_widget.set_sync_scroll_enabled(self.sync_scroll_enabled)
+        self.webview_widget.set_sync_scroll_enabled(self.sync_scroll_enabled)
+
         if self.webview_hidden:
             GLib.idle_add(self._apply_webview_hidden_state)
 
@@ -441,6 +565,9 @@ Start editing to see the preview!"""
             sidebar_visible = self.adw_overlay_split_view.get_show_sidebar()
             self.state_manager.save_sidebar_visible(sidebar_visible)
             self.state_manager.save_webview_hidden(self.webview_hidden)
+
+            # Save sync scroll state
+            self.state_manager.state["sync_scroll_enabled"] = self.sync_scroll_enabled
             self.state_manager.save_state()
 
         self._thread_pool.submit(save_async)
@@ -448,7 +575,6 @@ Start editing to see the preview!"""
     def _on_close_request(self, window):
         """Handle window close request."""
         self._save_state()
-        # Give threads time to finish
         time.sleep(0.1)
         return False
 

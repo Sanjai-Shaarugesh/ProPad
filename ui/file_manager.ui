@@ -8,8 +8,8 @@ corresponding .blp file and regenerate this file with blueprint-compiler.
   <requires lib="gtk" version="4.0"/>
   <template class="FileManagerDialog" parent="AdwWindow">
     <property name="title">File Manager</property>
-    <property name="default-width">700</property>
-    <property name="default-height">500</property>
+    <property name="default-width">750</property>
+    <property name="default-height">550</property>
     <property name="modal">true</property>
     <property name="content">
       <object class="GtkBox">
@@ -49,6 +49,15 @@ corresponding .blp file and regenerate this file with blueprint-compiler.
                 <property name="tooltip-text">Close</property>
               </object>
             </child>
+            <child type="end">
+              <object class="GtkButton" id="btn_clear_history">
+                <property name="icon-name">user-trash-symbolic</property>
+                <property name="tooltip-text">Clear History</property>
+                <style>
+                  <class name="destructive-action"/>
+                </style>
+              </object>
+            </child>
           </object>
         </child>
         <child>
@@ -82,12 +91,29 @@ corresponding .blp file and regenerate this file with blueprint-compiler.
               </object>
             </child>
             <child>
-              <object class="GtkLabel">
-                <property name="label">Recent Files:</property>
-                <property name="halign">1</property>
-                <style>
-                  <class name="heading"/>
-                </style>
+              <object class="GtkBox">
+                <property name="orientation">0</property>
+                <property name="spacing">8</property>
+                <child>
+                  <object class="GtkLabel">
+                    <property name="label">Recent Files:</property>
+                    <property name="halign">1</property>
+                    <property name="hexpand">true</property>
+                    <style>
+                      <class name="heading"/>
+                    </style>
+                  </object>
+                </child>
+                <child>
+                  <object class="GtkLabel">
+                    <property name="label">Tags: Created • Opened • Edited</property>
+                    <property name="halign">2</property>
+                    <style>
+                      <class name="dim-label"/>
+                      <class name="caption"/>
+                    </style>
+                  </object>
+                </child>
               </object>
             </child>
             <child>

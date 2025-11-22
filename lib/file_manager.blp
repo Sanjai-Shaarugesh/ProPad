@@ -3,8 +3,8 @@ using Adw 1;
 
 template $FileManagerDialog: Adw.Window {
   title: "File Manager";
-  default-width: 700;
-  default-height: 500;
+  default-width: 750;
+  default-height: 550;
   modal: true;
 
   content: Gtk.Box {
@@ -41,6 +41,13 @@ template $FileManagerDialog: Adw.Window {
         icon-name: "view-conceal-symbolic";
         tooltip-text: "Close";
       }
+
+      [end]
+      Gtk.Button btn_clear_history {
+        icon-name: "user-trash-symbolic";
+        tooltip-text: "Clear History";
+        styles ["destructive-action"]
+      }
     }
 
     Gtk.Box {
@@ -68,10 +75,22 @@ template $FileManagerDialog: Adw.Window {
         orientation: horizontal;
       }
 
-      Gtk.Label {
-        label: "Recent Files:";
-        halign: start;
-        styles ["heading"]
+      Gtk.Box {
+        orientation: horizontal;
+        spacing: 8;
+
+        Gtk.Label {
+          label: "Recent Files:";
+          halign: start;
+          hexpand: true;
+          styles ["heading"]
+        }
+
+        Gtk.Label {
+          label: "Tags: Created • Opened • Edited";
+          halign: end;
+          styles ["dim-label", "caption"]
+        }
       }
 
       Gtk.ScrolledWindow {

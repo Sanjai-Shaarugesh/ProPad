@@ -83,7 +83,7 @@ tr:nth-child(even) td {
     background-color: rgba(0,0,0,0.03);
 }
 
-/* Mermaid diagrams */
+/* Mermaid diagrams - Theme aware */
 .mermaid {
     text-align: center;
     margin: 20px 0;
@@ -97,6 +97,27 @@ tr:nth-child(even) td {
 .mermaid svg {
     max-width: 100%;
     height: auto;
+}
+
+/* Mermaid theme-specific colors */
+.mermaid .node rect,
+.mermaid .node circle,
+.mermaid .node polygon {
+    fill: {code_bg} !important;
+    stroke: {border_color} !important;
+}
+
+.mermaid .node .label,
+.mermaid text {
+    fill: {text_color} !important;
+}
+
+.mermaid .edgePath .path {
+    stroke: {text_color} !important;
+}
+
+.mermaid .arrowheadPath {
+    fill: {text_color} !important;
 }
 
 /* GitHub-style alerts - Base */
@@ -268,18 +289,42 @@ img {
     height: auto;
 }
 
-/* MathJax styling */
+/* MathJax styling - Theme aware */
 .MathJax {
     outline: 0;
+    color: {text_color} !important;
 }
 
 mjx-container {
     display: inline-block;
     margin: 0 2px;
+    color: {text_color} !important;
 }
 
 mjx-container[display="true"] {
     display: block;
     text-align: center;
     margin: 1em 0;
+}
+
+/* MathJax SVG elements */
+mjx-container svg {
+    color: {text_color} !important;
+}
+
+mjx-container svg text {
+    fill: {text_color} !important;
+}
+
+mjx-container svg path {
+    stroke: {text_color} !important;
+}
+
+/* MathJax CHTML elements */
+mjx-math {
+    color: {text_color} !important;
+}
+
+mjx-mn, mjx-mi, mjx-mo, mjx-mtext {
+    color: {text_color} !important;
 }

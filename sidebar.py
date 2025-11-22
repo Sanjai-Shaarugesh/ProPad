@@ -35,6 +35,7 @@ class SidebarWidget(Gtk.Box):
         self.sync_scroll_enabled = True
         self._is_programmatic_scroll = False
         self._scroll_adjustment = None
+        self._last_scroll_value = 0.0
 
         # Connect GTK buffer "changed" signal
         self.buffer.connect("changed", self._on_buffer_changed)
@@ -54,24 +55,36 @@ class SidebarWidget(Gtk.Box):
         # Setup keyboard shortcuts
         self._setup_shortcuts()
 
-        # Setup scroll synchronization
-        self._setup_scroll_sync()
+        # Setup scroll synchronization - delayed to ensure parent is ready
+        GLib.idle_add(self._setup_scroll_sync)
 
     def _setup_shortcuts(self):
         """Setup keyboard shortcuts."""
-        # Create event controller for key presses
         key_controller = Gtk.EventControllerKey()
         key_controller.connect("key-pressed", self._on_key_pressed)
         self.textview.add_controller(key_controller)
 
     def _setup_scroll_sync(self):
         """Setup scroll synchronization monitoring."""
-        # Get the scrolled window containing the textview
+        # Find the scrolled window parent
         parent = self.textview.get_parent()
-        if parent and isinstance(parent, Gtk.ScrolledWindow):
-            vadjustment = parent.get_vadjustment()
-            self._scroll_adjustment = vadjustment
-            vadjustment.connect("value-changed", self._on_scroll_changed)
+
+        # Walk up the widget tree to find ScrolledWindow
+        max_depth = 5
+        depth = 0
+        while parent and depth < max_depth:
+            if isinstance(parent, Gtk.ScrolledWindow):
+                vadjustment = parent.get_vadjustment()
+                if vadjustment:
+                    self._scroll_adjustment = vadjustment
+                    vadjustment.connect("value-changed", self._on_scroll_changed)
+                    print("Scroll sync setup successful!")
+                    return False
+            parent = parent.get_parent()
+            depth += 1
+
+        print("Warning: Could not find ScrolledWindow parent for scroll sync")
+        return False
 
     def _on_scroll_changed(self, adjustment):
         """Handle scroll changes in the text view."""
@@ -89,9 +102,15 @@ class SidebarWidget(Gtk.Box):
         else:
             percentage = value / max_scroll
 
-        # Notify scroll callbacks (webview)
-        for callback in self._scroll_callbacks:
-            callback(percentage)
+        # Only notify if the change is significant (more than 0.5%)
+        if abs(percentage - self._last_scroll_value) > 0.005:
+            self._last_scroll_value = percentage
+            # Notify scroll callbacks (webview) immediately
+            for callback in self._scroll_callbacks:
+                try:
+                    callback(percentage)
+                except Exception as e:
+                    print(f"Error in scroll callback: {e}")
 
     def scroll_to_percentage(self, percentage: float):
         """Scroll textview to a specific percentage (0.0 to 1.0)."""
@@ -104,19 +123,30 @@ class SidebarWidget(Gtk.Box):
         page_size = self._scroll_adjustment.get_page_size()
         max_scroll = upper - page_size
 
-        target_value = max_scroll * percentage
-        self._scroll_adjustment.set_value(target_value)
+        if max_scroll <= 0:
+            self._is_programmatic_scroll = False
+            return
 
-        # Reset flag after scroll completes
-        GLib.timeout_add(50, lambda: setattr(self, "_is_programmatic_scroll", False))
+        target_value = max_scroll * percentage
+
+        # Scroll immediately without threshold for smooth sync
+        self._scroll_adjustment.set_value(target_value)
+        self._last_scroll_value = percentage
+
+        # Reset flag quickly for real-time scrolling
+        GLib.timeout_add(30, lambda: setattr(self, "_is_programmatic_scroll", False))
 
     def connect_scroll_changed(self, callback):
         """Register a callback for scroll changes."""
         self._scroll_callbacks.append(callback)
+        print(
+            f"Scroll callback registered. Total callbacks: {len(self._scroll_callbacks)}"
+        )
 
     def set_sync_scroll_enabled(self, enabled: bool):
         """Enable or disable synchronized scrolling."""
         self.sync_scroll_enabled = enabled
+        print(f"Sync scroll enabled: {enabled}")
 
     def _on_key_pressed(self, controller, keyval, keycode, state):
         """Handle keyboard shortcuts."""
