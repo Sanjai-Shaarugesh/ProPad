@@ -46,40 +46,46 @@ class PropadApplication(Adw.Application):
         self.set_accels_for_action("win.open-file", ["<Ctrl>O"])
         self.set_accels_for_action("win.save-file", ["<Ctrl>S"])
         self.set_accels_for_action("win.save-as", ["<Ctrl><Shift>S"])
-
         self.set_accels_for_action("win.toggle-sync-scroll", ["<Ctrl><Alt>S"])
 
+        # App-level shortcuts
         self.set_accels_for_action("app.quit", ["<Ctrl>Q"])
-        self.set_accels_for_action("app.about", ["F1"])
 
-        # File Manager action - delegates to window
+        # File Manager action
         file_manager_action = Gio.SimpleAction.new("file-manager", None)
         file_manager_action.connect("activate", self._on_file_manager)
         self.add_action(file_manager_action)
         self.set_accels_for_action("app.file-manager", ["<Ctrl><Shift>F"])
 
-        # Export action - delegates to window
+        # Export action
         export_action = Gio.SimpleAction.new("export", None)
         export_action.connect("activate", self._on_export)
         self.add_action(export_action)
         self.set_accels_for_action("app.export", ["<Ctrl><Shift>E"])
 
-        # Find action - delegates to window
+        # Find action
         find_action = Gio.SimpleAction.new("find", None)
         find_action.connect("activate", self._on_find)
         self.add_action(find_action)
         self.set_accels_for_action("app.find", ["<Ctrl>F"])
 
-        # Replace action - delegates to window
+        # Replace action
         replace_action = Gio.SimpleAction.new("replace", None)
         replace_action.connect("activate", self._on_replace)
         self.add_action(replace_action)
         self.set_accels_for_action("app.replace", ["<Ctrl>H"])
 
-        # About action - delegates to window
+        # Shortcuts window action
+        shortcuts_action = Gio.SimpleAction.new("shortcuts", None)
+        shortcuts_action.connect("activate", self._on_shortcuts)
+        self.add_action(shortcuts_action)
+        self.set_accels_for_action("app.shortcuts", ["<Ctrl>question"])
+
+        # About action
         about_action = Gio.SimpleAction.new("about", None)
         about_action.connect("activate", self._on_about)
         self.add_action(about_action)
+        self.set_accels_for_action("app.about", ["F1"])
 
     def _on_file_manager(self, action, param):
         """Handle file manager action."""
@@ -100,6 +106,11 @@ class PropadApplication(Adw.Application):
         """Handle replace action."""
         if self.window:
             self.window.sidebar_widget.search_bar.show_replace()
+
+    def _on_shortcuts(self, action, param):
+        """Handle shortcuts action."""
+        if self.window:
+            self.window._on_shortcuts_activate(action, param)
 
     def _on_about(self, action, param):
         """Handle about action."""

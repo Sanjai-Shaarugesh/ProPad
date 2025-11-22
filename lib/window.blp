@@ -47,7 +47,7 @@ template $Window: Adw.ApplicationWindow {
         content: Adw.ViewStack stack {
           Adw.ViewStackPage {
             name: "webview_page";
-            title: "preview";
+            title: "Preview";
             icon-name: "media-view-subtitles-symbolic";
     
             child: Adw.LayoutSlot {
@@ -106,6 +106,17 @@ template $Window: Adw.ApplicationWindow {
           icon-name: "document-save-symbolic";
           tooltip-text: "Save (Ctrl+S)";
           action-name: "win.save-file";
+        }
+
+        [start]
+        Gtk.Separator {
+          orientation: vertical;
+        }
+
+        [start]
+        Gtk.Button toggle_sync_scroll_btn {
+          icon-name: "view-dual-symbolic";
+          tooltip-text: "Toggle Scroll Sync (Ctrl+Alt+S)";
         }
 
         [end]
@@ -201,7 +212,19 @@ menu main_menu {
 
   section {
     item {
-      label: "About";
+      label: "Toggle Scroll Sync";
+      action: "win.toggle-sync-scroll";
+    }
+  }
+
+  section {
+    item {
+      label: "Keyboard Shortcuts";
+      action: "app.shortcuts";
+    }
+
+    item {
+      label: "About ProPad";
       action: "app.about";
     }
   }

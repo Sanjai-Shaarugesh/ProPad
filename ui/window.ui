@@ -63,7 +63,7 @@ corresponding .blp file and regenerate this file with blueprint-compiler.
                     <child>
                       <object class="AdwViewStackPage">
                         <property name="name">webview_page</property>
-                        <property name="title">preview</property>
+                        <property name="title">Preview</property>
                         <property name="icon-name">media-view-subtitles-symbolic</property>
                         <property name="child">
                           <object class="AdwLayoutSlot">
@@ -130,6 +130,17 @@ corresponding .blp file and regenerate this file with blueprint-compiler.
                     <property name="icon-name">document-save-symbolic</property>
                     <property name="tooltip-text">Save (Ctrl+S)</property>
                     <property name="action-name">win.save-file</property>
+                  </object>
+                </child>
+                <child type="start">
+                  <object class="GtkSeparator">
+                    <property name="orientation">1</property>
+                  </object>
+                </child>
+                <child type="start">
+                  <object class="GtkButton" id="toggle_sync_scroll_btn">
+                    <property name="icon-name">view-dual-symbolic</property>
+                    <property name="tooltip-text">Toggle Scroll Sync (Ctrl+Alt+S)</property>
                   </object>
                 </child>
                 <child type="end">
@@ -219,7 +230,17 @@ corresponding .blp file and regenerate this file with blueprint-compiler.
     </section>
     <section>
       <item>
-        <attribute name="label">About</attribute>
+        <attribute name="label">Toggle Scroll Sync</attribute>
+        <attribute name="action">win.toggle-sync-scroll</attribute>
+      </item>
+    </section>
+    <section>
+      <item>
+        <attribute name="label">Keyboard Shortcuts</attribute>
+        <attribute name="action">app.shortcuts</attribute>
+      </item>
+      <item>
+        <attribute name="label">About ProPad</attribute>
         <attribute name="action">app.about</attribute>
       </item>
     </section>
