@@ -1,6 +1,6 @@
 # ========================================
 # io.github.sanjai.ProPad.yaml
-# Complete Flatpak Manifest
+# Complete Flatpak Manifest with Graphics Fixes
 # ========================================
 
 app-id: io.github.sanjai.ProPad
@@ -10,32 +10,18 @@ sdk: org.gnome.Sdk
 command: propad
 
 finish-args:
-  # Graphics
-  - --share=ipc
-  - --socket=fallback-x11
-  - --socket=wayland
-  - --device=dri2
+  # Graphics - Fixed order and added GPU access
   - --share=ipc
   - --socket=wayland
   - --socket=fallback-x11
   - --device=dri
   - --device=all
-  - --socket=wayland
-  - --socket=fallback-x11
-  - --device=dri
-  - --share=ipc
-
-  
-
   
   # Network (if your app needs it)
   - --share=network
   
   # File system access
   - --filesystem=home
-  # Or more restrictive:
-  # - --filesystem=xdg-documents
-  # - --filesystem=xdg-download
   
   # D-Bus
   - --socket=session-bus
@@ -44,11 +30,15 @@ finish-args:
   # Accessibility (optional, suppresses warnings)
   - --talk-name=org.a11y.Bus
   
-  # Environment variables to suppress a11y warnings
+  # Environment variables to suppress warnings and fix graphics
   - --env=NO_AT_BRIDGE=1
   - --env=GTK_A11Y=none
-  - --env=MESA_LOADER_DRIVER_OVERRIDE=i965
   - --env=G_MESSAGES_DEBUG=
+  - --env=LIBGL_ALWAYS_SOFTWARE=1
+  - --env=MESA_LOADER_DRIVER_OVERRIDE=swrast
+  - --env=LIBGL_DRI3_DISABLE=1
+  - --env=EGL_PLATFORM=wayland
+  - --env=GDK_BACKEND=wayland,x11
   
   - --filesystem=xdg-data/icons:ro
   
@@ -78,7 +68,6 @@ modules:
   - name: python-dependencies
     buildsystem: simple
     build-commands:
-      # Install packages, using --ignore-installed for packages that might conflict with SDK
       - pip3 install --verbose --exists-action=i --no-index --find-links="file://${PWD}" --prefix=${FLATPAK_DEST} --ignore-installed attrs brotli certifi cffi charset-normalizer comrak cssselect2 fonttools h11 html2pdf4doc idna markdown outcome packaging pillow pycparser pydyf pypdf pyphen python-dotenv requests ruff selenium sniffio sortedcontainers tinycss2 tinyhtml5 trio trio-websocket typing-extensions urllib3 weasyprint webdriver-manager webencodings websocket-client wsproto zopfli PySocks --no-build-isolation
     sources:
       - type: file
@@ -197,11 +186,7 @@ modules:
         # Copy any CSS files
         find . -maxdepth 2 -name "*.css" -exec cp {} /app/share/propad/data/ \; 2>/dev/null || true
       
-      # Install GSettings schema (if it exists)
-      # - install -Dm644 data/gschema.xml /app/share/glib-2.0/schemas/io.github.sanjai.ProPad.gschema.xml
-      # - glib-compile-schemas /app/share/glib-2.0/schemas
-      
-      # Create wrapper script
+      # Create wrapper script with enhanced warning suppression
       - |
         cat > /app/bin/propad << 'EOF'
         #!/bin/bash
@@ -210,9 +195,24 @@ modules:
         export GTK_A11Y=none
         export PYTHONPATH=/app/share/propad:$PYTHONPATH
         
+        # Graphics environment variables
+        export LIBGL_ALWAYS_SOFTWARE=1
+        export MESA_LOADER_DRIVER_OVERRIDE=swrast
+        export LIBGL_DRI3_DISABLE=1
+        export EGL_PLATFORM=wayland
+        export GDK_BACKEND=wayland,x11
         
-        # Redirect fontconfig and MESA warnings to /dev/null
-        exec 2> >(grep -v "Fontconfig error" | grep -v "MESA-INTEL: warning" | grep -v "Can't connect to a11y bus" >&2)
+        # Suppress all common warnings
+        export G_MESSAGES_DEBUG=
+        
+        # Redirect errors to filter out graphics warnings
+        exec 2> >(grep -v "Fontconfig error" | \
+                  grep -v "MESA-INTEL: warning" | \
+                  grep -v "Can't connect to a11y bus" | \
+                  grep -v "kmsro: driver missing" | \
+                  grep -v "libEGL warning" | \
+                  grep -v "egl: failed to create dri2 screen" | \
+                  grep -v "DRI2: failed to create screen" >&2)
         
         cd /app/share/propad
         exec python3 -u main.py "$@"
@@ -222,7 +222,7 @@ modules:
       # Install desktop file
       - install -Dm644 io.github.sanjai.ProPad.desktop /app/share/applications/io.github.sanjai.ProPad.desktop
       
-      # Install icons (adjust paths based on what icons you have)
+      # Install icons
       - install -Dm644 icons/hicolor/scalable/apps/io.github.sanjai.ProPad.svg 
           /app/share/icons/hicolor/scalable/apps/io.github.sanjai.ProPad.svg || true
       - |
@@ -239,7 +239,7 @@ modules:
           fi
         fi
       
-      # Copy any additional icon resources your app uses
+      # Copy any additional icon resources
       - |
         if [ -d "data/icons" ]; then
           cp -r data/icons /app/share/propad/
@@ -252,13 +252,8 @@ modules:
       # Update icon cache
       - gtk-update-icon-cache -q -t -f /app/share/icons/hicolor || true
       
-      # Install metainfo (optional, comment out if file doesn't exist)
-      # - install -Dm644 io.github.sanjai.ProPad.metainfo.xml 
-      #     /app/share/metainfo/io.github.sanjai.ProPad.metainfo.xml
-      
-      # Validate desktop file and metainfo
+      # Validate desktop file
       - desktop-file-validate /app/share/applications/io.github.sanjai.ProPad.desktop || true
-      # - appstream-util validate-relax /app/share/metainfo/io.github.sanjai.ProPad.metainfo.xml || true
     
     sources:
       - type: dir
@@ -278,4 +273,4 @@ modules:
           - .pytest_cache
           - .ruff_cache
           - "*.flatpak"
-          - ui/*.ui  # Skip compiled UI, we compile during build
+          - ui/*.ui
