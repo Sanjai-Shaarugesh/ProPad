@@ -1,7 +1,7 @@
 using Gtk 4.0;
 
-template $FormattingToolbar: Gtk.Popover {
-  Gtk.Box {
+template $FormattingToolbar: Popover {
+  Box {
     orientation: vertical;
     spacing: 8;
     margin-start: 12;
@@ -9,125 +9,127 @@ template $FormattingToolbar: Gtk.Popover {
     margin-top: 12;
     margin-bottom: 12;
 
-    Gtk.Label {
+    Label {
       label: "Text Formatting";
       styles ["heading"]
       halign: start;
     }
 
-    Gtk.Box {
+    Box {
       orientation: horizontal;
       spacing: 4;
       homogeneous: true;
 
-      Gtk.Button btn_bold {
+      Button btn_bold {
         icon-name: "format-text-bold-symbolic";
         tooltip-text: "Bold (Ctrl+B)";
       }
 
-      Gtk.Button btn_italic {
+      Button btn_italic {
         icon-name: "format-text-italic-symbolic";
         tooltip-text: "Italic (Ctrl+I)";
       }
 
-      Gtk.Button btn_strikethrough {
+      Button btn_strikethrough {
         icon-name: "format-text-strikethrough-symbolic";
         tooltip-text: "Strikethrough";
       }
 
-      Gtk.Button btn_code {
+      Button btn_code {
         icon-name: "text-x-generic-symbolic";
         tooltip-text: "Inline Code";
       }
     }
 
-    Gtk.Separator {}
+    Separator {}
 
-    Gtk.Label {
+    Label {
       label: "Headings";
       styles ["heading"]
       halign: start;
     }
 
-    Gtk.Box {
+    Box {
       orientation: horizontal;
       spacing: 4;
       homogeneous: true;
 
-      Gtk.Button btn_h1 {
+      Button btn_h1 {
         label: "H1";
         tooltip-text: "Heading 1";
       }
 
-      Gtk.Button btn_h2 {
+      Button btn_h2 {
         label: "H2";
         tooltip-text: "Heading 2";
       }
 
-      Gtk.Button btn_h3 {
+      Button btn_h3 {
         label: "H3";
         tooltip-text: "Heading 3";
       }
 
-      Gtk.Button btn_h4 {
+      Button btn_h4 {
         label: "H4";
         tooltip-text: "Heading 4";
       }
     }
 
-    Gtk.Separator {}
+    Separator {}
 
-    Gtk.Label {
+    Label {
       label: "Lists & Blocks";
       styles ["heading"]
       halign: start;
     }
 
-    Gtk.Box {
+    Box {
       orientation: horizontal;
       spacing: 4;
       homogeneous: true;
 
-      Gtk.Button btn_bullet_list {
+      Button btn_bullet_list {
         icon-name: "view-list-symbolic";
         tooltip-text: "Bullet List";
       }
 
-      Gtk.Button btn_numbered_list {
+      Button btn_numbered_list {
         icon-name: "view-list-ordered-symbolic";
         tooltip-text: "Numbered List";
       }
 
-      Gtk.Button btn_quote {
+      Button btn_quote {
         icon-name: "format-indent-more-symbolic";
         tooltip-text: "Block Quote";
       }
 
-      Gtk.Button btn_code_block {
+      Button btn_code_block {
         icon-name: "utilities-terminal-symbolic";
         tooltip-text: "Code Block";
       }
     }
 
-    Gtk.Separator {}
+    Separator {}
 
-    Gtk.Label {
+    Label {
       label: "Insert";
       styles ["heading"]
       halign: start;
     }
 
-    Gtk.Box {
+    Box {
       orientation: vertical;
       spacing: 4;
 
-      Gtk.Button btn_link {
-        Gtk.Box {
+      Button btn_link {
+        Box {
           spacing: 8;
-          Gtk.Image {
+          
+          Image {
             icon-name: "insert-link-symbolic";
           }
-          Gtk.Label {
+          
+          Label {
             label: "Link";
             hexpand: true;
             halign: start;
@@ -135,13 +137,15 @@ template $FormattingToolbar: Gtk.Popover {
         }
       }
 
-      Gtk.Button btn_image {
-        Gtk.Box {
+      Button btn_image {
+        Box {
           spacing: 8;
-          Gtk.Image {
+          
+          Image {
             icon-name: "insert-image-symbolic";
           }
-          Gtk.Label {
+          
+          Label {
             label: "Image";
             hexpand: true;
             halign: start;
@@ -149,13 +153,15 @@ template $FormattingToolbar: Gtk.Popover {
         }
       }
 
-      Gtk.Button btn_table {
-        Gtk.Box {
+      Button btn_table {
+        Box {
           spacing: 8;
-          Gtk.Image {
+          
+          Image {
             icon-name: "view-grid-symbolic";
           }
-          Gtk.Label {
+          
+          Label {
             label: "Table";
             hexpand: true;
             halign: start;
@@ -163,13 +169,15 @@ template $FormattingToolbar: Gtk.Popover {
         }
       }
 
-      Gtk.Button btn_mermaid {
-        Gtk.Box {
+      Button btn_mermaid {
+        Box {
           spacing: 8;
-          Gtk.Image {
+          
+          Image {
             icon-name: "network-wired-symbolic";
           }
-          Gtk.Label {
+          
+          Label {
             label: "Mermaid Diagram";
             hexpand: true;
             halign: start;
@@ -177,13 +185,15 @@ template $FormattingToolbar: Gtk.Popover {
         }
       }
 
-      Gtk.Button btn_latex {
-        Gtk.Box {
+      Button btn_latex {
+        Box {
           spacing: 8;
-          Gtk.Image {
+          
+          Image {
             icon-name: "x-office-document-symbolic";
           }
-          Gtk.Label {
+          
+          Label {
             label: "LaTeX Math";
             hexpand: true;
             halign: start;

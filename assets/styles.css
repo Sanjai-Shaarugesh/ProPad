@@ -1,7 +1,9 @@
+/* Global box sizing */
 * {
     box-sizing: border-box;
 }
 
+/* Body styling */
 body { 
     background: var(--bg-color, #ffffff); 
     color: var(--text-color, #1e1e1e); 
@@ -12,6 +14,7 @@ body {
     margin: 0 auto;
 }
 
+/* Links */
 a { 
     color: var(--link-color, #0066cc); 
     text-decoration: none;
@@ -21,6 +24,7 @@ a:hover {
     text-decoration: underline;
 }
 
+/* Inline code */
 code { 
     background: var(--code-bg, #f5f5f5); 
     padding: 2px 6px; 
@@ -29,6 +33,7 @@ code {
     font-size: 0.9em;
 }
 
+/* Code blocks */
 pre { 
     background: var(--pre-bg, #f5f5f5); 
     padding: 16px; 
@@ -42,12 +47,19 @@ pre code {
     padding: 0; 
 }
 
+/* Blockquotes */
 blockquote {
     border-left: 4px solid var(--border-color, #e1e4e8);
     padding-left: 16px;
     margin-left: 0;
     color: var(--text-color, #1e1e1e);
     opacity: 0.8;
+}
+
+/* Tables */
+.table-container {
+    overflow-x: auto;
+    width: 100%;
 }
 
 table {
@@ -67,7 +79,11 @@ th {
     font-weight: 600;
 }
 
-/* Mermaid diagram container */
+tr:nth-child(even) td {
+    background-color: rgba(0,0,0,0.03);
+}
+
+/* Mermaid diagrams */
 .mermaid {
     text-align: center;
     margin: 20px 0;
@@ -78,7 +94,6 @@ th {
     min-height: 100px;
 }
 
-/* Ensure SVG from mermaid is visible */
 .mermaid svg {
     max-width: 100%;
     height: auto;
@@ -158,6 +173,7 @@ th {
     margin-bottom: 0;
 }
 
+/* Headings */
 h1, h2, h3, h4, h5, h6 {
     margin-top: 24px;
     margin-bottom: 16px;
@@ -177,6 +193,7 @@ h2 {
     padding-bottom: 8px;
 }
 
+/* Lists */
 ul, ol {
     padding-left: 2em;
 }
@@ -185,12 +202,14 @@ li {
     margin: 4px 0;
 }
 
+/* Horizontal rule */
 hr {
     border: none;
     border-top: 2px solid var(--border-color, #e1e4e8);
     margin: 24px 0;
 }
 
+/* Images */
 img {
     max-width: 100%;
     height: auto;
@@ -212,7 +231,7 @@ mjx-container[display="true"] {
     margin: 1em 0;
 }
 
-/* Dark mode styles */
+/* Dark mode overrides */
 @media (prefers-color-scheme: dark) {
     body {
         background: #1e1e1e;
@@ -229,6 +248,7 @@ mjx-container[display="true"] {
     
     pre {
         background: #2d2d2d;
+        border-color: #333333;
     }
     
     blockquote {
@@ -241,6 +261,10 @@ mjx-container[display="true"] {
     
     th {
         background: #2d2d2d;
+    }
+    
+    tr:nth-child(even) td {
+        background-color: rgba(255,255,255,0.05);
     }
     
     h1, h2 {

@@ -44,10 +44,30 @@ class Window(Adw.ApplicationWindow):
         self.sidebar_widget = SidebarWidget()
         self.webview_widget = WebViewWidget()
 
-        # Starting text to start
-        initial_text = "starting writing"
+        # Configure comrak extension options with table support
+        self.extension_options = comrak.ExtensionOptions()
+        self.extension_options.table = True  # Enable table support
+        self.extension_options.strikethrough = True
+        self.extension_options.autolink = True
+        self.extension_options.tasklist = True
+        self.extension_options.superscript = True
+        self.extension_options.footnotes = True
+
+        # Starting text with proper table
+        initial_text = """# Welcome to ProPad
+
+## Table Example
+
+| Column 1 | Column 2 | Column 3 |
+|----------|----------|----------|
+| Data 1   | Data 2   | Data 3   |
+| Data 4   | Data 5   | Data 6   |
+
+Start editing to see the preview!"""
+
+        # Render markdown with table support
         initial_html = comrak.render_markdown(
-            initial_text, extension_options=comrak.ExtensionOptions()
+            initial_text, extension_options=self.extension_options
         )
 
         # Desktop view initially
@@ -61,7 +81,7 @@ class Window(Adw.ApplicationWindow):
         # Connect to text buffer changes with proper theme handling
         def on_text_update(text):
             html = comrak.render_markdown(
-                text, extension_options=comrak.ExtensionOptions()
+                text, extension_options=self.extension_options
             )
             # Get dark mode status at the time of the callback
             self.webview_widget.load_html(html, is_dark=self.is_dark_mode())
