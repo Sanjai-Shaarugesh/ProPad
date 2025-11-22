@@ -12,7 +12,8 @@ template $Window: Adw.ApplicationWindow {
       
       content: Adw.OverlaySplitView adw_overlay_split_view {
         min-sidebar-width: 450;
-        max-sidebar-width: 500;
+        max-sidebar-width: 4000;
+        sidebar-width-fraction: 0.5;
         
         sidebar: Adw.LayoutSlot {
           id: "slot_sidebar";

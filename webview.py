@@ -34,6 +34,11 @@ class WebViewWidget(Gtk.Box):
         self._file_cache = {}
         self._html_cache = {}
 
+        # Sync scroll state
+        self.sync_scroll_enabled = True
+        self._is_programmatic_scroll = False
+        self._scroll_sync_handler_id = None
+
         # Pre-load external files in background
         self._preload_external_files()
 
@@ -97,6 +102,88 @@ class WebViewWidget(Gtk.Box):
 
         # Load in background
         self._thread_pool.submit(load_files)
+
+    def set_sync_scroll_enabled(self, enabled: bool):
+        """Enable or disable synchronized scrolling."""
+        self.sync_scroll_enabled = enabled
+
+    def scroll_to_percentage(self, percentage: float):
+        """Scroll webview to a specific percentage (0.0 to 1.0)."""
+        if not self.sync_scroll_enabled or self._is_programmatic_scroll:
+            return
+
+        self._is_programmatic_scroll = True
+
+        js_code = f"""
+        (function() {{
+            const maxScroll = Math.max(
+                document.documentElement.scrollHeight - window.innerHeight,
+                0
+            );
+            const targetScroll = maxScroll * {percentage};
+            window.scrollTo({{
+                top: targetScroll,
+                behavior: 'auto'
+            }});
+        }})();
+        """
+
+        self.webview.evaluate_javascript(js_code, -1, None, None, None)
+
+        # Reset flag after scroll completes
+        GLib.timeout_add(50, lambda: setattr(self, "_is_programmatic_scroll", False))
+
+    def get_scroll_percentage(self, callback):
+        """Get current scroll percentage asynchronously."""
+        js_code = """
+        (function() {
+            const maxScroll = Math.max(
+                document.documentElement.scrollHeight - window.innerHeight,
+                0
+            );
+            if (maxScroll === 0) return 0;
+            return window.scrollY / maxScroll;
+        })();
+        """
+
+        def on_result(webview, result, user_data):
+            try:
+                js_result = webview.evaluate_javascript_finish(result)
+                if js_result:
+                    value = js_result.to_double()
+                    callback(value)
+            except Exception as e:
+                print(f"Error getting scroll percentage: {e}")
+                callback(0)
+
+        self.webview.evaluate_javascript(js_code, -1, None, on_result, None)
+
+    def setup_scroll_monitoring(self):
+        """Setup scroll event monitoring in the webview."""
+        if self._scroll_sync_handler_id:
+            return
+
+        js_code = """
+        (function() {
+            let scrollTimeout;
+            window.addEventListener('scroll', function() {
+                clearTimeout(scrollTimeout);
+                scrollTimeout = setTimeout(function() {
+                    const maxScroll = Math.max(
+                        document.documentElement.scrollHeight - window.innerHeight,
+                        0
+                    );
+                    const percentage = maxScroll === 0 ? 0 : window.scrollY / maxScroll;
+                    
+                    // Signal to GTK (stored in window for external access)
+                    window.lastScrollPercentage = percentage;
+                }, 50);
+            });
+        })();
+        """
+
+        self.webview.evaluate_javascript(js_code, -1, None, None, None)
+        self._scroll_sync_handler_id = True
 
     def _on_theme_changed(self, style_manager, param):
         """Reload content with new theme when system theme changes."""
@@ -309,9 +396,7 @@ class WebViewWidget(Gtk.Box):
                 cache_key = (hash(html), is_dark)
                 if cache_key in self._html_cache:
                     html_content = self._html_cache[cache_key]
-                    GLib.idle_add(
-                        lambda: self.webview.load_html(html_content, "file:///")
-                    )
+                    GLib.idle_add(lambda: self._finish_load_html(html_content))
                     return
 
                 # Process HTML
@@ -445,10 +530,16 @@ class WebViewWidget(Gtk.Box):
                     self._html_cache.clear()
 
                 # Load in main thread
-                GLib.idle_add(lambda: self.webview.load_html(html_content, "file:///"))
+                GLib.idle_add(lambda: self._finish_load_html(html_content))
 
         # Process in background thread
         self._thread_pool.submit(process_html_async)
+
+    def _finish_load_html(self, html_content):
+        """Finish loading HTML in main thread."""
+        self.webview.load_html(html_content, "file:///")
+        # Setup scroll monitoring after content loads
+        GLib.timeout_add(500, self.setup_scroll_monitoring)
 
     def reload(self) -> None:
         """Reload the current page."""

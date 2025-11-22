@@ -2,7 +2,7 @@ import gi
 
 gi.require_version(namespace="Gtk", version="4.0")
 
-from gi.repository import Gtk, Gdk
+from gi.repository import Gtk, Gdk, GLib
 from search_replace import SearchReplaceBar
 from formatting_toolbar import FormattingToolbar
 
@@ -29,6 +29,12 @@ class SidebarWidget(Gtk.Box):
         # Custom callbacks list
         self._text_changed_callbacks = []
         self._hide_webview_callbacks = []
+        self._scroll_callbacks = []
+
+        # Sync scroll state
+        self.sync_scroll_enabled = True
+        self._is_programmatic_scroll = False
+        self._scroll_adjustment = None
 
         # Connect GTK buffer "changed" signal
         self.buffer.connect("changed", self._on_buffer_changed)
@@ -48,12 +54,69 @@ class SidebarWidget(Gtk.Box):
         # Setup keyboard shortcuts
         self._setup_shortcuts()
 
+        # Setup scroll synchronization
+        self._setup_scroll_sync()
+
     def _setup_shortcuts(self):
         """Setup keyboard shortcuts."""
         # Create event controller for key presses
         key_controller = Gtk.EventControllerKey()
         key_controller.connect("key-pressed", self._on_key_pressed)
         self.textview.add_controller(key_controller)
+
+    def _setup_scroll_sync(self):
+        """Setup scroll synchronization monitoring."""
+        # Get the scrolled window containing the textview
+        parent = self.textview.get_parent()
+        if parent and isinstance(parent, Gtk.ScrolledWindow):
+            vadjustment = parent.get_vadjustment()
+            self._scroll_adjustment = vadjustment
+            vadjustment.connect("value-changed", self._on_scroll_changed)
+
+    def _on_scroll_changed(self, adjustment):
+        """Handle scroll changes in the text view."""
+        if not self.sync_scroll_enabled or self._is_programmatic_scroll:
+            return
+
+        # Calculate scroll percentage
+        value = adjustment.get_value()
+        upper = adjustment.get_upper()
+        page_size = adjustment.get_page_size()
+
+        max_scroll = upper - page_size
+        if max_scroll <= 0:
+            percentage = 0.0
+        else:
+            percentage = value / max_scroll
+
+        # Notify scroll callbacks (webview)
+        for callback in self._scroll_callbacks:
+            callback(percentage)
+
+    def scroll_to_percentage(self, percentage: float):
+        """Scroll textview to a specific percentage (0.0 to 1.0)."""
+        if not self.sync_scroll_enabled or not self._scroll_adjustment:
+            return
+
+        self._is_programmatic_scroll = True
+
+        upper = self._scroll_adjustment.get_upper()
+        page_size = self._scroll_adjustment.get_page_size()
+        max_scroll = upper - page_size
+
+        target_value = max_scroll * percentage
+        self._scroll_adjustment.set_value(target_value)
+
+        # Reset flag after scroll completes
+        GLib.timeout_add(50, lambda: setattr(self, "_is_programmatic_scroll", False))
+
+    def connect_scroll_changed(self, callback):
+        """Register a callback for scroll changes."""
+        self._scroll_callbacks.append(callback)
+
+    def set_sync_scroll_enabled(self, enabled: bool):
+        """Enable or disable synchronized scrolling."""
+        self.sync_scroll_enabled = enabled
 
     def _on_key_pressed(self, controller, keyval, keycode, state):
         """Handle keyboard shortcuts."""

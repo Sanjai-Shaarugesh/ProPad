@@ -47,6 +47,11 @@ class PropadApplication(Adw.Application):
         self.set_accels_for_action("win.save-file", ["<Ctrl>S"])
         self.set_accels_for_action("win.save-as", ["<Ctrl><Shift>S"])
 
+        self.set_accels_for_action("win.toggle-sync-scroll", ["<Ctrl><Alt>S"])
+
+        self.set_accels_for_action("app.quit", ["<Ctrl>Q"])
+        self.set_accels_for_action("app.about", ["F1"])
+
         # File Manager action - delegates to window
         file_manager_action = Gio.SimpleAction.new("file-manager", None)
         file_manager_action.connect("activate", self._on_file_manager)
