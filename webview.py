@@ -1,14 +1,17 @@
 import gi
+import threading
+from concurrent.futures import ThreadPoolExecutor
+import os
 
 gi.require_version("Gtk", "4.0")
 gi.require_version("WebKit", "6.0")
 gi.require_version("Adw", "1")
+gi.require_version("Gdk", "4.0")
 
-from gi.repository import Gtk, WebKit, Adw
+from gi.repository import Gtk, WebKit, Adw, GLib, Gdk
 from typing import Optional
 import comrak
 import re
-import os
 
 UI_FILE = "ui/webview.ui"
 
@@ -24,13 +27,44 @@ class WebViewWidget(Gtk.Box):
             kwargs["orientation"] = Gtk.Orientation.VERTICAL
         super().__init__(**kwargs)
 
-        self.webview = WebKit.WebView.new()
+        # Thread pool for parallel processing
+        self._thread_pool = ThreadPoolExecutor(max_workers=4)
+
+        # Cache for processed content and loaded files
+        self._file_cache = {}
+        self._html_cache = {}
+
+        # Pre-load external files in background
+        self._preload_external_files()
+
+        # Create WebView with GPU acceleration
+        settings = WebKit.Settings()
+        settings.set_enable_webgl(True)
+        settings.set_enable_webaudio(True)
+        settings.set_hardware_acceleration_policy(
+            WebKit.HardwareAccelerationPolicy.ALWAYS
+        )
+        settings.set_enable_page_cache(True)
+        settings.set_enable_javascript(True)
+        settings.set_enable_smooth_scrolling(True)
+        settings.set_javascript_can_access_clipboard(True)
+
+        self.webview = WebKit.WebView()
+        self.webview.set_settings(settings)
         self.webview.set_hexpand(True)
         self.webview.set_vexpand(True)
+
+        # Enable GPU compositing
+        try:
+            self.webview.set_background_color(Gdk.RGBA(1, 1, 1, 1))
+        except:
+            pass
+
         self.webview_container.append(self.webview)
 
         self._last_html = ""
         self._last_is_dark = None
+        self._rendering_lock = threading.Lock()
 
         # Connect to decide-policy signal to handle link clicks
         self.webview.connect("decide-policy", self._on_decide_policy)
@@ -38,7 +72,7 @@ class WebViewWidget(Gtk.Box):
         # Connect to context-menu signal to handle right-click actions
         self.webview.connect("context-menu", self._on_context_menu)
 
-        self.webview.load_html("<p></p>", "file:///")  # Load empty content
+        self.webview.load_html("<p></p>", "file:///")
 
         # Listen to Adw.StyleManager for theme changes
         style_manager = Adw.StyleManager.get_default()
@@ -46,6 +80,23 @@ class WebViewWidget(Gtk.Box):
 
         # Apply theme immediately
         self.set_theme(self.is_dark_mode())
+
+    def _preload_external_files(self):
+        """Pre-load external files in background thread for faster access."""
+
+        def load_files():
+            files_to_load = [
+                "assets/styles.css",
+                "assets/mermaid-loader.js",
+                "assets/mathjax-config.js",
+                "assets/mathjax-render.js",
+            ]
+            for filename in files_to_load:
+                if filename not in self._file_cache:
+                    self._file_cache[filename] = self._load_external_file(filename)
+
+        # Load in background
+        self._thread_pool.submit(load_files)
 
     def _on_theme_changed(self, style_manager, param):
         """Reload content with new theme when system theme changes."""
@@ -60,19 +111,15 @@ class WebViewWidget(Gtk.Box):
             request = nav_action.get_request()
             uri = request.get_uri()
 
-            # Allow file:// URIs (our local content)
             if uri and uri.startswith("file://"):
                 decision.use()
                 return False
 
-            # Open external links (http://, https://) in default browser
             if uri and (uri.startswith("http://") or uri.startswith("https://")):
-                print(f"Opening external link: {uri}")
                 Gtk.show_uri(None, uri, 0)
                 decision.ignore()
                 return True
 
-            # Allow other URIs to be handled by WebView
             decision.use()
             return False
 
@@ -80,10 +127,8 @@ class WebViewWidget(Gtk.Box):
 
     def _on_context_menu(self, webview, context_menu, hit_test_result):
         """Handle context menu - customize to open links in external browser."""
-        # Get the items in the context menu
         items = context_menu.get_items()
 
-        # Remove reload and other navigation items
         for item in list(items):
             action = item.get_stock_action()
             if action in [
@@ -94,16 +139,11 @@ class WebViewWidget(Gtk.Box):
             ]:
                 context_menu.remove(item)
 
-        # Check if we're on a link
         if hit_test_result.context_is_link():
             link_uri = hit_test_result.get_link_uri()
 
-            # Remove all default link-related items
-            for item in list(
-                items
-            ):  # Convert to list to avoid modification during iteration
+            for item in list(items):
                 action = item.get_stock_action()
-                # Remove: Open Link, Open Link in New Window, Download Linked File, Copy Link
                 if action in [
                     WebKit.ContextMenuAction.OPEN_LINK,
                     WebKit.ContextMenuAction.OPEN_LINK_IN_NEW_WINDOW,
@@ -112,11 +152,9 @@ class WebViewWidget(Gtk.Box):
                 ]:
                     context_menu.remove(item)
 
-            # Add custom "Open Link in Browser" action at the top
             if link_uri and (
                 link_uri.startswith("http://") or link_uri.startswith("https://")
             ):
-                # Create a custom action using Gio.SimpleAction
                 from gi.repository import Gio
 
                 action = Gio.SimpleAction.new("open-in-browser", None)
@@ -127,7 +165,6 @@ class WebViewWidget(Gtk.Box):
                 )
                 context_menu.prepend(open_action)
 
-                # Add "Copy Link" action
                 copy_action_obj = Gio.SimpleAction.new("copy-link", None)
                 copy_action_obj.connect(
                     "activate", lambda a, p: self._copy_to_clipboard(link_uri)
@@ -138,14 +175,10 @@ class WebViewWidget(Gtk.Box):
                 )
                 context_menu.append(copy_action)
 
-        # Check if we're on an image
         if hit_test_result.context_is_image():
             image_uri = hit_test_result.get_image_uri()
 
-            # Remove default image actions and add custom ones
-            for item in list(
-                items
-            ):  # Convert to list to avoid modification during iteration
+            for item in list(items):
                 action = item.get_stock_action()
                 if action in [
                     WebKit.ContextMenuAction.OPEN_IMAGE_IN_NEW_WINDOW,
@@ -153,7 +186,6 @@ class WebViewWidget(Gtk.Box):
                 ]:
                     context_menu.remove(item)
 
-            # Add custom "Open Image in Browser" if it's an external image
             if image_uri and (
                 image_uri.startswith("http://") or image_uri.startswith("https://")
             ):
@@ -183,7 +215,6 @@ class WebViewWidget(Gtk.Box):
 
     def _process_github_alerts(self, html: str) -> str:
         """Convert GitHub-style alerts/admonitions to styled divs."""
-        # Pattern for blockquotes that start with [!NOTE], [!TIP], etc.
         alert_pattern = re.compile(
             r"<blockquote>\s*<p>\[!(NOTE|TIP|IMPORTANT|WARNING|CAUTION)\]\s*(.*?)</p>(.*?)</blockquote>",
             re.DOTALL | re.IGNORECASE,
@@ -193,35 +224,26 @@ class WebViewWidget(Gtk.Box):
             alert_type = match.group(1).upper()
             first_line = match.group(2).strip()
             rest_content = match.group(3).strip()
-
-            # Combine first line with rest of content
             full_content = first_line
             if rest_content:
                 full_content += rest_content
-
             return f'<div class="alert alert-{alert_type.lower()}" data-alert-type="{alert_type}">{full_content}</div>'
 
         return alert_pattern.sub(replace_alert, html)
 
     def _process_mermaid_blocks(self, html: str) -> str:
         """Convert mermaid code blocks to mermaid divs."""
-        # Try multiple patterns to catch different markdown renderers
         patterns = [
-            # Pattern 1: <pre><code class="language-mermaid">...</code></pre>
             re.compile(
                 r'<pre><code class="language-mermaid">(.*?)</code></pre>', re.DOTALL
             ),
-            # Pattern 2: <pre lang="mermaid"><code>...</code></pre>
             re.compile(r'<pre lang="mermaid"><code>(.*?)</code></pre>', re.DOTALL),
-            # Pattern 3: <code class="language-mermaid">...</code> without pre
             re.compile(r'<code class="language-mermaid">(.*?)</code>', re.DOTALL),
-            # Pattern 4: Just looking for ```mermaid in plain text (fallback)
             re.compile(r"```mermaid\s*(.*?)\s*```", re.DOTALL),
         ]
 
         def replace_mermaid(match):
             mermaid_code = match.group(1).strip()
-            # Unescape HTML entities that might be in the code
             mermaid_code = (
                 mermaid_code.replace("&lt;", "<")
                 .replace("&gt;", ">")
@@ -230,7 +252,6 @@ class WebViewWidget(Gtk.Box):
             )
             return f'<div class="mermaid">\n{mermaid_code}\n</div>'
 
-        # Apply all patterns in sequence
         result = html
         for pattern in patterns:
             result = pattern.sub(replace_mermaid, result)
@@ -273,117 +294,121 @@ class WebViewWidget(Gtk.Box):
             return ""
 
     def load_html(self, html: str, is_dark: Optional[bool] = None):
-        """Load HTML content and apply the theme immediately."""
+        """Load HTML content with GPU-accelerated rendering in background thread."""
         if is_dark is None:
             is_dark = self.is_dark_mode()
 
-        # Store the ORIGINAL HTML content and theme state (before processing)
+        # Store original HTML
         self._last_html = html
         self._last_is_dark = is_dark
 
-        # Debug: Check if mermaid code exists in input
-        if "mermaid" in html.lower():
-            print(f"DEBUG: Found mermaid in HTML (length: {len(html)})")
+        # Process HTML in background thread
+        def process_html_async():
+            with self._rendering_lock:
+                # Check cache first
+                cache_key = (hash(html), is_dark)
+                if cache_key in self._html_cache:
+                    html_content = self._html_cache[cache_key]
+                    GLib.idle_add(
+                        lambda: self.webview.load_html(html_content, "file:///")
+                    )
+                    return
 
-        # Process Mermaid blocks FIRST (before GitHub alerts)
-        processed_html = self._process_mermaid_blocks(html)
+                # Process HTML
+                processed_html = self._process_mermaid_blocks(html)
+                processed_html = self._process_github_alerts(processed_html)
 
-        # Debug: Check if conversion happened
-        if (
-            'class="mermaid"' in processed_html
-            or '<div class="mermaid">' in processed_html
-        ):
-            print("DEBUG: Successfully converted to mermaid div")
+                # Load external files from cache
+                css_content = self._file_cache.get(
+                    "assets/styles.css"
+                ) or self._load_external_file("assets/styles.css")
+                js_mermaid = self._file_cache.get(
+                    "assets/mermaid-loader.js"
+                ) or self._load_external_file("assets/mermaid-loader.js")
+                js_mathjax_config = self._file_cache.get(
+                    "assets/mathjax-config.js"
+                ) or self._load_external_file("assets/mathjax-config.js")
+                js_mathjax_render = self._file_cache.get(
+                    "assets/mathjax-render.js"
+                ) or self._load_external_file("assets/mathjax-render.js")
 
-        # Process GitHub-style alerts
-        processed_html = self._process_github_alerts(processed_html)
+                # Get theme colors
+                bg_color = "#1e1e1e" if is_dark else "#ffffff"
+                text_color = "#d4d4d4" if is_dark else "#1e1e1e"
+                link_color = "#4fc3f7" if is_dark else "#0066cc"
+                code_bg = "#2d2d2d" if is_dark else "#f5f5f5"
+                pre_bg = "#2d2d2d" if is_dark else "#f5f5f5"
+                border_color = "#333333" if is_dark else "#e1e4e8"
+                mermaid_theme = "dark" if is_dark else "default"
 
-        # Load external CSS and JS files
-        css_content = self._load_external_file("assets/styles.css")
-        js_mermaid = self._load_external_file("assets/mermaid-loader.js")
-        js_mathjax_config = self._load_external_file("assets/mathjax-config.js")
-        js_mathjax_render = self._load_external_file("assets/mathjax-render.js")
+                # Alert colors
+                if is_dark:
+                    note_bg, note_border, note_icon = "#1f2937", "#3b82f6", "#3b82f6"
+                    tip_bg, tip_border, tip_icon = "#1e3a2e", "#10b981", "#10b981"
+                    important_bg, important_border, important_icon = (
+                        "#3a2e42",
+                        "#a855f7",
+                        "#a855f7",
+                    )
+                    warning_bg, warning_border, warning_icon = (
+                        "#3a2e1e",
+                        "#f59e0b",
+                        "#f59e0b",
+                    )
+                    caution_bg, caution_border, caution_icon = (
+                        "#3a1e1e",
+                        "#ef4444",
+                        "#ef4444",
+                    )
+                else:
+                    note_bg, note_border, note_icon = "#dbeafe", "#3b82f6", "#1e40af"
+                    tip_bg, tip_border, tip_icon = "#d1fae5", "#10b981", "#065f46"
+                    important_bg, important_border, important_icon = (
+                        "#f3e8ff",
+                        "#a855f7",
+                        "#6b21a8",
+                    )
+                    warning_bg, warning_border, warning_icon = (
+                        "#fef3c7",
+                        "#f59e0b",
+                        "#92400e",
+                    )
+                    caution_bg, caution_border, caution_icon = (
+                        "#fee2e2",
+                        "#ef4444",
+                        "#991b1b",
+                    )
 
-        # Get theme colors
-        bg_color = "#1e1e1e" if is_dark else "#ffffff"
-        text_color = "#d4d4d4" if is_dark else "#1e1e1e"
-        link_color = "#4fc3f7" if is_dark else "#0066cc"
-        code_bg = "#2d2d2d" if is_dark else "#f5f5f5"
-        pre_bg = "#2d2d2d" if is_dark else "#f5f5f5"
-        border_color = "#333333" if is_dark else "#e1e4e8"
-        mermaid_theme = "dark" if is_dark else "default"
+                # Build HTML with theme
+                css_with_theme = (
+                    css_content.replace("{bg_color}", bg_color)
+                    .replace("{text_color}", text_color)
+                    .replace("{link_color}", link_color)
+                    .replace("{code_bg}", code_bg)
+                    .replace("{pre_bg}", pre_bg)
+                    .replace("{border_color}", border_color)
+                    .replace("{note_bg}", note_bg)
+                    .replace("{note_border}", note_border)
+                    .replace("{note_icon}", note_icon)
+                    .replace("{tip_bg}", tip_bg)
+                    .replace("{tip_border}", tip_border)
+                    .replace("{tip_icon}", tip_icon)
+                    .replace("{important_bg}", important_bg)
+                    .replace("{important_border}", important_border)
+                    .replace("{important_icon}", important_icon)
+                    .replace("{warning_bg}", warning_bg)
+                    .replace("{warning_border}", warning_border)
+                    .replace("{warning_icon}", warning_icon)
+                    .replace("{caution_bg}", caution_bg)
+                    .replace("{caution_border}", caution_border)
+                    .replace("{caution_icon}", caution_icon)
+                )
 
-        # Alert colors (GitHub-style)
-        if is_dark:
-            note_bg = "#1f2937"
-            note_border = "#3b82f6"
-            note_icon = "#3b82f6"
+                js_mermaid_with_theme = js_mermaid.replace(
+                    "{mermaid_theme}", mermaid_theme
+                )
 
-            tip_bg = "#1e3a2e"
-            tip_border = "#10b981"
-            tip_icon = "#10b981"
-
-            important_bg = "#3a2e42"
-            important_border = "#a855f7"
-            important_icon = "#a855f7"
-
-            warning_bg = "#3a2e1e"
-            warning_border = "#f59e0b"
-            warning_icon = "#f59e0b"
-
-            caution_bg = "#3a1e1e"
-            caution_border = "#ef4444"
-            caution_icon = "#ef4444"
-        else:
-            note_bg = "#dbeafe"
-            note_border = "#3b82f6"
-            note_icon = "#1e40af"
-
-            tip_bg = "#d1fae5"
-            tip_border = "#10b981"
-            tip_icon = "#065f46"
-
-            important_bg = "#f3e8ff"
-            important_border = "#a855f7"
-            important_icon = "#6b21a8"
-
-            warning_bg = "#fef3c7"
-            warning_border = "#f59e0b"
-            warning_icon = "#92400e"
-
-            caution_bg = "#fee2e2"
-            caution_border = "#ef4444"
-            caution_icon = "#991b1b"
-
-        # Replace CSS variables with actual values
-        css_with_theme = (
-            css_content.replace("{bg_color}", bg_color)
-            .replace("{text_color}", text_color)
-            .replace("{link_color}", link_color)
-            .replace("{code_bg}", code_bg)
-            .replace("{pre_bg}", pre_bg)
-            .replace("{border_color}", border_color)
-            .replace("{note_bg}", note_bg)
-            .replace("{note_border}", note_border)
-            .replace("{note_icon}", note_icon)
-            .replace("{tip_bg}", tip_bg)
-            .replace("{tip_border}", tip_border)
-            .replace("{tip_icon}", tip_icon)
-            .replace("{important_bg}", important_bg)
-            .replace("{important_border}", important_border)
-            .replace("{important_icon}", important_icon)
-            .replace("{warning_bg}", warning_bg)
-            .replace("{warning_border}", warning_border)
-            .replace("{warning_icon}", warning_icon)
-            .replace("{caution_bg}", caution_bg)
-            .replace("{caution_border}", caution_border)
-            .replace("{caution_icon}", caution_icon)
-        )
-
-        # Replace JS variables with actual values
-        js_mermaid_with_theme = js_mermaid.replace("{mermaid_theme}", mermaid_theme)
-
-        html_content = f"""<!DOCTYPE html>
+                html_content = f"""<!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
@@ -392,18 +417,17 @@ class WebViewWidget(Gtk.Box):
 {css_with_theme}
 </style>
 
-<!-- Mermaid for diagrams (Latest Version v11) - Load FIRST -->
+<!-- Mermaid for diagrams (Latest Version v11) -->
 <script type="module">
 {js_mermaid_with_theme}
 </script>
 
-<!-- MathJax for LaTeX (Full Support) -->
+<!-- MathJax for LaTeX -->
 <script>
 {js_mathjax_config}
 </script>
 <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
 
-<!-- Ensure MathJax renders after page load -->
 <script>
 {js_mathjax_render}
 </script>
@@ -413,7 +437,18 @@ class WebViewWidget(Gtk.Box):
 </body>
 </html>"""
 
-        self.webview.load_html(html_content, "file:///")
+                # Cache the result
+                self._html_cache[cache_key] = html_content
+
+                # Keep cache size reasonable
+                if len(self._html_cache) > 10:
+                    self._html_cache.clear()
+
+                # Load in main thread
+                GLib.idle_add(lambda: self.webview.load_html(html_content, "file:///"))
+
+        # Process in background thread
+        self._thread_pool.submit(process_html_async)
 
     def reload(self) -> None:
         """Reload the current page."""

@@ -2,12 +2,15 @@ import gi
 import os
 import tempfile
 import re
+import threading
+from concurrent.futures import ThreadPoolExecutor
 
 gi.require_version("Gtk", "4.0")
 gi.require_version("Adw", "1")
 gi.require_version("WebKit", "6.0")
+gi.require_version("Gdk", "4.0")
 
-from gi.repository import Gtk, Adw, Gio, WebKit, GLib
+from gi.repository import Gtk, Adw, Gio, WebKit, GLib, Gdk
 import comrak
 
 
@@ -31,6 +34,15 @@ class ExportDialog(Adw.Window):
         self.set_transient_for(parent_window)
         self.parent_window = parent_window
 
+        # Thread pool for parallel processing
+        self._thread_pool = ThreadPoolExecutor(max_workers=4)
+
+        # Cache for loaded external files
+        self._file_cache = {}
+
+        # Pre-load external files in background
+        self._preload_external_files()
+
         # Configure comrak with same settings as main window
         self.extension_options = comrak.ExtensionOptions()
         self.extension_options.table = True
@@ -46,12 +58,40 @@ class ExportDialog(Adw.Window):
         self.btn_export_image.connect("clicked", self._on_export_image)
         self.btn_close.connect("clicked", lambda b: self.close())
 
+    def _preload_external_files(self):
+        """Pre-load external files in background thread for faster access."""
+
+        def load_files():
+            files_to_load = [
+                "assets/styles.css",
+                "assets/mermaid-loader.js",
+                "assets/mathjax-config.js",
+                "assets/mathjax-render.js",
+            ]
+            for filename in files_to_load:
+                if filename not in self._file_cache:
+                    self._file_cache[filename] = self._load_external_file(filename)
+
+        # Load in background
+        self._thread_pool.submit(load_files)
+
     def get_markdown_content(self):
         """Get markdown content from parent window."""
         if self.parent_window:
             sidebar = self.parent_window.get_sidebar()
             return sidebar.get_text()
         return ""
+
+    def _load_external_file(self, filename):
+        """Load external file with error handling."""
+        try:
+            script_dir = os.path.dirname(os.path.abspath(__file__))
+            file_path = os.path.join(script_dir, filename)
+            with open(file_path, "r", encoding="utf-8") as f:
+                return f.read()
+        except Exception as e:
+            print(f"Error loading {filename}: {e}")
+            return ""
 
     def get_html_content(self):
         """Convert markdown to HTML."""
@@ -138,10 +178,19 @@ class ExportDialog(Adw.Window):
                 print(f"Error loading {filename}: {e}")
                 return ""
 
-        css_content = load_external_file("assets/styles.css")
-        js_mermaid = load_external_file("assets/mermaid-loader.js")
-        js_mathjax_config = load_external_file("assets/mathjax-config.js")
-        js_mathjax_render = load_external_file("assets/mathjax-render.js")
+        # Use cached files if available, otherwise load
+        css_content = self._file_cache.get("assets/styles.css") or load_external_file(
+            "assets/styles.css"
+        )
+        js_mermaid = self._file_cache.get(
+            "assets/mermaid-loader.js"
+        ) or load_external_file("assets/mermaid-loader.js")
+        js_mathjax_config = self._file_cache.get(
+            "assets/mathjax-config.js"
+        ) or load_external_file("assets/mathjax-config.js")
+        js_mathjax_render = self._file_cache.get(
+            "assets/mathjax-render.js"
+        ) or load_external_file("assets/mathjax-render.js")
 
         # Theme colors
         bg_color = "#1e1e1e" if is_dark else "#ffffff"
@@ -305,22 +354,57 @@ class ExportDialog(Adw.Window):
         self._prepare_pdf_webview()
 
     def _prepare_pdf_webview(self):
-        """Prepare WebView for PDF export."""
+        """Prepare WebView for PDF export with GPU acceleration and fast loading."""
+        # Create WebView settings with hardware acceleration enabled
+        settings = WebKit.Settings()
+        settings.set_enable_webgl(True)
+        settings.set_enable_webaudio(True)
+        settings.set_hardware_acceleration_policy(
+            WebKit.HardwareAccelerationPolicy.ALWAYS
+        )
+        settings.set_enable_page_cache(True)
+        settings.set_enable_javascript(True)
+
+        # Create WebView and apply settings
         webview = WebKit.WebView()
+        webview.set_settings(settings)
         webview.set_size_request(800, 600)
+
+        # Enable GPU compositing
+        try:
+            webview.set_background_color(Gdk.RGBA(1, 1, 1, 1))
+        except:
+            pass  # Fallback if background color setting fails
+
         self._pdf_webview = webview
+        self._render_timeout_id = None
 
         def on_load_finished(web_view, event):
             if event == WebKit.LoadEvent.FINISHED:
-                # Wait for JavaScript to render (Mermaid, MathJax)
-                GLib.timeout_add(3000, lambda: self._show_print_dialog())
+                # Minimal delay - rely on GPU acceleration for fast rendering
+                # Use idle_add for immediate processing after load
+                GLib.idle_add(self._show_print_dialog_immediate)
 
         webview.connect("load-changed", on_load_finished)
-        webview.load_html(self._pdf_html_content, "file:///")
+
+        # Load HTML in background thread
+        def load_html_async():
+            GLib.idle_add(lambda: webview.load_html(self._pdf_html_content, "file:///"))
+
+        self._thread_pool.submit(load_html_async)
+
+    def _show_print_dialog_immediate(self):
+        """Show print dialog immediately without artificial delay."""
+        # Small delay (200ms) just for critical rendering, then show dialog
+        self._render_timeout_id = GLib.timeout_add(200, self._show_print_dialog)
+        return False
 
     def _show_print_dialog(self):
         """Show the GTK print dialog with preview support."""
         try:
+            # Clear the timeout ID
+            self._render_timeout_id = None
+
             # Create WebKit print operation
             print_op = WebKit.PrintOperation.new(self._pdf_webview)
 
@@ -333,15 +417,20 @@ class ExportDialog(Adw.Window):
             page_setup.set_left_margin(15, Gtk.Unit.MM)
             page_setup.set_right_margin(15, Gtk.Unit.MM)
 
-            # Set print settings with default file output
+            # Set print settings with default file output and preview enabled
             print_settings = Gtk.PrintSettings()
             print_settings.set(
                 Gtk.PRINT_SETTINGS_OUTPUT_URI, f"file://{self._pdf_output_path}"
             )
             print_settings.set(Gtk.PRINT_SETTINGS_OUTPUT_FILE_FORMAT, "pdf")
-            # Enable preview support
+
+            # Enable high-quality output for better preview
             print_settings.set_use_color(True)
             print_settings.set_quality(Gtk.PrintQuality.HIGH)
+            print_settings.set_resolution(300)  # 300 DPI for better quality
+
+            # Set printer to "Print to File" to ensure preview works
+            print_settings.set_printer("Print to File")
 
             print_op.set_page_setup(page_setup)
             print_op.set_print_settings(print_settings)
@@ -351,13 +440,17 @@ class ExportDialog(Adw.Window):
             print_op.connect("failed", self._on_print_failed)
 
             # Run with print dialog - Preview button will be available
-            print_op.run_dialog(self)
+            response = print_op.run_dialog(self)
+
+            # Return False to stop the timeout
+            return False
 
         except Exception as e:
             print(f"Error showing print dialog: {e}")
             self._show_error_message(
                 "Export Failed", f"Could not show print dialog: {str(e)}"
             )
+            return False
 
     def _on_print_finished(self, print_op):
         """Handle successful print completion."""
@@ -429,8 +522,17 @@ class ExportDialog(Adw.Window):
                 )
 
     def _generate_image(self, filepath, format_ext):
-        """Generate image from HTML content using WebKit snapshot."""
+        """Generate image from HTML content using WebKit snapshot with GPU acceleration."""
+        # Create WebView settings with hardware acceleration
+        settings = WebKit.Settings()
+        settings.set_enable_webgl(True)
+        settings.set_hardware_acceleration_policy(
+            WebKit.HardwareAccelerationPolicy.ALWAYS
+        )
+        settings.set_enable_javascript(True)
+
         webview = WebKit.WebView()
+        webview.set_settings(settings)
         webview.set_size_request(1200, 800)
         html_content = self.get_full_html_document_from_webview(for_pdf=False)
 
@@ -451,7 +553,8 @@ class ExportDialog(Adw.Window):
 
         def on_load_finished(web_view, event):
             if event == WebKit.LoadEvent.FINISHED:
-                GLib.timeout_add(2000, lambda: take_snapshot())
+                # Faster timeout with GPU acceleration
+                GLib.timeout_add(500, lambda: take_snapshot())
 
         def take_snapshot():
             webview.get_snapshot(

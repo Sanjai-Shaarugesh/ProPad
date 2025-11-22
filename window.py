@@ -1,4 +1,7 @@
 import gi
+import threading
+from concurrent.futures import ThreadPoolExecutor
+import time
 
 gi.require_version(namespace="Gtk", version="4.0")
 gi.require_version(namespace="Adw", version="1")
@@ -36,9 +39,17 @@ class Window(Adw.ApplicationWindow):
         super().__init__(**kwargs)
 
         self.is_mobile = False
-        self.webview_hidden = False  # Track webview visibility state
+        self.webview_hidden = False
         self.content_modified = False
         self.current_file = None
+
+        # Thread pool for parallel operations
+        self._thread_pool = ThreadPoolExecutor(max_workers=4)
+
+        # Debounce timer for text updates
+        self._update_timer_id = None
+        self._pending_text = None
+        self._rendering_lock = threading.Lock()
 
         # Initialize state manager
         self.state_manager = StateManager()
@@ -53,9 +64,9 @@ class Window(Adw.ApplicationWindow):
         self.sidebar_widget = SidebarWidget(parent_window=self)
         self.webview_widget = WebViewWidget()
 
-        # Configure comrak extension options with table support
+        # Configure comrak extension options
         self.extension_options = comrak.ExtensionOptions()
-        self.extension_options.table = True  # Enable table support
+        self.extension_options.table = True
         self.extension_options.strikethrough = True
         self.extension_options.autolink = True
         self.extension_options.tasklist = True
@@ -71,7 +82,6 @@ class Window(Adw.ApplicationWindow):
 
         # If no saved content, show welcome message
         if not self.sidebar_widget.get_text():
-            # Starting text with proper table
             initial_text = """# Welcome to ProPad
 
 ## Table Example
@@ -83,31 +93,15 @@ class Window(Adw.ApplicationWindow):
 
 Start editing to see the preview!"""
 
-            # Render markdown with table support
-            initial_html = comrak.render_markdown(
-                initial_text, extension_options=self.extension_options
-            )
-
-            # Set initial text and render
             self.sidebar_widget.set_text(initial_text)
-            self.webview_widget.load_html(initial_html, is_dark=self.is_dark_mode())
+            self._render_markdown_async(initial_text)
         else:
-            # Render existing content
             text = self.sidebar_widget.get_text()
-            self.html = comrak.render_markdown(
-                text, extension_options=self.extension_options
-            )
+            self._render_markdown_async(text)
 
-            self.webview_widget.load_html(self.html, is_dark=self.is_dark_mode())
-
-        # Connect to text buffer changes with proper theme handling
+        # Connect to text buffer changes with debouncing
         def on_text_update(text):
-            self.html = comrak.render_markdown(
-                text, extension_options=self.extension_options
-            )
-
-            # Get dark mode status at the time of the callback
-            self.webview_widget.load_html(self.html, is_dark=self.is_dark_mode())
+            self._debounced_render(text)
             self.content_modified = True
             self._update_title()
 
@@ -137,12 +131,49 @@ Start editing to see the preview!"""
         # Auto-save timer (every 30 seconds)
         GLib.timeout_add_seconds(30, self._auto_save_state)
 
+    def _debounced_render(self, text):
+        """Debounce text rendering to avoid excessive updates."""
+        self._pending_text = text
+
+        if self._update_timer_id:
+            GLib.source_remove(self._update_timer_id)
+
+        # Wait 150ms before rendering (fast enough to feel instant)
+        self._update_timer_id = GLib.timeout_add(150, self._process_pending_text)
+
+    def _process_pending_text(self):
+        """Process pending text after debounce period."""
+        if self._pending_text is not None:
+            self._render_markdown_async(self._pending_text)
+            self._pending_text = None
+        self._update_timer_id = None
+        return False
+
+    def _render_markdown_async(self, text):
+        """Render markdown in background thread."""
+
+        def render():
+            with self._rendering_lock:
+                try:
+                    # Render markdown
+                    html = comrak.render_markdown(
+                        text, extension_options=self.extension_options
+                    )
+
+                    # Load HTML in main thread (WebKit requires main thread)
+                    GLib.idle_add(
+                        lambda: self.webview_widget.load_html(
+                            html, is_dark=self.is_dark_mode()
+                        )
+                    )
+                except Exception as e:
+                    print(f"Error rendering markdown: {e}")
+
+        # Submit to thread pool
+        self._thread_pool.submit(render)
+
     def _setup_headerbar_buttons(self):
         """Add file operation buttons to the headerbar."""
-        # Get the headerbar from the template
-        # We'll need to modify the .blp file to add these buttons
-        # For now, we'll create actions that can be triggered via shortcuts
-
         # New file action (Ctrl+N)
         new_action = Gio.SimpleAction.new("new-file", None)
         new_action.connect("activate", self._on_new_file)
@@ -224,22 +255,35 @@ Start editing to see the preview!"""
         dialog.open(self, None, self._on_open_file_response)
 
     def _on_open_file_response(self, dialog, result):
-        """Handle file open response."""
+        """Handle file open response - load in background."""
         try:
             file = dialog.open_finish(result)
             if file:
                 filepath = file.get_path()
-                with open(filepath, "r", encoding="utf-8") as f:
-                    content = f.read()
 
-                self.sidebar_widget.set_text(content)
-                self.current_file = filepath
-                self.content_modified = False
-                self._update_title()
-                self.state_manager.save_current_file(filepath)
+                # Load file in background thread
+                def load_file_async():
+                    try:
+                        with open(filepath, "r", encoding="utf-8") as f:
+                            content = f.read()
+
+                        # Update UI in main thread
+                        GLib.idle_add(lambda: self._finish_file_load(filepath, content))
+                    except Exception as e:
+                        print(f"Error loading file: {e}")
+
+                self._thread_pool.submit(load_file_async)
         except Exception as e:
             if "dismissed" not in str(e).lower():
                 print(f"Error opening file: {e}")
+
+    def _finish_file_load(self, filepath, content):
+        """Finish loading file in main thread."""
+        self.sidebar_widget.set_text(content)
+        self.current_file = filepath
+        self.content_modified = False
+        self._update_title()
+        self.state_manager.save_current_file(filepath)
 
     def _on_save_file(self, action, param):
         """Save current file."""
@@ -278,17 +322,25 @@ Start editing to see the preview!"""
                 print(f"Error saving file: {e}")
 
     def _save_to_file(self, filepath):
-        """Save content to file."""
-        try:
-            content = self.sidebar_widget.get_text()
-            with open(filepath, "w", encoding="utf-8") as f:
-                f.write(content)
+        """Save content to file in background."""
+        content = self.sidebar_widget.get_text()
 
-            self.content_modified = False
-            self._update_title()
-            print(f"File saved: {filepath}")
-        except Exception as e:
-            print(f"Error saving file: {e}")
+        def save_async():
+            try:
+                with open(filepath, "w", encoding="utf-8") as f:
+                    f.write(content)
+
+                GLib.idle_add(lambda: self._finish_file_save(filepath))
+            except Exception as e:
+                print(f"Error saving file: {e}")
+
+        self._thread_pool.submit(save_async)
+
+    def _finish_file_save(self, filepath):
+        """Finish saving file in main thread."""
+        self.content_modified = False
+        self._update_title()
+        print(f"File saved: {filepath}")
 
     def _on_file_manager_activate(self, action, param):
         """Show file manager dialog."""
@@ -371,27 +423,33 @@ Start editing to see the preview!"""
         return True
 
     def _save_state(self):
-        """Save current application state."""
-        width, height = self.get_default_size()
-        self.state_manager.state["window"] = {
-            "width": width,
-            "height": height,
-            "maximized": self.is_maximized(),
-        }
+        """Save current application state in background."""
 
-        self.state_manager.save_content(self.sidebar_widget.get_text())
-        cursor_pos = self.sidebar_widget.get_cursor_position()
-        self.state_manager.save_cursor_position(cursor_pos)
-        self.state_manager.save_current_file(self.current_file)
+        def save_async():
+            width, height = self.get_default_size()
+            self.state_manager.state["window"] = {
+                "width": width,
+                "height": height,
+                "maximized": self.is_maximized(),
+            }
 
-        sidebar_visible = self.adw_overlay_split_view.get_show_sidebar()
-        self.state_manager.save_sidebar_visible(sidebar_visible)
-        self.state_manager.save_webview_hidden(self.webview_hidden)
-        self.state_manager.save_state()
+            self.state_manager.save_content(self.sidebar_widget.get_text())
+            cursor_pos = self.sidebar_widget.get_cursor_position()
+            self.state_manager.save_cursor_position(cursor_pos)
+            self.state_manager.save_current_file(self.current_file)
+
+            sidebar_visible = self.adw_overlay_split_view.get_show_sidebar()
+            self.state_manager.save_sidebar_visible(sidebar_visible)
+            self.state_manager.save_webview_hidden(self.webview_hidden)
+            self.state_manager.save_state()
+
+        self._thread_pool.submit(save_async)
 
     def _on_close_request(self, window):
         """Handle window close request."""
         self._save_state()
+        # Give threads time to finish
+        time.sleep(0.1)
         return False
 
     def _update_title(self):
@@ -432,7 +490,7 @@ Start editing to see the preview!"""
         self.state_manager.save_sidebar_visible(not current)
 
     def _on_hide_webview(self) -> None:
-        """Toggle webview visibility - hide/show the entire right panel."""
+        """Toggle webview visibility."""
         self.webview_hidden = not self.webview_hidden
 
         if self.webview_hidden:
@@ -467,7 +525,6 @@ Start editing to see the preview!"""
 
     def _switch_to_mobile(self) -> None:
         """Switch to mobile layout."""
-        print("Switching to mobile layout")
         self.is_mobile = True
 
         parent = self.sidebar_widget.get_parent()
@@ -484,7 +541,6 @@ Start editing to see the preview!"""
 
     def _switch_to_desktop(self) -> None:
         """Switch to desktop layout."""
-        print("Switching to desktop layout")
         self.is_mobile = False
 
         parent = self.sidebar_widget.get_parent()
