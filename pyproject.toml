@@ -10,6 +10,7 @@ dependencies = [
     "markdown>=3.10",
     "pygobject>=3.54.5",
     "pygobject-stubs>=2.14.0",
+    "pytest>=9.0.1",
     "weasyprint>=66.0",
 ]
 

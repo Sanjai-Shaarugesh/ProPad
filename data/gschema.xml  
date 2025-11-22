@@ -1,0 +1,79 @@
+<!-- ======================================== -->
+<!-- data/gschema.xml -->
+<!-- GSettings schema for application settings -->
+<!-- ======================================== -->
+<?xml version="1.0" encoding="UTF-8"?>
+<schemalist>
+  <schema id="io.github.sanjai.ProPad" path="/io/sanjai/sanjai/ProPad">
+    
+    <!-- Window state -->
+    <key name="window-width" type="i">
+      <default>1200</default>
+      <summary>Window width</summary>
+      <description>The width of the main window</description>
+    </key>
+    
+    <key name="window-height" type="i">
+      <default>800</default>
+      <summary>Window height</summary>
+      <description>The height of the main window</description>
+    </key>
+    
+    <key name="window-maximized" type="b">
+      <default>false</default>
+      <summary>Window maximized state</summary>
+      <description>Whether the window is maximized</description>
+    </key>
+    
+    <!-- Application settings -->
+    <key name="dark-mode" type="b">
+      <default>false</default>
+      <summary>Dark mode</summary>
+      <description>Enable dark mode theme</description>
+    </key>
+    
+    <key name="sidebar-visible" type="b">
+      <default>true</default>
+      <summary>Sidebar visibility</summary>
+      <description>Whether the sidebar is visible</description>
+    </key>
+    
+    <key name="last-opened-file" type="s">
+      <default>''</default>
+      <summary>Last opened file</summary>
+      <description>Path to the last opened file</description>
+    </key>
+    
+    <key name="recent-files" type="as">
+      <default>[]</default>
+      <summary>Recent files</summary>
+      <description>List of recently opened files</description>
+    </key>
+    
+    <!-- Editor settings -->
+    <key name="font-size" type="i">
+      <default>12</default>
+      <summary>Font size</summary>
+      <description>Default font size for the editor</description>
+    </key>
+    
+    <key name="show-line-numbers" type="b">
+      <default>true</default>
+      <summary>Show line numbers</summary>
+      <description>Whether to show line numbers in the editor</description>
+    </key>
+    
+    <key name="auto-save" type="b">
+      <default>true</default>
+      <summary>Auto save</summary>
+      <description>Automatically save changes</description>
+    </key>
+    
+    <key name="auto-save-interval" type="i">
+      <default>300</default>
+      <summary>Auto save interval</summary>
+      <description>Auto save interval in seconds</description>
+    </key>
+    
+  </schema>
+</schemalist>

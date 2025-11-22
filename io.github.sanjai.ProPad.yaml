@@ -1,0 +1,281 @@
+# ========================================
+# io.github.sanjai.ProPad.yaml
+# Complete Flatpak Manifest
+# ========================================
+
+app-id: io.github.sanjai.ProPad
+runtime: org.gnome.Platform
+runtime-version: '48'
+sdk: org.gnome.Sdk
+command: propad
+
+finish-args:
+  # Graphics
+  - --share=ipc
+  - --socket=fallback-x11
+  - --socket=wayland
+  - --device=dri2
+  - --share=ipc
+  - --socket=wayland
+  - --socket=fallback-x11
+  - --device=dri
+  - --device=all
+  - --socket=wayland
+  - --socket=fallback-x11
+  - --device=dri
+  - --share=ipc
+
+  
+
+  
+  # Network (if your app needs it)
+  - --share=network
+  
+  # File system access
+  - --filesystem=home
+  # Or more restrictive:
+  # - --filesystem=xdg-documents
+  # - --filesystem=xdg-download
+  
+  # D-Bus
+  - --socket=session-bus
+  - --socket=system-bus
+  
+  # Accessibility (optional, suppresses warnings)
+  - --talk-name=org.a11y.Bus
+  
+  # Environment variables to suppress a11y warnings
+  - --env=NO_AT_BRIDGE=1
+  - --env=GTK_A11Y=none
+  - --env=MESA_LOADER_DRIVER_OVERRIDE=i965
+  - --env=G_MESSAGES_DEBUG=
+  
+  - --filesystem=xdg-data/icons:ro
+  
+  # WebKit2GTK support (for webview)
+  - --socket=pulseaudio
+  - --filesystem=xdg-run/dconf
+  - --filesystem=~/.config/dconf:ro
+  - --talk-name=ca.desrt.dconf
+  - --env=DCONF_USER_CONFIG_DIR=.config/dconf
+  
+  # GSettings
+  - --metadata=X-DConf=migrate-path=/io/github/sanjai/ProPad/
+
+cleanup:
+  - /include
+  - /lib/pkgconfig
+  - /man
+  - /share/doc
+  - /share/gtk-doc
+  - /share/man
+  - /share/pkgconfig
+  - '*.la'
+  - '*.a'
+
+modules:
+  # Python dependencies
+  - name: python-dependencies
+    buildsystem: simple
+    build-commands:
+      # Install packages, using --ignore-installed for packages that might conflict with SDK
+      - pip3 install --verbose --exists-action=i --no-index --find-links="file://${PWD}" --prefix=${FLATPAK_DEST} --ignore-installed attrs brotli certifi cffi charset-normalizer comrak cssselect2 fonttools h11 html2pdf4doc idna markdown outcome packaging pillow pycparser pydyf pypdf pyphen python-dotenv requests ruff selenium sniffio sortedcontainers tinycss2 tinyhtml5 trio trio-websocket typing-extensions urllib3 weasyprint webdriver-manager webencodings websocket-client wsproto zopfli PySocks --no-build-isolation
+    sources:
+      - type: file
+        path: python-modules/PySocks-1.7.1-py3-none-any.whl
+      - type: file
+        path: python-modules/attrs-25.4.0-py3-none-any.whl
+      - type: file
+        path: python-modules/brotli-1.2.0-cp312-cp312-manylinux2014_x86_64.manylinux_2_17_x86_64.whl
+      - type: file
+        path: python-modules/certifi-2025.11.12-py3-none-any.whl
+      - type: file
+        path: python-modules/cffi-2.0.0-cp312-cp312-manylinux2014_x86_64.manylinux_2_17_x86_64.whl
+      - type: file
+        path: python-modules/charset_normalizer-3.4.4-cp312-cp312-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl
+      - type: file
+        path: python-modules/comrak-0.0.9-cp39-abi3-manylinux_2_17_x86_64.manylinux2014_x86_64.whl
+      - type: file
+        path: python-modules/cssselect2-0.8.0-py3-none-any.whl
+      - type: file
+        path: python-modules/fonttools-4.60.1-cp312-cp312-manylinux1_x86_64.manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_5_x86_64.whl
+      - type: file
+        path: python-modules/h11-0.16.0-py3-none-any.whl
+      - type: file
+        path: python-modules/html2pdf4doc-0.0.22-py3-none-any.whl
+      - type: file
+        path: python-modules/idna-3.11-py3-none-any.whl
+      - type: file
+        path: python-modules/markdown-3.10-py3-none-any.whl
+      - type: file
+        path: python-modules/outcome-1.3.0.post0-py2.py3-none-any.whl
+      - type: file
+        path: python-modules/packaging-25.0-py3-none-any.whl
+      - type: file
+        path: python-modules/pillow-12.0.0-cp312-cp312-manylinux_2_27_x86_64.manylinux_2_28_x86_64.whl
+      - type: file
+        path: python-modules/pycparser-2.23-py3-none-any.whl
+      - type: file
+        path: python-modules/pydyf-0.11.0-py3-none-any.whl
+      - type: file
+        path: python-modules/pypdf-6.3.0-py3-none-any.whl
+      - type: file
+        path: python-modules/pyphen-0.17.2-py3-none-any.whl
+      - type: file
+        path: python-modules/python_dotenv-1.2.1-py3-none-any.whl
+      - type: file
+        path: python-modules/requests-2.32.5-py3-none-any.whl
+      - type: file
+        path: python-modules/ruff-0.14.5-py3-none-manylinux_2_17_x86_64.manylinux2014_x86_64.whl
+      - type: file
+        path: python-modules/selenium-4.38.0-py3-none-any.whl
+      - type: file
+        path: python-modules/sniffio-1.3.1-py3-none-any.whl
+      - type: file
+        path: python-modules/sortedcontainers-2.4.0-py2.py3-none-any.whl
+      - type: file
+        path: python-modules/tinycss2-1.5.0-py3-none-any.whl
+      - type: file
+        path: python-modules/tinyhtml5-2.0.0-py3-none-any.whl
+      - type: file
+        path: python-modules/trio-0.32.0-py3-none-any.whl
+      - type: file
+        path: python-modules/trio_websocket-0.12.2-py3-none-any.whl
+      - type: file
+        path: python-modules/typing_extensions-4.15.0-py3-none-any.whl
+      - type: file
+        path: python-modules/urllib3-2.5.0-py3-none-any.whl
+      - type: file
+        path: python-modules/weasyprint-66.0-py3-none-any.whl
+      - type: file
+        path: python-modules/webdriver_manager-4.0.2-py2.py3-none-any.whl
+      - type: file
+        path: python-modules/webencodings-0.5.1-py2.py3-none-any.whl
+      - type: file
+        path: python-modules/websocket_client-1.9.0-py3-none-any.whl
+      - type: file
+        path: python-modules/wsproto-1.3.2-py3-none-any.whl
+      - type: file
+        path: python-modules/zopfli-0.4.0-cp310-abi3-manylinux2014_x86_64.manylinux_2_17_x86_64.whl
+
+  # Main application
+  - name: propad
+    buildsystem: simple
+    build-commands:
+      # Create app directory structure
+      - mkdir -p /app/share/propad/ui
+      - mkdir -p /app/share/propad/data
+      - mkdir -p /app/share/propad/src
+      
+      # Copy pre-compiled UI files
+      - cp ui/*.ui /app/share/propad/ui/
+      
+      # Copy Python source files
+      - cp -r src /app/share/propad/
+      - cp main.py /app/share/propad/
+      
+      # Copy ALL data files and resources (preserve directory structure)
+      - mkdir -p /app/share/propad/data
+      - mkdir -p /app/share/propad/lib
+      - mkdir -p /app/share/propad/icons
+      - |
+        # Copy everything from data directory
+        if [ -d "data" ]; then
+          cp -r data/* /app/share/propad/data/ 2>/dev/null || true
+        fi
+      - |
+        # Copy lib directory (for .blp files if needed)
+        if [ -d "lib" ]; then
+          cp -r lib/* /app/share/propad/lib/ 2>/dev/null || true
+        fi
+      - |
+        # Copy icons directory
+        if [ -d "icons" ]; then
+          cp -r icons/* /app/share/propad/icons/ 2>/dev/null || true
+        fi
+      - |
+        # Copy any CSS files
+        find . -maxdepth 2 -name "*.css" -exec cp {} /app/share/propad/data/ \; 2>/dev/null || true
+      
+      # Install GSettings schema (if it exists)
+      # - install -Dm644 data/gschema.xml /app/share/glib-2.0/schemas/io.github.sanjai.ProPad.gschema.xml
+      # - glib-compile-schemas /app/share/glib-2.0/schemas
+      
+      # Create wrapper script
+      - |
+        cat > /app/bin/propad << 'EOF'
+        #!/bin/bash
+        # Suppress accessibility bus warnings
+        export NO_AT_BRIDGE=1
+        export GTK_A11Y=none
+        export PYTHONPATH=/app/share/propad:$PYTHONPATH
+        
+        
+        # Redirect fontconfig and MESA warnings to /dev/null
+        exec 2> >(grep -v "Fontconfig error" | grep -v "MESA-INTEL: warning" | grep -v "Can't connect to a11y bus" >&2)
+        
+        cd /app/share/propad
+        exec python3 -u main.py "$@"
+        EOF
+      - chmod +x /app/bin/propad
+      
+      # Install desktop file
+      - install -Dm644 io.github.sanjai.ProPad.desktop /app/share/applications/io.github.sanjai.ProPad.desktop
+      
+      # Install icons (adjust paths based on what icons you have)
+      - install -Dm644 icons/hicolor/scalable/apps/io.github.sanjai.ProPad.svg 
+          /app/share/icons/hicolor/scalable/apps/io.github.sanjai.ProPad.svg || true
+      - |
+        if [ -d "icons" ]; then
+          for size in 16 22 24 32 48 64 128 256 512; do
+            if [ -f "icons/hicolor/${size}x${size}/apps/io.github.sanjai.ProPad.png" ]; then
+              install -Dm644 "icons/hicolor/${size}x${size}/apps/io.github.sanjai.ProPad.png" \
+                "/app/share/icons/hicolor/${size}x${size}/apps/io.github.sanjai.ProPad.png"
+            fi
+          done
+          if [ -f "icons/hicolor/symbolic/apps/io.github.sanjai.ProPad-symbolic.svg" ]; then
+            install -Dm644 "icons/hicolor/symbolic/apps/io.github.sanjai.ProPad-symbolic.svg" \
+              "/app/share/icons/hicolor/symbolic/apps/io.github.sanjai.ProPad-symbolic.svg"
+          fi
+        fi
+      
+      # Copy any additional icon resources your app uses
+      - |
+        if [ -d "data/icons" ]; then
+          cp -r data/icons /app/share/propad/
+        fi
+      - |
+        if [ -d "icons" ]; then
+          cp -r icons /app/share/propad/
+        fi
+      
+      # Update icon cache
+      - gtk-update-icon-cache -q -t -f /app/share/icons/hicolor || true
+      
+      # Install metainfo (optional, comment out if file doesn't exist)
+      # - install -Dm644 io.github.sanjai.ProPad.metainfo.xml 
+      #     /app/share/metainfo/io.github.sanjai.ProPad.metainfo.xml
+      
+      # Validate desktop file and metainfo
+      - desktop-file-validate /app/share/applications/io.github.sanjai.ProPad.desktop || true
+      # - appstream-util validate-relax /app/share/metainfo/io.github.sanjai.ProPad.metainfo.xml || true
+    
+    sources:
+      - type: dir
+        path: .
+        skip:
+          - .git
+          - .github
+          - .vscode
+          - .idea
+          - build-dir
+          - .flatpak-builder
+          - __pycache__
+          - "*.pyc"
+          - "*.pyo"
+          - .venv
+          - venv
+          - .pytest_cache
+          - .ruff_cache
+          - "*.flatpak"
+          - ui/*.ui  # Skip compiled UI, we compile during build

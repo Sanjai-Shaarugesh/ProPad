@@ -7,7 +7,7 @@ gi.require_version("Gtk", "4.0")
 gi.require_version("Adw", "1")
 
 from gi.repository import Gtk, Adw, Gio
-from window import Window
+from src.window import Window
 
 
 class PropadApplication(Adw.Application):
@@ -15,7 +15,7 @@ class PropadApplication(Adw.Application):
 
     def __init__(self):
         super().__init__(
-            application_id="com.example.propad",
+            application_id="io.github.sanjai.PropPad",
             flags=Gio.ApplicationFlags.DEFAULT_FLAGS,
         )
         self.window = None
