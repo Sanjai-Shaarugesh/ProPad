@@ -1,0 +1,238 @@
+/* ========================================
+   data/style.css
+   Custom styles for the application
+   ======================================== */
+
+/* Main window styling */
+.main-window {
+    background-color: transparent;
+}
+
+/* Sidebar styling */
+.sidebar {
+    background-color: transparent;
+    border-right: 1px solid alpha(currentColor, 0.1);
+    padding: 12px;
+}
+
+.sidebar-item {
+    padding: 8px 12px;
+    margin: 4px 0;
+    border-radius: 6px;
+    transition: background-color 200ms ease;
+}
+
+.sidebar-item:hover {
+    background-color: alpha(currentColor, 0.05);
+}
+
+.sidebar-item:selected {
+    background-color: alpha(currentColor, 0.15);
+}
+
+/* Toolbar styling */
+.formatting-toolbar {
+    padding: 6px;
+    border-bottom: 1px solid alpha(currentColor, 0.1);
+}
+
+.toolbar-button {
+    padding: 6px 12px;
+    margin: 2px;
+    border-radius: 4px;
+}
+
+.toolbar-separator {
+    margin: 0 8px;
+    opacity: 0.3;
+}
+
+/* Editor/Webview area */
+.content-area {
+    padding: 24px;
+}
+
+.webview-container {
+    border-radius: 8px;
+    border: 1px solid alpha(currentColor, 0.1);
+}
+
+/* Dialog styling */
+.export-dialog .dialog-content {
+    padding: 24px;
+    min-width: 400px;
+}
+
+.search-replace-bar {
+    padding: 12px;
+    border-bottom: 1px solid alpha(currentColor, 0.1);
+}
+
+.search-entry {
+    margin-right: 8px;
+    min-width: 250px;
+}
+
+/* File manager */
+.file-manager-row {
+    padding: 8px 12px;
+    border-radius: 6px;
+    transition: background-color 200ms ease;
+}
+
+.file-manager-row:hover {
+    background-color: alpha(currentColor, 0.05);
+}
+
+.file-manager-row:selected {
+    background-color: alpha(currentColor, 0.15);
+}
+
+.file-icon {
+    margin-right: 8px;
+}
+
+.file-name {
+    font-weight: 500;
+}
+
+.file-metadata {
+    font-size: 0.9em;
+    opacity: 0.7;
+}
+
+/* Card and list styles */
+.card {
+    border-radius: 8px;
+    padding: 16px;
+    margin: 8px 0;
+    border: 1px solid alpha(currentColor, 0.1);
+}
+
+.list-item {
+    padding: 12px;
+    border-radius: 6px;
+    transition: background-color 200ms ease;
+}
+
+.list-item:hover {
+    background-color: alpha(currentColor, 0.05);
+}
+
+/* Status indicators */
+.status-badge {
+    padding: 4px 8px;
+    border-radius: 12px;
+    font-size: 0.85em;
+    font-weight: 600;
+}
+
+.status-badge.success {
+    background-color: rgba(38, 162, 105, 0.2);
+    color: rgb(38, 162, 105);
+}
+
+.status-badge.warning {
+    background-color: rgba(230, 162, 60, 0.2);
+    color: rgb(230, 162, 60);
+}
+
+.status-badge.error {
+    background-color: rgba(237, 51, 59, 0.2);
+    color: rgb(237, 51, 59);
+}
+
+/* Loading states */
+.loading-spinner {
+    opacity: 0.7;
+}
+
+.loading-overlay {
+    background-color: rgba(0, 0, 0, 0.5);
+}
+
+/* Animations */
+@keyframes fade-in {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.fade-in {
+    animation: fade-in 300ms ease;
+}
+
+/* Scrollbar styling */
+scrollbar {
+    background-color: transparent;
+}
+
+scrollbar slider {
+    background-color: alpha(currentColor, 0.3);
+    border-radius: 10px;
+    min-width: 8px;
+    min-height: 8px;
+}
+
+scrollbar slider:hover {
+    background-color: alpha(currentColor, 0.5);
+}
+
+/* Utility classes */
+.text-muted {
+    opacity: 0.7;
+}
+
+.text-small {
+    font-size: 0.9em;
+}
+
+.text-large {
+    font-size: 1.2em;
+}
+
+.margin-top {
+    margin-top: 12px;
+}
+
+.margin-bottom {
+    margin-bottom: 12px;
+}
+
+.padding-large {
+    padding: 24px;
+}
+
+.rounded {
+    border-radius: 8px;
+}
+
+/* Additional helper classes */
+.spacing-6 {
+    margin: 6px;
+}
+
+.spacing-12 {
+    margin: 12px;
+}
+
+.spacing-24 {
+    margin: 24px;
+}
+
+/* Focus states */
+*:focus {
+    outline: 2px solid alpha(currentColor, 0.3);
+    outline-offset: 2px;
+}
+
+button:focus,
+entry:focus {
+    outline: 2px solid rgba(53, 132, 228, 0.5);
+    outline-offset: -2px;
+}

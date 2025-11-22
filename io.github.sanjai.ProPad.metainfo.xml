@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<component type="io.github.sanjai.ProPad">
+  <id>io.github.sanjai.ProPad</id>
+  
+  <!-- Licensing -->
+  <metadata_license>CC0-1.0</metadata_license>
+  <project_license>GPL-3.0-or-later</project_license>
+  
+  <!-- Basic info -->
+  <name>ProPadp</name>
+  <summary>A modern text editor with rich formatting</summary>
+  
+  <description>
+    <p>
+      My GTK App is a modern, user-friendly text editor built with GTK 4 and Libadwaita.
+      It provides a clean interface for writing and editing documents with rich formatting capabilities.
+    </p>
+    <p>Features include:</p>
+    <ul>
+      <li>Clean and intuitive interface following GNOME HIG</li>
+      <li>Rich text formatting with toolbar</li>
+      <li>File manager for organizing documents</li>
+      <li>Search and replace functionality</li>
+      <li>Export to multiple formats</li>
+      <li>Dark mode support</li>
+      <li>Auto-save functionality</li>
+    </ul>
+    <p>
+      Whether you're taking notes, writing documentation, or editing markdown files,
+      My GTK App provides all the tools you need in a distraction-free environment.
+    </p>
+  </description>
+  
+  <!-- Developer info -->
+  <developer id="io.github.sanjai.ProPad">
+    <name>Sanjai Shaarugesh</name>
+  </developer>
+  
+  <!-- Update contact (email or URL) -->
+  <update_contact>shaarugesh6@gmail.com</update_contact>
+  
+  <!-- Homepage and support URLs -->
+  <url type="homepage">https://example.com/my-gtk-app</url>
+  <url type="bugtracker">https://github.com/yourusername/my-gtk-app/issues</url>
+  <url type="help">https://example.com/my-gtk-app/docs</url>
+  <url type="donation">https://example.com/donate</url>
+  <url type="vcs-browser">https://github.com/yourusername/my-gtk-app</url>
+  
+  <!-- Launchable -->
+  <launchable type="desktop-id">io.github.sanjai.ProPad.desktop</launchable>
+  
+  <!-- Provides (for package managers) -->
+  <provides>
+    <binary>ProPad</binary>
+  </provides>
+  
+  <!-- Content rating (OARS) -->
+  <content_rating type="oars-1.1" />
+  
+  <!-- Screenshots -->
+  <screenshots>
+    <screenshot type="default">
+      <caption>Main window with editor</caption>
+      <image>https://example.com/screenshots/main-window.png</image>
+    </screenshot>
+    <screenshot>
+      <caption>Dark mode interface</caption>
+      <image>https://example.com/screenshots/dark-mode.png</image>
+    </screenshot>
+    <screenshot>
+      <caption>File manager sidebar</caption>
+      <image>https://example.com/screenshots/file-manager.png</image>
+    </screenshot>
+  </screenshots>
+  
+  <!-- Release history -->
+  <releases>
+    <release version="0.3.0" date="2024-03-15">
+      <description>
+        <p>New features and improvements:</p>
+        <ul>
+          <li>Added search and replace functionality</li>
+          <li>Improved file manager with better navigation</li>
+          <li>Fixed several bugs in the export dialog</li>
+          <li>Updated translations</li>
+        </ul>
+      </description>
+    </release>
+    
+    <release version="0.2.0" date="2024-02-01">
+      <description>
+        <p>Second beta release:</p>
+        <ul>
+          <li>Added formatting toolbar</li>
+          <li>Implemented auto-save feature</li>
+          <li>Added dark mode support</li>
+          <li>Performance improvements</li>
+        </ul>
+      </description>
+    </release>
+    
+    <release version="0.1.0" date="2024-01-15">
+      <description>
+        <p>Initial release with core features:</p>
+        <ul>
+          <li>Basic text editing</li>
+          <li>File management</li>
+          <li>Export functionality</li>
+        </ul>
+      </description>
+    </release>
+  </releases>
+  
+  <!-- Branding colors (optional) -->
+  <branding>
+    <color type="primary" scheme_preference="light">#3584e4</color>
+    <color type="primary" scheme_preference="dark">#1c71d8</color>
+  </branding>
+  
+  <!-- Categories -->
+  <categories>
+    <category>Utility</category>
+    <category>TextEditor</category>
+  </categories>
+  
+  <!-- Keywords for search -->
+  <keywords>
+    <keyword>editor</keyword>
+    <keyword>text</keyword>
+    <keyword>notes</keyword>
+    <keyword>markdown</keyword>
+    <keyword>writing</keyword>
+  </keywords>
+  
+  <!-- Requires specific versions -->
+  <requires>
+    <display_length compare="ge">360</display_length>
+  </requires>
+  
+  <!-- Recommends -->
+  <recommends>
+    <control>keyboard</control>
+    <control>pointing</control>
+  </recommends>
+  
+</component>
