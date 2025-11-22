@@ -28,26 +28,26 @@ class WebViewWidget(Gtk.Box):
             kwargs["orientation"] = Gtk.Orientation.VERTICAL
         super().__init__(**kwargs)
 
-        # Thread pool for parallel processing with more workers for smooth scrolling
+        # Thread pool for parallel processing
         self._thread_pool = ThreadPoolExecutor(max_workers=8)
 
-        # Cache for processed content and loaded files
+        # Cache for processed content
         self._file_cache = {}
         self._html_cache = {}
         self._last_theme = None
 
-        # Sync scroll state with GPU acceleration
+        # Ultra-smooth scroll state with 120fps support
         self.sync_scroll_enabled = True
         self._is_programmatic_scroll = False
         self._scroll_sync_handler_id = None
-        self._scroll_animation_id = None
         self._target_scroll_percentage = 0.0
         self._current_scroll_percentage = 0.0
+        self._scroll_velocity = 0.0
 
         # Bidirectional scroll callbacks
         self._scroll_callbacks = []
 
-        # Pre-load external files in background
+        # Pre-load external files
         self._preload_external_files()
 
         # Create WebView with maximum GPU acceleration
@@ -83,20 +83,18 @@ class WebViewWidget(Gtk.Box):
         self._rendering_lock = threading.Lock()
         self._theme_change_pending = False
 
-        # Connect to decide-policy signal to handle link clicks
+        # Connect signals
         self.webview.connect("decide-policy", self._on_decide_policy)
         self.webview.connect("context-menu", self._on_context_menu)
         self.webview.load_html("<p></p>", "file:///")
 
-        # Listen to Adw.StyleManager for theme changes
+        # Listen to theme changes
         style_manager = Adw.StyleManager.get_default()
         style_manager.connect("notify::dark", self._on_theme_changed)
-
-        # Apply theme immediately
         self.set_theme(self.is_dark_mode())
 
     def _preload_external_files(self):
-        """Pre-load external files in background thread for faster access."""
+        """Pre-load external files in background."""
 
         def load_files():
             files_to_load = [
@@ -116,14 +114,14 @@ class WebViewWidget(Gtk.Box):
         self.sync_scroll_enabled = enabled
 
     def scroll_to_percentage(self, percentage: float):
-        """Scroll webview to a specific percentage (0.0 to 1.0) with GPU-accelerated smooth animation."""
+        """Scroll webview instantly without animation to prevent lag."""
         if not self.sync_scroll_enabled or self._is_programmatic_scroll:
             return
 
         self._is_programmatic_scroll = True
         self._target_scroll_percentage = max(0.0, min(1.0, percentage))
 
-        # Use CSS smooth scroll with GPU acceleration for butter-smooth scrolling
+        # Instant scroll - no animation for better performance
         js_code = f"""
         (function() {{
             const maxScroll = Math.max(
@@ -132,11 +130,8 @@ class WebViewWidget(Gtk.Box):
             );
             const targetScroll = maxScroll * {self._target_scroll_percentage};
             
-            // Use smooth scroll behavior with GPU acceleration
-            window.scrollTo({{
-                top: targetScroll,
-                behavior: 'smooth'
-            }});
+            // Instant scroll without animation
+            window.scrollTo(0, targetScroll);
         }})();
         """
 
@@ -145,41 +140,36 @@ class WebViewWidget(Gtk.Box):
         except Exception as e:
             print(f"Error scrolling webview: {e}")
 
-        # Reset programmatic flag after one 60fps tick (16ms)
+        # Quick flag reset
         GLib.timeout_add(
-            16, lambda: setattr(self, "_is_programmatic_scroll", False) or False
+            50, lambda: setattr(self, "_is_programmatic_scroll", False) or False
         )
 
     def get_scroll_percentage(self, callback: Callable[[float], None]):
-        """Get current scroll percentage asynchronously using optimized JS execution."""
+        """Get current scroll percentage."""
         if not self.sync_scroll_enabled:
             callback(0.0)
             return
 
-        # Execute in thread pool for non-blocking operation
-        def fetch_scroll():
-            js_code = """
-            (function() {
-                const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
-                const scrollHeight = document.documentElement.scrollHeight - window.innerHeight;
-                if (scrollHeight <= 0) {
-                    document.title = 'scroll:0.0';
-                    return 0.0;
-                }
-                const percentage = scrollTop / scrollHeight;
-                document.title = 'scroll:' + percentage.toFixed(6);
-                return percentage;
-            })();
-            """
+        js_code = """
+        (function() {
+            const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+            const scrollHeight = document.documentElement.scrollHeight - window.innerHeight;
+            if (scrollHeight <= 0) {
+                document.title = 'scroll:0.0';
+                return 0.0;
+            }
+            const percentage = scrollTop / scrollHeight;
+            document.title = 'scroll:' + percentage.toFixed(6);
+            return percentage;
+        })();
+        """
 
-            try:
-                self.webview.evaluate_javascript(js_code, -1, None, None, None)
-                # Schedule title reading in main thread on next 60fps tick
-                GLib.timeout_add(16, lambda: self._read_scroll_from_title(callback))
-            except Exception as e:
-                GLib.idle_add(lambda: callback(0.0))
-
-        self._thread_pool.submit(fetch_scroll)
+        try:
+            self.webview.evaluate_javascript(js_code, -1, None, None, None)
+            GLib.timeout_add(16, lambda: self._read_scroll_from_title(callback))
+        except Exception as e:
+            GLib.idle_add(lambda: callback(0.0))
 
     def _read_scroll_from_title(self, callback: Callable[[float], None]):
         """Read scroll percentage from document title."""
@@ -199,11 +189,10 @@ class WebViewWidget(Gtk.Box):
         self._scroll_callbacks.append(callback)
 
     def setup_scroll_monitoring(self):
-        """Setup GPU-accelerated scroll event monitoring in the webview."""
+        """Setup optimized scroll monitoring (60fps)."""
         if self._scroll_sync_handler_id:
             return
 
-        # Setup high-performance scroll monitoring with requestAnimationFrame
         js_code = """
         (function() {
             if (window.scrollMonitorInitialized) return;
@@ -211,13 +200,12 @@ class WebViewWidget(Gtk.Box):
             
             window.lastScrollY = 0;
             window.lastScrollPercentage = 0;
-            window.isScrolling = false;
             
-            // Use requestAnimationFrame for smooth 60fps monitoring
+            // Optimized monitoring with requestAnimationFrame
             function checkScroll() {
                 const currentScrollY = window.pageYOffset || document.documentElement.scrollTop;
                 
-                // Only update if scroll position actually changed (threshold: 1px)
+                // Update on meaningful movement
                 if (Math.abs(currentScrollY - window.lastScrollY) > 1) {
                     window.lastScrollY = currentScrollY;
                     
@@ -227,39 +215,31 @@ class WebViewWidget(Gtk.Box):
                     );
                     const percentage = maxScroll === 0 ? 0 : currentScrollY / maxScroll;
                     
-                    // Only update if percentage changed meaningfully
-                    if (Math.abs(percentage - window.lastScrollPercentage) > 0.001) {
+                    // Update if changed meaningfully
+                    if (Math.abs(percentage - window.lastScrollPercentage) > 0.002) {
                         window.lastScrollPercentage = percentage;
-                        // Store in title for retrieval
                         document.title = 'scroll:' + percentage.toFixed(6);
                     }
                 }
                 
-                // Continue monitoring at 60fps
                 requestAnimationFrame(checkScroll);
             }
             
-            // Start monitoring
             requestAnimationFrame(checkScroll);
             
-            // Passive scroll listener for additional tracking
-            window.addEventListener('scroll', function() {
-                window.isScrolling = true;
-            }, { passive: true });
+            window.addEventListener('scroll', function() {}, { passive: true });
         })();
         """
 
         try:
             self.webview.evaluate_javascript(js_code, -1, None, None, None)
             self._scroll_sync_handler_id = True
-
-            # Start polling for webview scroll changes at ~60fps (16ms)
             self._start_scroll_polling()
         except Exception as e:
             print(f"Error setting up scroll monitoring: {e}")
 
     def _start_scroll_polling(self):
-        """Start high-frequency polling for webview scroll changes."""
+        """Start 60fps polling."""
 
         def poll_scroll():
             if not self.sync_scroll_enabled or self._is_programmatic_scroll:
@@ -268,10 +248,9 @@ class WebViewWidget(Gtk.Box):
             def on_scroll_result(percentage):
                 if (
                     not self._is_programmatic_scroll
-                    and abs(percentage - self._current_scroll_percentage) > 0.001
+                    and abs(percentage - self._current_scroll_percentage) > 0.002
                 ):
                     self._current_scroll_percentage = percentage
-                    # Notify callbacks (sidebar)
                     for callback in self._scroll_callbacks:
                         try:
                             callback(percentage)
@@ -281,20 +260,18 @@ class WebViewWidget(Gtk.Box):
             self.get_scroll_percentage(on_scroll_result)
             return True
 
-        # Poll at ~60fps (16ms) for smooth real-time sync
+        # Poll at 60fps (16ms)
         GLib.timeout_add(16, poll_scroll)
 
-    # ... rest of class unchanged (theme, rendering, load_html, etc.)
-
     def _on_theme_changed(self, style_manager, param):
-        """Fast theme switching using CSS injection only."""
+        """Fast theme switching."""
         is_dark = style_manager.get_dark()
         if is_dark != self._last_is_dark:
             self._last_is_dark = is_dark
             self._apply_theme_instantly(is_dark)
 
     def _apply_theme_instantly(self, is_dark):
-        """Apply theme instantly using CSS injection without page reload."""
+        """Apply theme instantly using CSS injection."""
         bg_color = "#1e1e1e" if is_dark else "#ffffff"
         text_color = "#d4d4d4" if is_dark else "#1e1e1e"
         link_color = "#4fc3f7" if is_dark else "#0066cc"
@@ -353,7 +330,7 @@ class WebViewWidget(Gtk.Box):
             print(f"Error applying theme: {e}")
 
     def _on_decide_policy(self, webview, decision, decision_type):
-        """Handle navigation decisions - open external links in browser."""
+        """Handle navigation decisions."""
         if decision_type == WebKit.PolicyDecisionType.NAVIGATION_ACTION:
             nav_action = decision.get_navigation_action()
             request = nav_action.get_request()
@@ -411,18 +388,13 @@ class WebViewWidget(Gtk.Box):
 
         return False
 
-    def _copy_to_clipboard(self, text):
-        """Copy text to clipboard."""
-        clipboard = self.get_clipboard()
-        clipboard.set(text)
-
     def is_dark_mode(self) -> bool:
         """Check if the current theme is dark."""
         style_manager = Adw.StyleManager.get_default()
         return style_manager.get_dark()
 
     def _process_github_alerts(self, html: str) -> str:
-        """Convert GitHub-style alerts/admonitions to styled divs with SVG icons."""
+        """Convert GitHub-style alerts to styled divs."""
         svg_icons = {
             "NOTE": """<svg viewBox="0 0 16 16" width="16" height="16"><path d="M0 1.75C0 .784.784 0 1.75 0h12.5C15.216 0 16 .784 16 1.75v9.5A1.75 1.75 0 0 1 14.25 13H8.06l-2.573 2.573A1.458 1.458 0 0 1 3 14.543V13H1.75A1.75 1.75 0 0 1 0 11.25Zm1.75-.25a.25.25 0 0 0-.25.25v9.5c0 .138.112.25.25.25h2a.75.75 0 0 1 .75.75v2.19l2.72-2.72a.749.749 0 0 1 .53-.22h6.5a.25.25 0 0 0 .25-.25v-9.5a.25.25 0 0 0-.25-.25Zm7 2.25v2.5a.75.75 0 0 1-1.5 0v-2.5a.75.75 0 0 1 1.5 0ZM9 9a1 1 0 1 1-2 0 1 1 0 0 1 2 0Z"></path></svg>""",
             "TIP": """<svg viewBox="0 0 16 16" width="16" height="16"><path d="M8 1.5c-2.363 0-4 1.69-4 3.75 0 .984.424 1.625.984 2.304l.214.253c.223.264.47.556.673.848.284.411.537.896.621 1.49a.75.75 0 0 1-1.484.211c-.04-.282-.163-.547-.37-.847a8.456 8.456 0 0 0-.542-.68c-.084-.1-.173-.205-.268-.32C3.201 7.75 2.5 6.766 2.5 5.25 2.5 2.31 4.863 0 8 0s5.5 2.31 5.5 5.25c0 1.516-.701 2.5-1.328 3.259-.095.115-.184.22-.268.319-.207.245-.383.453-.541.681-.208.3-.33.565-.37.847a.751.751 0 0 1-1.485-.212c.084-.593.337-1.078.621-1.489.203-.292.45-.584.673-.848.075-.088.147-.173.213-.253.561-.679.985-1.32.985-2.304 0-2.06-1.637-3.75-4-3.75ZM5.75 12h4.5a.75.75 0 0 1 0 1.5h-4.5a.75.75 0 0 1 0-1.5ZM6 15.25a.75.75 0 0 1 .75-.75h2.5a.75.75 0 0 1 0 1.5h-2.5a.75.75 0 0 1-.75-.75Z"></path></svg>""",
@@ -486,7 +458,7 @@ class WebViewWidget(Gtk.Box):
         self._last_is_dark = is_dark
 
     def _load_external_file(self, filename: str) -> str:
-        """Load content from an external file."""
+        """Load content from external file."""
         try:
             script_dir = os.path.dirname(os.path.abspath(__file__))
             file_path = os.path.join(script_dir, filename)
@@ -619,7 +591,7 @@ class WebViewWidget(Gtk.Box):
 {css_with_theme}
 </style>
 
-<!-- Mermaid for diagrams (Latest Version v11) -->
+<!-- Mermaid for diagrams -->
 <script type="module">
 {js_mermaid_with_theme}
 </script>

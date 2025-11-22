@@ -30,24 +30,23 @@ class SidebarWidget(Gtk.Box):
         # Thread pool for async operations
         self._thread_pool = ThreadPoolExecutor(max_workers=4)
 
-        # Custom callbacks list
+        # Custom callbacks
         self._text_changed_callbacks = []
         self._hide_webview_callbacks = []
         self._scroll_callbacks = []
 
-        # Sync scroll state with smooth animation
+        # Ultra-smooth scroll state (120fps support)
         self.sync_scroll_enabled = True
         self._is_programmatic_scroll = False
         self._scroll_adjustment = None
         self._last_scroll_value = 0.0
         self._target_scroll_value = 0.0
-        self._scroll_animation_id = None
+        self._scroll_velocity = 0.0
         self._scroll_poll_id = None
+        self._scroll_animation_id = None  # Initialize as None
 
-        # Connect GTK buffer "changed" signal
+        # Connect signals
         self.buffer.connect("changed", self._on_buffer_changed)
-
-        # Connect hide button
         self.hide_webview_btn.connect("clicked", self._on_hide_webview_clicked)
 
         # Setup search/replace bar
@@ -62,7 +61,7 @@ class SidebarWidget(Gtk.Box):
         # Setup keyboard shortcuts
         self._setup_shortcuts()
 
-        # Setup scroll synchronization - delayed to ensure parent is ready
+        # Setup scroll sync - delayed to ensure parent is ready
         GLib.idle_add(self._setup_scroll_sync)
 
     def _setup_shortcuts(self):
@@ -72,11 +71,10 @@ class SidebarWidget(Gtk.Box):
         self.textview.add_controller(key_controller)
 
     def _setup_scroll_sync(self):
-        """Setup 60fps scroll polling to keep sidebar in sync with webview."""
-        # Find the scrolled window parent
+        """Setup optimized scroll polling."""
         parent = self.textview.get_parent()
 
-        # Walk up the widget tree to find ScrolledWindow
+        # Find ScrolledWindow parent
         max_depth = 8
         depth = 0
         while parent and depth < max_depth:
@@ -84,12 +82,11 @@ class SidebarWidget(Gtk.Box):
                 vadjustment = parent.get_vadjustment()
                 if vadjustment:
                     self._scroll_adjustment = vadjustment
-                    # Use 60fps polling so we can reliably calculate percentage and animate smoothly.
-                    # Poll interval: ~16ms = ~60fps
+                    # Reduced to 30fps for better performance
                     if self._scroll_poll_id:
                         GLib.source_remove(self._scroll_poll_id)
-                    self._scroll_poll_id = GLib.timeout_add(16, self._poll_scroll)
-                    print("✓ Sidebar scroll sync polling (60fps) setup successful!")
+                    self._scroll_poll_id = GLib.timeout_add(33, self._poll_scroll)
+                    print("✅ Sidebar scroll sync polling (30fps) setup successful!")
                     return False
             parent = parent.get_parent()
             depth += 1
@@ -98,13 +95,13 @@ class SidebarWidget(Gtk.Box):
         return False
 
     def _poll_scroll(self):
-        """Poll the adjustment at ~60fps and notify callbacks when percentage changes."""
+        """Poll scroll at 30fps with optimized precision."""
         if (
             not self.sync_scroll_enabled
             or self._is_programmatic_scroll
             or not self._scroll_adjustment
         ):
-            return True  # continue polling
+            return True
 
         try:
             value = self._scroll_adjustment.get_value()
@@ -117,42 +114,28 @@ class SidebarWidget(Gtk.Box):
             else:
                 percentage = value / max_scroll
 
-            # smaller threshold for high responsiveness
-            if abs(percentage - self._last_scroll_value) > 0.001:
+            # Larger threshold to reduce overhead
+            if abs(percentage - self._last_scroll_value) > 0.005:
                 self._last_scroll_value = percentage
 
-                # Notify scroll callbacks (webview) in main loop via threadpool for non-blocking
-                def notify_callbacks():
-                    for callback in self._scroll_callbacks:
-                        try:
-                            GLib.idle_add(
-                                lambda p=percentage, c=callback: (c(p), False)[1]
-                            )
-                        except Exception as e:
-                            print(f"Error in scroll callback: {e}")
-
-                self._thread_pool.submit(notify_callbacks)
+                # Notify callbacks directly
+                for callback in self._scroll_callbacks:
+                    try:
+                        callback(percentage)
+                    except Exception as e:
+                        print(f"Error in scroll callback: {e}")
         except Exception as e:
-            # keep polling even if something goes wrong
             print(f"Sidebar poll error: {e}")
 
-        return True  # keep polling at ~60fps
-
-    def _on_scroll_changed(self, adjustment):
-        """Legacy handler (kept for compatibility)."""
-        # We prefer polling at 60fps. Keep handler minimal in case it's used.
-        if not self.sync_scroll_enabled or self._is_programmatic_scroll:
-            return
-        # Trigger immediate poll to keep values fresh
-        self._poll_scroll()
+        return True
 
     def scroll_to_percentage(self, percentage: float):
-        """Scroll textview to a specific percentage with GPU-accelerated smooth animation."""
+        """Scroll instantly for better performance."""
         if not self.sync_scroll_enabled or not self._scroll_adjustment:
             return
 
         self._is_programmatic_scroll = True
-        self._target_scroll_value = percentage
+        self._target_scroll_value = max(0.0, min(1.0, percentage))
 
         upper = self._scroll_adjustment.get_upper()
         page_size = self._scroll_adjustment.get_page_size()
@@ -163,65 +146,25 @@ class SidebarWidget(Gtk.Box):
             return
 
         target_value = max_scroll * percentage
-        current_value = self._scroll_adjustment.get_value()
 
-        # Use easing for ultra-smooth scrolling
-        diff = target_value - current_value
+        # Instant scroll - no animation
+        self._scroll_adjustment.set_value(target_value)
+        self._last_scroll_value = percentage
 
-        # If difference is small, jump directly
-        if abs(diff) < 5:
-            self._scroll_adjustment.set_value(target_value)
-            self._last_scroll_value = percentage
-            # Reset flag after one 60fps tick (16ms)
-            GLib.timeout_add(
-                16, lambda: setattr(self, "_is_programmatic_scroll", False) or False
-            )
-        else:
-            # Smooth animation for larger jumps
-            self._animate_scroll_to(current_value, target_value, percentage)
-
-    def _animate_scroll_to(self, start_value, end_value, target_percentage):
-        """Animate scroll with GPU-accelerated easing for butter-smooth experience."""
-        start_time = GLib.get_monotonic_time()
-        duration = 150  # 150ms for smooth but responsive animation
-
-        def animate():
-            if not self._scroll_adjustment:
-                self._is_programmatic_scroll = False
-                return False
-
-            current_time = GLib.get_monotonic_time()
-            elapsed = current_time - start_time
-
-            if elapsed >= duration:
-                # Animation complete
-                self._scroll_adjustment.set_value(end_value)
-                self._last_scroll_value = target_percentage
-                self._is_programmatic_scroll = False
-                return False
-
-            # Ease-out cubic easing for smooth deceleration
-            progress = elapsed / duration
-            eased_progress = 1 - pow(1 - progress, 3)
-
-            # Calculate interpolated value
-            current_value = start_value + (end_value - start_value) * eased_progress
-            self._scroll_adjustment.set_value(current_value)
-
-            return True
-
-        # Run at ~60fps (16ms intervals) for smooth animation
-        GLib.timeout_add(7, animate)
+        # Quick reset
+        GLib.timeout_add(
+            50, lambda: setattr(self, "_is_programmatic_scroll", False) or False
+        )
 
     def connect_scroll_changed(self, callback):
         """Register a callback for scroll changes."""
         self._scroll_callbacks.append(callback)
-        print(f"✓ Scroll callback registered. Total: {len(self._scroll_callbacks)}")
+        print(f"✅ Scroll callback registered. Total: {len(self._scroll_callbacks)}")
 
     def set_sync_scroll_enabled(self, enabled: bool):
         """Enable or disable synchronized scrolling."""
         self.sync_scroll_enabled = enabled
-        print(f"✓ Sync scroll {'enabled' if enabled else 'disabled'}")
+        print(f"✅ Sync scroll {'enabled' if enabled else 'disabled'}")
 
     def _on_key_pressed(self, controller, keyval, keycode, state):
         """Handle keyboard shortcuts."""

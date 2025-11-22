@@ -156,49 +156,49 @@ Start editing to see the preview!"""
         GLib.timeout_add_seconds(30, self._auto_save_state)
 
     def _setup_bidirectional_scroll_sync(self):
-        """Setup GPU-accelerated bidirectional scroll synchronization."""
+        """Setup lightweight bidirectional scroll synchronization."""
         # Initialize scroll tracking
         self._last_sidebar_percentage = 0.0
         self._last_webview_percentage = 0.0
         self._scroll_lock = False
 
-        print("🚀Setting up bidirectional scroll sync with GPU acceleration...")
+        print("🚀 Setting up lightweight bidirectional scroll sync...")
 
-        # DIRECTION 1: Sidebar -> WebView (Editor scrolls, Preview follows)
+        # DIRECTION 1: Sidebar → WebView (Editor scrolls, Preview follows)
         def on_sidebar_scroll(percentage):
             if self.sync_scroll_enabled and not self._scroll_lock:
-                # Use smaller threshold for more responsive sync
-                if abs(percentage - self._last_sidebar_percentage) > 0.001:
+                # Larger threshold to reduce updates
+                if abs(percentage - self._last_sidebar_percentage) > 0.005:
                     self._last_sidebar_percentage = percentage
                     self._scroll_lock = True
 
-                    # Scroll webview with GPU acceleration
+                    # Scroll webview
                     self.webview_widget.scroll_to_percentage(percentage)
 
-                    # Quick unlock for smooth continuous scrolling
-                    GLib.timeout_add(20, lambda: setattr(self, "_scroll_lock", False))
+                    # Reset lock
+                    GLib.timeout_add(100, lambda: setattr(self, "_scroll_lock", False))
 
         self.sidebar_widget.connect_scroll_changed(on_sidebar_scroll)
-        print("✓ Sidebar → WebView sync enabled")
+        print("✅ Sidebar → WebView sync enabled")
 
-        # DIRECTION 2: WebView -> Sidebar (Preview scrolls, Editor follows)
+        # DIRECTION 2: WebView → Sidebar (Preview scrolls, Editor follows)
         def on_webview_scroll(percentage):
             if self.sync_scroll_enabled and not self._scroll_lock:
-                # Use smaller threshold for more responsive sync
-                if abs(percentage - self._last_webview_percentage) > 0.001:
+                # Larger threshold to reduce updates
+                if abs(percentage - self._last_webview_percentage) > 0.005:
                     self._last_webview_percentage = percentage
                     self._scroll_lock = True
 
-                    # Scroll sidebar with GPU-accelerated animation
+                    # Scroll sidebar
                     self.sidebar_widget.scroll_to_percentage(percentage)
 
-                    # Quick unlock for smooth continuous scrolling
-                    GLib.timeout_add(20, lambda: setattr(self, "_scroll_lock", False))
+                    # Reset lock
+                    GLib.timeout_add(100, lambda: setattr(self, "_scroll_lock", False))
 
         self.webview_widget.connect_scroll_changed(on_webview_scroll)
-        print("✓ WebView → Sidebar sync enabled")
+        print("✅ WebView → Sidebar sync enabled")
 
-        print("✅ Bidirectional scroll sync setup complete! Both directions active.")
+        print("✨ Lightweight bidirectional scroll sync complete!")
 
     def _on_toggle_sync_scroll(self, button):
         """Toggle scroll synchronization."""
