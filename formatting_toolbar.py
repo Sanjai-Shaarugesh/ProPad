@@ -106,7 +106,7 @@ class FormattingToolbar(Gtk.Popover):
 
     def _insert_code_block(self, button):
         cursor = self.buffer.get_iter_at_mark(self.buffer.get_insert())
-        self.buffer.insert(cursor, "```python\n\n```\n")
+        self.buffer.insert(cursor, "```bash\n\n```\n")
         self.popdown()
 
     def _insert_link(self, button):

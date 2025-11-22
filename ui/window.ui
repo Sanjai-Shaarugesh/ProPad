@@ -41,6 +41,9 @@ corresponding .blp file and regenerate this file with blueprint-compiler.
               <object class="AdwToolbarView">
                 <child type="top">
                   <object class="AdwHeaderBar" id="header_bar">
+                    <style>
+                      <class name="flat"/>
+                    </style>
                     <property name="title-widget">
                       <object class="AdwViewSwitcher">
                         <property name="stack">stack</property>
@@ -60,8 +63,8 @@ corresponding .blp file and regenerate this file with blueprint-compiler.
                     <child>
                       <object class="AdwViewStackPage">
                         <property name="name">webview_page</property>
-                        <property name="title">WebView</property>
-                        <property name="icon-name">globe-symbolic</property>
+                        <property name="title">preview</property>
+                        <property name="icon-name">media-view-subtitles-symbolic</property>
                         <property name="child">
                           <object class="AdwLayoutSlot">
                             <property name="id">mobile-webview-slot</property>
@@ -99,6 +102,9 @@ corresponding .blp file and regenerate this file with blueprint-compiler.
           <object class="AdwToolbarView">
             <child type="top">
               <object class="AdwHeaderBar">
+                <style>
+                  <class name="flat"/>
+                </style>
                 <child type="start">
                   <object class="GtkButton" id="toggle_sidebar_btn">
                     <property name="icon-name">sidebar-show-symbolic</property>

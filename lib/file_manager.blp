@@ -11,6 +11,7 @@ template $FileManagerDialog: Adw.Window {
     orientation: vertical;
 
     Adw.HeaderBar {
+      styles ["flat"]
       [start]
       Gtk.Button btn_new {
         icon-name: "document-new-symbolic";
@@ -37,7 +38,7 @@ template $FileManagerDialog: Adw.Window {
 
       [end]
       Gtk.Button btn_close {
-        icon-name: "window-close-symbolic";
+        icon-name: "view-conceal-symbolic";
         tooltip-text: "Close";
       }
     }

@@ -16,9 +16,12 @@ corresponding .blp file and regenerate this file with blueprint-compiler.
         <property name="orientation">1</property>
         <child>
           <object class="AdwHeaderBar">
+            <style>
+              <class name="flat"/>
+            </style>
             <child type="end">
               <object class="GtkButton" id="btn_close">
-                <property name="icon-name">window-close-symbolic</property>
+                <property name="icon-name">view-conceal-symbolic</property>
                 <property name="tooltip-text">Close</property>
               </object>
             </child>
@@ -55,8 +58,12 @@ corresponding .blp file and regenerate this file with blueprint-compiler.
                         <property name="spacing">8</property>
                         <child>
                           <object class="GtkImage">
-                            <property name="icon-name">text-html-symbolic</property>
+                            <property name="icon-name">text-html</property>
                             <property name="pixel-size">48</property>
+                            <property name="margin-top">20</property>
+                            <property name="margin-bottom">10</property>
+                            <property name="margin-end">20</property>
+                            <property name="margin-start">20</property>
                           </object>
                         </child>
                         <child>
@@ -83,8 +90,12 @@ corresponding .blp file and regenerate this file with blueprint-compiler.
                         <property name="spacing">8</property>
                         <child>
                           <object class="GtkImage">
-                            <property name="icon-name">document-symbolic</property>
+                            <property name="icon-name">x-office-document</property>
                             <property name="pixel-size">48</property>
+                            <property name="margin-top">20</property>
+                            <property name="margin-bottom">10</property>
+                            <property name="margin-end">20</property>
+                            <property name="margin-start">20</property>
                           </object>
                         </child>
                         <child>
@@ -111,8 +122,12 @@ corresponding .blp file and regenerate this file with blueprint-compiler.
                         <property name="spacing">8</property>
                         <child>
                           <object class="GtkImage">
-                            <property name="icon-name">image-x-generic-symbolic</property>
+                            <property name="icon-name">image-x-generic</property>
                             <property name="pixel-size">48</property>
+                            <property name="margin-top">20</property>
+                            <property name="margin-bottom">10</property>
+                            <property name="margin-end">20</property>
+                            <property name="margin-start">20</property>
                           </object>
                         </child>
                         <child>

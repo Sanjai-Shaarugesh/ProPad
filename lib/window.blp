@@ -31,6 +31,7 @@ template $Window: Adw.ApplicationWindow {
       content: Adw.ToolbarView {
         [top]
         Adw.HeaderBar header_bar {
+          styles ["flat"]
           title-widget: Adw.ViewSwitcher {
             stack: stack;
             policy: wide;
@@ -46,8 +47,8 @@ template $Window: Adw.ApplicationWindow {
         content: Adw.ViewStack stack {
           Adw.ViewStackPage {
             name: "webview_page";
-            title: "WebView";
-            icon-name: "globe-symbolic";
+            title: "preview";
+            icon-name: "media-view-subtitles-symbolic";
     
             child: Adw.LayoutSlot {
               id: "mobile-webview-slot";
@@ -79,6 +80,7 @@ template $Window: Adw.ApplicationWindow {
     Adw.ToolbarView {
       [top]
       Adw.HeaderBar {
+        styles ["flat"]
         [start]
         Gtk.Button toggle_sidebar_btn {
           icon-name: "sidebar-show-symbolic";

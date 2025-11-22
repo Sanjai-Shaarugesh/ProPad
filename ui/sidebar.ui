@@ -36,7 +36,7 @@ corresponding .blp file and regenerate this file with blueprint-compiler.
         </child>
         <child>
           <object class="GtkButton" id="hide_webview_btn">
-            <property name="icon-name">window-close-symbolic</property>
+            <property name="icon-name">view-conceal-symbolic</property>
             <property name="tooltip-text">Hide Preview</property>
             <property name="valign">3</property>
             <style>
