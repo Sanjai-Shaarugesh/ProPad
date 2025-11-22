@@ -283,7 +283,7 @@ class ExportDialog(Adw.Window):
                 )
 
     def _on_export_pdf(self, button):
-        """Export as PDF using WebKit print operation."""
+        """Export as PDF using WebKit print operation with GTK print dialog."""
         html_content = self.get_full_html_document_from_webview(for_pdf=True)
 
         if self.parent_window and self.parent_window.current_file:
@@ -294,76 +294,96 @@ class ExportDialog(Adw.Window):
         else:
             export_filename = "document.pdf"
 
-        dialog = Gtk.FileDialog()
-        dialog.set_title("Export as PDF")
-        dialog.set_initial_name(export_filename)
-
-        filter_pdf = Gtk.FileFilter()
-        filter_pdf.set_name("PDF Files")
-        filter_pdf.add_pattern("*.pdf")
-
-        filters = Gio.ListStore.new(Gtk.FileFilter)
-        filters.append(filter_pdf)
-        dialog.set_filters(filters)
+        # Get default output directory (user's home or documents folder)
+        home_dir = os.path.expanduser("~")
+        default_output = os.path.join(home_dir, export_filename)
 
         self._pdf_html_content = html_content
-        dialog.save(self, None, self._on_export_pdf_response)
+        self._pdf_output_path = default_output
 
-    def _on_export_pdf_response(self, dialog, result):
-        """Handle PDF export response."""
-        try:
-            file = dialog.save_finish(result)
-            if file:
-                filepath = file.get_path()
-                self._generate_pdf_with_webkit(filepath, self._pdf_html_content)
-        except Exception as e:
-            if "dismissed" not in str(e).lower():
-                print(f"Error exporting to PDF: {e}")
-                self._show_error_message(
-                    "Export Failed", f"Could not export to PDF: {str(e)}"
-                )
+        # Load HTML and show print dialog
+        self._prepare_pdf_webview()
 
-    def _generate_pdf_with_webkit(self, filepath, html_content):
-        """Generate PDF from HTML using WebKit print operation."""
+    def _prepare_pdf_webview(self):
+        """Prepare WebView for PDF export."""
         webview = WebKit.WebView()
         webview.set_size_request(800, 600)
+        self._pdf_webview = webview
 
         def on_load_finished(web_view, event):
             if event == WebKit.LoadEvent.FINISHED:
-                GLib.timeout_add(3000, lambda: start_print_operation())
-
-        def start_print_operation():
-            try:
-                print_op = WebKit.PrintOperation.new(webview)
-
-                page_setup = Gtk.PageSetup()
-                paper_size = Gtk.PaperSize.new(Gtk.PAPER_NAME_A4)
-                page_setup.set_paper_size(paper_size)
-                page_setup.set_top_margin(15, Gtk.Unit.MM)
-                page_setup.set_bottom_margin(15, Gtk.Unit.MM)
-                page_setup.set_left_margin(15, Gtk.Unit.MM)
-                page_setup.set_right_margin(15, Gtk.Unit.MM)
-
-                print_settings = Gtk.PrintSettings()
-                print_settings.set_printer("Print to File")
-                print_settings.set(Gtk.PRINT_SETTINGS_OUTPUT_URI, f"file://{filepath}")
-
-                print_op.set_page_setup(page_setup)
-                print_op.set_print_settings(print_settings)
-                print_op.print_()
-
-                print(f"Exported to PDF: {filepath}")
-                self._show_success_message(
-                    "PDF Export Successful", f"Document exported to:\n{filepath}"
-                )
-            except Exception as e:
-                print(f"Error during PDF generation: {e}")
-                self._show_error_message(
-                    "Export Failed", f"Could not generate PDF: {str(e)}"
-                )
+                # Wait for JavaScript to render (Mermaid, MathJax)
+                GLib.timeout_add(3000, lambda: self._show_print_dialog())
 
         webview.connect("load-changed", on_load_finished)
-        webview.load_html(html_content, "file:///")
+        webview.load_html(self._pdf_html_content, "file:///")
+
+    def _show_print_dialog(self):
+        """Show the GTK print dialog with preview support."""
+        try:
+            # Create WebKit print operation
+            print_op = WebKit.PrintOperation.new(self._pdf_webview)
+
+            # Set up page setup
+            page_setup = Gtk.PageSetup()
+            paper_size = Gtk.PaperSize.new(Gtk.PAPER_NAME_A4)
+            page_setup.set_paper_size(paper_size)
+            page_setup.set_top_margin(15, Gtk.Unit.MM)
+            page_setup.set_bottom_margin(15, Gtk.Unit.MM)
+            page_setup.set_left_margin(15, Gtk.Unit.MM)
+            page_setup.set_right_margin(15, Gtk.Unit.MM)
+
+            # Set print settings with default file output
+            print_settings = Gtk.PrintSettings()
+            print_settings.set(
+                Gtk.PRINT_SETTINGS_OUTPUT_URI, f"file://{self._pdf_output_path}"
+            )
+            print_settings.set(Gtk.PRINT_SETTINGS_OUTPUT_FILE_FORMAT, "pdf")
+            # Enable preview support
+            print_settings.set_use_color(True)
+            print_settings.set_quality(Gtk.PrintQuality.HIGH)
+
+            print_op.set_page_setup(page_setup)
+            print_op.set_print_settings(print_settings)
+
+            # Connect to signals
+            print_op.connect("finished", self._on_print_finished)
+            print_op.connect("failed", self._on_print_failed)
+
+            # Run with print dialog - Preview button will be available
+            print_op.run_dialog(self)
+
+        except Exception as e:
+            print(f"Error showing print dialog: {e}")
+            self._show_error_message(
+                "Export Failed", f"Could not show print dialog: {str(e)}"
+            )
+
+    def _on_print_finished(self, print_op):
+        """Handle successful print completion."""
+        # Get the actual output path from print settings
+        settings = print_op.get_print_settings()
+        output_uri = settings.get(Gtk.PRINT_SETTINGS_OUTPUT_URI)
+
+        if output_uri and output_uri.startswith("file://"):
+            filepath = output_uri[7:]  # Remove "file://" prefix
+            print(f"Exported to PDF: {filepath}")
+            self._show_success_message(
+                "PDF Export Successful", f"Document exported to:\n{filepath}"
+            )
+        else:
+            print("Print job completed")
+            self._show_success_message(
+                "Print Successful", "Document was printed successfully"
+            )
+
+    def _on_print_failed(self, print_op, error):
+        """Handle print failure."""
+        error_msg = error.message if error else "Unknown error"
+        print(f"Print failed: {error_msg}")
+        self._show_error_message(
+            "Export Failed", f"Could not generate PDF: {error_msg}"
+        )
 
     def _on_export_image(self, button):
         """Export as image (PNG/JPEG/WebP)."""
