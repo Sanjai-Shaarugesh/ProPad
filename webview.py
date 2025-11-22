@@ -301,7 +301,17 @@ class WebViewWidget(Gtk.Box):
         return style_manager.get_dark()
 
     def _process_github_alerts(self, html: str) -> str:
-        """Convert GitHub-style alerts/admonitions to styled divs."""
+        """Convert GitHub-style alerts/admonitions to styled divs with SVG icons."""
+
+        # SVG icons for each alert type (GitHub Octicons)
+        svg_icons = {
+            "NOTE": """<svg viewBox="0 0 16 16" width="16" height="16"><path d="M0 1.75C0 .784.784 0 1.75 0h12.5C15.216 0 16 .784 16 1.75v9.5A1.75 1.75 0 0 1 14.25 13H8.06l-2.573 2.573A1.458 1.458 0 0 1 3 14.543V13H1.75A1.75 1.75 0 0 1 0 11.25Zm1.75-.25a.25.25 0 0 0-.25.25v9.5c0 .138.112.25.25.25h2a.75.75 0 0 1 .75.75v2.19l2.72-2.72a.749.749 0 0 1 .53-.22h6.5a.25.25 0 0 0 .25-.25v-9.5a.25.25 0 0 0-.25-.25Zm7 2.25v2.5a.75.75 0 0 1-1.5 0v-2.5a.75.75 0 0 1 1.5 0ZM9 9a1 1 0 1 1-2 0 1 1 0 0 1 2 0Z"></path></svg>""",
+            "TIP": """<svg viewBox="0 0 16 16" width="16" height="16"><path d="M8 1.5c-2.363 0-4 1.69-4 3.75 0 .984.424 1.625.984 2.304l.214.253c.223.264.47.556.673.848.284.411.537.896.621 1.49a.75.75 0 0 1-1.484.211c-.04-.282-.163-.547-.37-.847a8.456 8.456 0 0 0-.542-.68c-.084-.1-.173-.205-.268-.32C3.201 7.75 2.5 6.766 2.5 5.25 2.5 2.31 4.863 0 8 0s5.5 2.31 5.5 5.25c0 1.516-.701 2.5-1.328 3.259-.095.115-.184.22-.268.319-.207.245-.383.453-.541.681-.208.3-.33.565-.37.847a.751.751 0 0 1-1.485-.212c.084-.593.337-1.078.621-1.489.203-.292.45-.584.673-.848.075-.088.147-.173.213-.253.561-.679.985-1.32.985-2.304 0-2.06-1.637-3.75-4-3.75ZM5.75 12h4.5a.75.75 0 0 1 0 1.5h-4.5a.75.75 0 0 1 0-1.5ZM6 15.25a.75.75 0 0 1 .75-.75h2.5a.75.75 0 0 1 0 1.5h-2.5a.75.75 0 0 1-.75-.75Z"></path></svg>""",
+            "IMPORTANT": """<svg viewBox="0 0 16 16" width="16" height="16"><path d="M0 1.75C0 .784.784 0 1.75 0h12.5C15.216 0 16 .784 16 1.75v9.5A1.75 1.75 0 0 1 14.25 13H8.06l-2.573 2.573A1.458 1.458 0 0 1 3 14.543V13H1.75A1.75 1.75 0 0 1 0 11.25Zm1.75-.25a.25.25 0 0 0-.25.25v9.5c0 .138.112.25.25.25h2a.75.75 0 0 1 .75.75v2.19l2.72-2.72a.749.749 0 0 1 .53-.22h6.5a.25.25 0 0 0 .25-.25v-9.5a.25.25 0 0 0-.25-.25Zm7 2.25v2.5a.75.75 0 0 1-1.5 0v-2.5a.75.75 0 0 1 1.5 0ZM9 9a1 1 0 1 1-2 0 1 1 0 0 1 2 0Z"></path></svg>""",
+            "WARNING": """<svg viewBox="0 0 16 16" width="16" height="16"><path d="M6.457 1.047c.659-1.234 2.427-1.234 3.086 0l6.082 11.378A1.75 1.75 0 0 1 14.082 15H1.918a1.75 1.75 0 0 1-1.543-2.575Zm1.763.707a.25.25 0 0 0-.44 0L1.698 13.132a.25.25 0 0 0 .22.368h12.164a.25.25 0 0 0 .22-.368Zm.53 3.996v2.5a.75.75 0 0 1-1.5 0v-2.5a.75.75 0 0 1 1.5 0ZM9 11a1 1 0 1 1-2 0 1 1 0 0 1 2 0Z"></path></svg>""",
+            "CAUTION": """<svg viewBox="0 0 16 16" width="16" height="16"><path d="M4.47.22A.749.749 0 0 1 5 0h6c.199 0 .389.079.53.22l4.25 4.25c.141.14.22.331.22.53v6a.749.749 0 0 1-.22.53l-4.25 4.25A.749.749 0 0 1 11 16H5a.749.749 0 0 1-.53-.22L.22 11.53A.749.749 0 0 1 0 11V5c0-.199.079-.389.22-.53Zm.84 1.28L1.5 5.31v5.38l3.81 3.81h5.38l3.81-3.81V5.31L10.69 1.5ZM8 4a.75.75 0 0 1 .75.75v3.5a.75.75 0 0 1-1.5 0v-3.5A.75.75 0 0 1 8 4Zm0 8a1 1 0 1 1 0-2 1 1 0 0 1 0 2Z"></path></svg>""",
+        }
+
         alert_pattern = re.compile(
             r"<blockquote>\s*<p>\[!(NOTE|TIP|IMPORTANT|WARNING|CAUTION)\]\s*(.*?)</p>(.*?)</blockquote>",
             re.DOTALL | re.IGNORECASE,
@@ -314,7 +324,18 @@ class WebViewWidget(Gtk.Box):
             full_content = first_line
             if rest_content:
                 full_content += rest_content
-            return f'<div class="alert alert-{alert_type.lower()}" data-alert-type="{alert_type}">{full_content}</div>'
+
+            # Get the appropriate SVG icon
+            icon_svg = svg_icons.get(alert_type, svg_icons["NOTE"])
+
+            # Create the alert div with icon and title (GitHub style)
+            return f"""<div class="alert alert-{alert_type.lower()}">
+        <div class="alert-title">
+            {icon_svg}
+            <span class="alert-title-text">{alert_type.title()}</span>
+        </div>
+        <div class="alert-content">{full_content}</div>
+    </div>"""
 
         return alert_pattern.sub(replace_alert, html)
 
@@ -426,43 +447,51 @@ class WebViewWidget(Gtk.Box):
                 border_color = "#333333" if is_dark else "#e1e4e8"
                 mermaid_theme = "dark" if is_dark else "default"
 
-                # Alert colors
+                # Replace the alert color section in your load_html method with these exact GitHub colors:
+
+                # Alert colors (GitHub's exact colors)
                 if is_dark:
-                    note_bg, note_border, note_icon = "#1f2937", "#3b82f6", "#3b82f6"
-                    tip_bg, tip_border, tip_icon = "#1e3a2e", "#10b981", "#10b981"
-                    important_bg, important_border, important_icon = (
-                        "#3a2e42",
-                        "#a855f7",
-                        "#a855f7",
-                    )
-                    warning_bg, warning_border, warning_icon = (
-                        "#3a2e1e",
-                        "#f59e0b",
-                        "#f59e0b",
-                    )
-                    caution_bg, caution_border, caution_icon = (
-                        "#3a1e1e",
-                        "#ef4444",
-                        "#ef4444",
-                    )
+                    # Dark mode - GitHub colors
+                    note_bg = "#1f6feb1a"  # Blue with transparency
+                    note_border = "#2f81f7"
+                    note_icon = "#2f81f7"
+
+                    tip_bg = "#3fb9501a"  # Green with transparency
+                    tip_border = "#3fb950"
+                    tip_icon = "#3fb950"
+
+                    important_bg = "#a371f71a"  # Purple with transparency
+                    important_border = "#a371f7"
+                    important_icon = "#a371f7"
+
+                    warning_bg = "#d29922ia"  # Orange with transparency
+                    warning_border = "#d29922"
+                    warning_icon = "#d29922"
+
+                    caution_bg = "#f851301a"  # Red with transparency
+                    caution_border = "#f85149"
+                    caution_icon = "#f85149"
                 else:
-                    note_bg, note_border, note_icon = "#dbeafe", "#3b82f6", "#1e40af"
-                    tip_bg, tip_border, tip_icon = "#d1fae5", "#10b981", "#065f46"
-                    important_bg, important_border, important_icon = (
-                        "#f3e8ff",
-                        "#a855f7",
-                        "#6b21a8",
-                    )
-                    warning_bg, warning_border, warning_icon = (
-                        "#fef3c7",
-                        "#f59e0b",
-                        "#92400e",
-                    )
-                    caution_bg, caution_border, caution_icon = (
-                        "#fee2e2",
-                        "#ef4444",
-                        "#991b1b",
-                    )
+                    # Light mode - GitHub colors
+                    note_bg = "#ddf4ff"
+                    note_border = "#0969da"
+                    note_icon = "#0969da"
+
+                    tip_bg = "#dafbe1"
+                    tip_border = "#1a7f37"
+                    tip_icon = "#1a7f37"
+
+                    important_bg = "#f8e3ff"
+                    important_border = "#8250df"
+                    important_icon = "#8250df"
+
+                    warning_bg = "#fff8c5"
+                    warning_border = "#9a6700"
+                    warning_icon = "#9a6700"
+
+                    caution_bg = "#ffebe9"
+                    caution_border = "#cf222e"
+                    caution_icon = "#cf222e"
 
                 # Build HTML with theme
                 css_with_theme = (

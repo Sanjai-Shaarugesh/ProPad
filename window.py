@@ -414,7 +414,7 @@ Start editing to see the preview!"""
             else:
                 self.mobile_webview_container.set_visible(True)
 
-            self.sidebar_widget.hide_webview_btn.set_icon_name("view-conceal-symbolic")
+            self.sidebar_widget.hide_webview_btn.set_icon_name("window-close-symbolic")
             self.sidebar_widget.hide_webview_btn.set_tooltip_text("Hide Preview")
 
     def _auto_save_state(self):
@@ -509,7 +509,7 @@ Start editing to see the preview!"""
             else:
                 self.mobile_webview_container.set_visible(True)
 
-            self.sidebar_widget.hide_webview_btn.set_icon_name("view-conceal-symbolic")
+            self.sidebar_widget.hide_webview_btn.set_icon_name("window-close-symbolic")
             self.sidebar_widget.hide_webview_btn.set_tooltip_text("Hide Preview")
 
         self.state_manager.save_webview_hidden(self.webview_hidden)
