@@ -7,7 +7,7 @@ corresponding .blp file and regenerate this file with blueprint-compiler.
 <interface>
   <requires lib="gtk" version="4.0"/>
   <template class="Window" parent="AdwApplicationWindow">
-    <property name="title">propad</property>
+    <property name="title">ProPad</property>
     <property name="default-width">853</property>
     <property name="default-height">634</property>
     <property name="content">
@@ -104,6 +104,27 @@ corresponding .blp file and regenerate this file with blueprint-compiler.
                     <property name="tooltip-text">Toggle Sidebar</property>
                   </object>
                 </child>
+                <child type="start">
+                  <object class="GtkButton" id="btn_new">
+                    <property name="icon-name">document-new-symbolic</property>
+                    <property name="tooltip-text">New File (Ctrl+N)</property>
+                    <property name="action-name">win.new-file</property>
+                  </object>
+                </child>
+                <child type="start">
+                  <object class="GtkButton" id="btn_open">
+                    <property name="icon-name">document-open-symbolic</property>
+                    <property name="tooltip-text">Open File (Ctrl+O)</property>
+                    <property name="action-name">win.open-file</property>
+                  </object>
+                </child>
+                <child type="start">
+                  <object class="GtkButton" id="btn_save">
+                    <property name="icon-name">document-save-symbolic</property>
+                    <property name="tooltip-text">Save (Ctrl+S)</property>
+                    <property name="action-name">win.save-file</property>
+                  </object>
+                </child>
                 <child type="end">
                   <object class="GtkMenuButton" id="menu_btn">
                     <property name="icon-name">open-menu-symbolic</property>
@@ -151,6 +172,24 @@ corresponding .blp file and regenerate this file with blueprint-compiler.
     </child>
   </template>
   <menu id="main_menu">
+    <section>
+      <item>
+        <attribute name="label">New File</attribute>
+        <attribute name="action">win.new-file</attribute>
+      </item>
+      <item>
+        <attribute name="label">Open File...</attribute>
+        <attribute name="action">win.open-file</attribute>
+      </item>
+      <item>
+        <attribute name="label">Save</attribute>
+        <attribute name="action">win.save-file</attribute>
+      </item>
+      <item>
+        <attribute name="label">Save As...</attribute>
+        <attribute name="action">win.save-as</attribute>
+      </item>
+    </section>
     <section>
       <item>
         <attribute name="label">File Manager</attribute>

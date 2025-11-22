@@ -1,3 +1,5 @@
+#!/usr/bin/env python3
+
 import gi
 import sys
 
@@ -38,6 +40,12 @@ class PropadApplication(Adw.Application):
         quit_action.connect("activate", lambda *args: self.quit())
         self.add_action(quit_action)
         self.set_accels_for_action("app.quit", ["<Ctrl>Q"])
+
+        # File operations (window-level actions)
+        self.set_accels_for_action("win.new-file", ["<Ctrl>N"])
+        self.set_accels_for_action("win.open-file", ["<Ctrl>O"])
+        self.set_accels_for_action("win.save-file", ["<Ctrl>S"])
+        self.set_accels_for_action("win.save-as", ["<Ctrl><Shift>S"])
 
         # File Manager action - delegates to window
         file_manager_action = Gio.SimpleAction.new("file-manager", None)

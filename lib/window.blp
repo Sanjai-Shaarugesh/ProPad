@@ -2,7 +2,7 @@ using Gtk 4.0;
 using Adw 1;
 
 template $Window: Adw.ApplicationWindow {
-  title: "propad";
+  title: "ProPad";
   default-width: 853;
   default-height: 634;
   
@@ -84,6 +84,27 @@ template $Window: Adw.ApplicationWindow {
           tooltip-text: "Toggle Sidebar";
         }
 
+        [start]
+        Gtk.Button btn_new {
+          icon-name: "document-new-symbolic";
+          tooltip-text: "New File (Ctrl+N)";
+          action-name: "win.new-file";
+        }
+
+        [start]
+        Gtk.Button btn_open {
+          icon-name: "document-open-symbolic";
+          tooltip-text: "Open File (Ctrl+O)";
+          action-name: "win.open-file";
+        }
+
+        [start]
+        Gtk.Button btn_save {
+          icon-name: "document-save-symbolic";
+          tooltip-text: "Save (Ctrl+S)";
+          action-name: "win.save-file";
+        }
+
         [end]
         Gtk.MenuButton menu_btn {
           icon-name: "open-menu-symbolic";
@@ -129,6 +150,28 @@ template $Window: Adw.ApplicationWindow {
 }
 
 menu main_menu {
+  section {
+    item {
+      label: "New File";
+      action: "win.new-file";
+    }
+
+    item {
+      label: "Open File...";
+      action: "win.open-file";
+    }
+
+    item {
+      label: "Save";
+      action: "win.save-file";
+    }
+
+    item {
+      label: "Save As...";
+      action: "win.save-as";
+    }
+  }
+
   section {
     item {
       label: "File Manager";
