@@ -108,11 +108,45 @@ class FileManagerDialog(Adw.Window):
 
     def _on_new_clicked(self, button):
         """Create a new file."""
-        # Ask to save current file if modified
+        # Check if current content should be saved
+        if self.parent_window and self.parent_window.content_modified:
+            dialog = Adw.MessageDialog(
+                transient_for=self,
+                heading="Save Changes?",
+                body="The document has unsaved changes. Do you want to save them?",
+            )
+            dialog.add_response("discard", "Discard")
+            dialog.add_response("cancel", "Cancel")
+            dialog.add_response("save", "Save")
+            dialog.set_response_appearance("save", Adw.ResponseAppearance.SUGGESTED)
+            dialog.set_response_appearance(
+                "discard", Adw.ResponseAppearance.DESTRUCTIVE
+            )
+
+            dialog.connect("response", self._on_new_save_response)
+            dialog.present()
+        else:
+            self._create_new_file()
+
+    def _on_new_save_response(self, dialog, response):
+        """Handle save response for new file."""
+        if response == "save":
+            if self.current_file:
+                self.save_file(self.current_file)
+                self._create_new_file()
+            else:
+                self._on_save_as_clicked(None)
+        elif response == "discard":
+            self._create_new_file()
+        # Cancel does nothing
+
+    def _create_new_file(self):
+        """Create a new empty file."""
         if self.parent_window:
             sidebar = self.parent_window.get_sidebar()
             sidebar.clear()
             self.current_file = None
+            self.parent_window.set_current_file(None)
             self.entry_current_file.set_text("Untitled.md")
 
     def _on_open_clicked(self, button):
@@ -125,6 +159,7 @@ class FileManagerDialog(Adw.Window):
         filter_md.set_name("Markdown Files")
         filter_md.add_pattern("*.md")
         filter_md.add_pattern("*.markdown")
+        filter_md.add_pattern("*.txt")
 
         filter_all = Gtk.FileFilter()
         filter_all.set_name("All Files")
@@ -134,6 +169,17 @@ class FileManagerDialog(Adw.Window):
         filters.append(filter_md)
         filters.append(filter_all)
         dialog.set_filters(filters)
+
+        # Set initial folder to user's documents if available
+        try:
+            documents_path = GLib.get_user_special_dir(
+                GLib.UserDirectory.DIRECTORY_DOCUMENTS
+            )
+            if documents_path and os.path.exists(documents_path):
+                initial_folder = Gio.File.new_for_path(documents_path)
+                dialog.set_initial_folder(initial_folder)
+        except:
+            pass
 
         dialog.open(self, None, self._on_open_response)
 
@@ -145,7 +191,9 @@ class FileManagerDialog(Adw.Window):
                 filepath = file.get_path()
                 self.load_file(filepath)
         except Exception as e:
-            print(f"Error opening file: {e}")
+            if "dismissed" not in str(e).lower():
+                print(f"Error opening file: {e}")
+                self._show_error_dialog("Open Error", f"Could not open file: {str(e)}")
 
     def load_file(self, filepath):
         """Load file content."""
@@ -156,13 +204,17 @@ class FileManagerDialog(Adw.Window):
             if self.parent_window:
                 sidebar = self.parent_window.get_sidebar()
                 sidebar.set_text(content)
+                self.parent_window.set_current_file(filepath)
 
             self.current_file = filepath
             self.entry_current_file.set_text(filepath)
             self.add_to_recent(filepath)
 
+            print(f"File loaded: {filepath}")
+
         except Exception as e:
             print(f"Error loading file: {e}")
+            self._show_error_dialog("Load Error", f"Could not load file: {str(e)}")
 
     def _on_save_clicked(self, button):
         """Save current file."""
@@ -175,7 +227,29 @@ class FileManagerDialog(Adw.Window):
         """Save as dialog."""
         dialog = Gtk.FileDialog()
         dialog.set_title("Save Markdown File")
-        dialog.set_initial_name("untitled.md")
+
+        # Set initial name based on current file or default
+        if self.current_file:
+            initial_name = os.path.basename(self.current_file)
+        else:
+            initial_name = "untitled.md"
+
+        dialog.set_initial_name(initial_name)
+
+        # Set initial folder
+        try:
+            if self.current_file:
+                folder_path = os.path.dirname(self.current_file)
+            else:
+                folder_path = GLib.get_user_special_dir(
+                    GLib.UserDirectory.DIRECTORY_DOCUMENTS
+                )
+
+            if folder_path and os.path.exists(folder_path):
+                initial_folder = Gio.File.new_for_path(folder_path)
+                dialog.set_initial_folder(initial_folder)
+        except:
+            pass
 
         dialog.save(self, None, self._on_save_as_response)
 
@@ -185,9 +259,16 @@ class FileManagerDialog(Adw.Window):
             file = dialog.save_finish(result)
             if file:
                 filepath = file.get_path()
+
+                # Add .md extension if not present
+                if not filepath.endswith((".md", ".markdown", ".txt")):
+                    filepath += ".md"
+
                 self.save_file(filepath)
         except Exception as e:
-            print(f"Error saving file: {e}")
+            if "dismissed" not in str(e).lower():
+                print(f"Error saving file: {e}")
+                self._show_error_dialog("Save Error", f"Could not save file: {str(e)}")
 
     def save_file(self, filepath):
         """Save file content."""
@@ -200,12 +281,17 @@ class FileManagerDialog(Adw.Window):
                     f.write(content)
 
                 self.current_file = filepath
+                self.parent_window.set_current_file(filepath)
+                self.parent_window.mark_content_modified(False)
                 self.entry_current_file.set_text(filepath)
                 self.add_to_recent(filepath)
 
                 print(f"File saved: {filepath}")
+                self._show_toast(f"Saved: {os.path.basename(filepath)}")
+
         except Exception as e:
             print(f"Error saving file: {e}")
+            self._show_error_dialog("Save Error", f"Could not save file: {str(e)}")
 
     def _on_recent_activated(self, listbox, row):
         """Handle recent file activation."""
@@ -215,6 +301,21 @@ class FileManagerDialog(Adw.Window):
     def _on_close_clicked(self, button):
         """Close dialog."""
         self.close()
+
+    def _show_error_dialog(self, heading, body):
+        """Show error dialog."""
+        dialog = Adw.MessageDialog(
+            transient_for=self,
+            heading=heading,
+            body=body,
+        )
+        dialog.add_response("ok", "OK")
+        dialog.present()
+
+    def _show_toast(self, message):
+        """Show a toast notification."""
+        # For now just print, you can integrate with Adw.Toast if you add ToastOverlay
+        print(f"Toast: {message}")
 
     def get_current_file(self):
         """Get current file path."""
