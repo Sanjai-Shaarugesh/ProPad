@@ -35,7 +35,7 @@ flatpak-deps: flatpak-setup
 
 flatpak-build: flatpak-deps
     echo "Building Flatpak..."
-    flatpak-builder --force-clean build-dir io.github.sanjai.ProPad.yaml
+    flatpak-builder --force-clean --repo=repo build-dir io.github.sanjai.ProPad.yaml
 
 flatpak-run: flatpak-build
     echo "Running Flatpak..."
@@ -55,7 +55,7 @@ flatpak-clean:
 
 flatpak-bundle: flatpak-build
     echo "Creating Flatpak bundle..."
-    flatpak build-bundle ~/.local/share/flatpak/repo ProPad.flatpak io.github.sanjai.ProPad
+    flatpak build-bundle repo ProPad.flatpak io.github.sanjai.ProPad
 
 # Combined workflow
 flatpak-dev: flatpak-install flatpak-run

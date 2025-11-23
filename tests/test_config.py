@@ -20,7 +20,7 @@ class TestConfig(unittest.TestCase):
 
     def test_ui_dir_exists_in_dev(self):
         """Test UI directory exists in development mode."""
-        if not Path("/app/share/my-gtk-app").exists():
+        if not Path("/app/share/ProPad").exists():
             # In development mode
             self.assertTrue(config.UI_DIR.parent.exists())
 

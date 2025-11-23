@@ -16,22 +16,39 @@ class PropadApplication(Adw.Application):
     def __init__(self):
         super().__init__(
             application_id="io.github.sanjai.PropPad",
-            flags=Gio.ApplicationFlags.DEFAULT_FLAGS,
+            flags=Gio.ApplicationFlags.HANDLES_COMMAND_LINE,
         )
-        self.window = None
+        self.windows = []
 
     def do_activate(self):
         """Called when the application is activated."""
-        if not self.window:
-            self.window = Window(application=self)
-        self.window.present()
+        # Open a window if none exists
+        if not self.windows:
+            self._open_new_window()
 
     def do_startup(self):
         """Called when the application starts."""
         Adw.Application.do_startup(self)
-
-        # Setup keyboard shortcuts
         self._setup_shortcuts()
+
+    def do_command_line(self, command_line):
+        """Handle command-line arguments."""
+        options = command_line.get_arguments()[1:]  # skip program name
+
+        if "--new-window" in options:
+            self._open_new_window()
+        else:
+            # If no windows exist, open one
+            if not self.windows:
+                self._open_new_window()
+
+        return 0
+
+    def _open_new_window(self):
+        """Open a new application window."""
+        window = Window(application=self)
+        window.present()
+        self.windows.append(window)
 
     def _setup_shortcuts(self):
         """Setup application-wide keyboard shortcuts."""
@@ -47,9 +64,6 @@ class PropadApplication(Adw.Application):
         self.set_accels_for_action("win.save-file", ["<Ctrl>S"])
         self.set_accels_for_action("win.save-as", ["<Ctrl><Shift>S"])
         self.set_accels_for_action("win.toggle-sync-scroll", ["<Ctrl><Alt>S"])
-
-        # App-level shortcuts
-        self.set_accels_for_action("app.quit", ["<Ctrl>Q"])
 
         # File Manager action
         file_manager_action = Gio.SimpleAction.new("file-manager", None)
@@ -89,37 +103,38 @@ class PropadApplication(Adw.Application):
 
     def _on_file_manager(self, action, param):
         """Handle file manager action."""
-        if self.window:
-            self.window._on_file_manager_activate(action, param)
+        for w in self.windows:
+            w._on_file_manager_activate(action, param)
 
     def _on_export(self, action, param):
         """Handle export action."""
-        if self.window:
-            self.window._on_export_activate(action, param)
+        for w in self.windows:
+            w._on_export_activate(action, param)
 
     def _on_find(self, action, param):
         """Handle find action."""
-        if self.window:
-            self.window.sidebar_widget.search_bar.show_search()
+        for w in self.windows:
+            w.sidebar_widget.search_bar.show_search()
 
     def _on_replace(self, action, param):
         """Handle replace action."""
-        if self.window:
-            self.window.sidebar_widget.search_bar.show_replace()
+        for w in self.windows:
+            w.sidebar_widget.search_bar.show_replace()
 
     def _on_shortcuts(self, action, param):
         """Handle shortcuts action."""
-        if self.window:
-            self.window._on_shortcuts_activate(action, param)
+        for w in self.windows:
+            w._on_shortcuts_activate(action, param)
 
     def _on_about(self, action, param):
         """Handle about action."""
-        if self.window:
-            self.window._on_about_activate(action, param)
+        for w in self.windows:
+            w._on_about_activate(action, param)
 
 
 def main():
     """Main entry point."""
+    Adw.init()
     app = PropadApplication()
     return app.run(sys.argv)
 
