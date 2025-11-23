@@ -8,3 +8,26 @@ wheels/
 
 # Virtual environments
 .venv
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+.venv/
+venv/
+
+# Compiled UI files
+ui/*.ui
+
+# Flatpak
+build-dir/
+.flatpak-builder/
+*.flatpak
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo

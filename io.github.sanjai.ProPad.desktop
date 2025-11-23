@@ -1,0 +1,33 @@
+[Desktop Entry]
+Type=Application
+Version=1.0
+Name=ProPad
+GenericName=ProPad
+Comment=A modern GTK application with rich text editing
+# Translatable fields
+Comment[es]=Una aplicación GTK moderna con edición de texto enriquecido
+Comment[fr]=Une application GTK moderne avec édition de texte enrichi
+
+# Execution - CHANGED from ProPad to propad (Case Sensitive!)
+Exec=propad %F
+Icon=io.github.sanjai.ProPad
+Terminal=false
+StartupNotify=true
+StartupWMClass=io.github.sanjai.ProPad
+
+# Categories (see freedesktop.org menu spec)
+Categories=GTK;GNOME;Utility;TextEditor;
+Keywords=editor;text;notes;markdown;
+Keywords[es]=editor;texto;notas;markdown;
+Keywords[fr]=éditeur;texte;notes;markdown;
+
+# MIME types this app can handle
+MimeType=text/plain;text/markdown;text/html;
+
+# Actions (optional - right-click menu items)
+Actions=NewWindow;
+
+[Desktop Action NewWindow]
+Name=New Window
+# Execution - CHANGED from ProPad to propad
+Exec=/usr/bin/flatpak run --branch=master --arch=x86_64 --command=propad io.github.sanjai.ProPad --new-window
