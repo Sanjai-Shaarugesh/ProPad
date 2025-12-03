@@ -1,0 +1,520 @@
+# Japanese translations for propad package.
+msgid ""
+msgstr ""
+"Project-Id-Version: propad 2.0.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2025-11-30 22:55+0530\n"
+"PO-Revision-Date: 2025-12-02 00:00+0900\n"
+"Last-Translator: Complete Translation\n"
+"Language-Team: Japanese <ja@li.org>\n"
+"Language: ja\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+# Window and Basic UI
+msgid "ProPad"
+msgstr "ProPad"
+
+msgid "Editor"
+msgstr "エディタ"
+
+msgid "Preview"
+msgstr "プレビュー"
+
+msgid "New Window"
+msgstr "新しいウィンドウ"
+
+msgid "New File"
+msgstr "新規ファイル"
+
+msgid "Open File"
+msgstr "ファイルを開く"
+
+msgid "Open File..."
+msgstr "ファイルを開く..."
+
+msgid "Save"
+msgstr "保存"
+
+msgid "Save File"
+msgstr "ファイルを保存"
+
+msgid "Save As"
+msgstr "名前を付けて保存"
+
+msgid "Save As..."
+msgstr "名前を付けて保存..."
+
+msgid "File Manager"
+msgstr "ファイルマネージャー"
+
+msgid "Export"
+msgstr "エクスポート"
+
+msgid "Export..."
+msgstr "エクスポート..."
+
+msgid "Find"
+msgstr "検索"
+
+msgid "Replace"
+msgstr "置換"
+
+msgid "Toggle Scroll Sync"
+msgstr "スクロール同期の切り替え"
+
+msgid "Toggle Sidebar"
+msgstr "サイドバーの切り替え"
+
+msgid "Keyboard Shortcuts"
+msgstr "キーボードショートカット"
+
+msgid "About ProPad"
+msgstr "ProPadについて"
+
+msgid "Quit"
+msgstr "終了"
+
+# File operations
+msgid "All Files"
+msgstr "すべてのファイル"
+
+msgid "Markdown Files"
+msgstr "Markdownファイル"
+
+msgid "Open Markdown File"
+msgstr "Markdownファイルを開く"
+
+msgid "Save Markdown File"
+msgstr "Markdownファイルを保存"
+
+msgid "Untitled"
+msgstr "無題"
+
+msgid "Cancel"
+msgstr "キャンセル"
+
+msgid "Discard"
+msgstr "破棄"
+
+msgid "Close"
+msgstr "閉じる"
+
+# Dialogs
+msgid "Save Changes?"
+msgstr "変更を保存しますか？"
+
+msgid "The document has unsaved changes. Do you want to save them?"
+msgstr "ドキュメントには未保存の変更があります。保存しますか？"
+
+# Features
+msgid "Welcome to ProPad"
+msgstr "ProPadへようこそ"
+
+msgid "Features"
+msgstr "機能"
+
+msgid "Live Preview"
+msgstr "ライブプレビュー"
+
+msgid "with synchronized scrolling"
+msgstr "同期スクロール対応"
+
+msgid "Markdown Tables"
+msgstr "Markdownテーブル"
+
+msgid "support"
+msgstr "サポート"
+
+msgid "Mermaid Diagrams"
+msgstr "Mermaid図"
+
+msgid "rendering"
+msgstr "レンダリング"
+
+msgid "LaTeX Math"
+msgstr "LaTeX数式"
+
+msgid "equations"
+msgstr "方程式"
+
+msgid "GitHub Alerts"
+msgstr "GitHub通知"
+
+msgid "File History"
+msgstr "ファイル履歴"
+
+msgid "with tags"
+msgstr "タグ付き"
+
+msgid "Start editing to see the preview!"
+msgstr "編集を開始してプレビューを表示！"
+
+msgid "This is a GitHub-style note alert!"
+msgstr "これはGitHubスタイルのノート通知です！"
+
+# Sync Scroll
+msgid "Sync Scroll Enabled"
+msgstr "同期スクロール 有効"
+
+msgid "Sync Scroll Disabled"
+msgstr "同期スクロール 無効"
+
+# Preview controls
+msgid "Hide Preview"
+msgstr "プレビューを非表示"
+
+msgid "Show Preview"
+msgstr "プレビューを表示"
+
+# Export
+msgid "Export as HTML"
+msgstr "HTMLとしてエクスポート"
+
+msgid "Export as PDF"
+msgstr "PDFとしてエクスポート"
+
+msgid "Export as Image"
+msgstr "画像としてエクスポート"
+
+msgid "HTML Files"
+msgstr "HTMLファイル"
+
+msgid "Image Files"
+msgstr "画像ファイル"
+
+msgid "Export Document"
+msgstr "ドキュメントをエクスポート"
+
+msgid "Export Format:"
+msgstr "エクスポート形式："
+
+msgid "Export Options:"
+msgstr "エクスポートオプション："
+
+msgid "Include Custom CSS"
+msgstr "カスタムCSSを含める"
+
+msgid "Create Standalone File"
+msgstr "スタンドアロンファイルを作成"
+
+msgid "Image Format:"
+msgstr "画像形式："
+
+msgid "HTML"
+msgstr "HTML"
+
+msgid "PDF"
+msgstr "PDF"
+
+msgid "Image"
+msgstr "画像"
+
+# Formatting toolbar
+msgid "Text Formatting"
+msgstr "テキスト書式"
+
+msgid "Formatting"
+msgstr "書式設定"
+
+msgid "Bold"
+msgstr "太字"
+
+msgid "Bold (Ctrl+B)"
+msgstr "太字 (Ctrl+B)"
+
+msgid "Italic"
+msgstr "斜体"
+
+msgid "Italic (Ctrl+I)"
+msgstr "斜体 (Ctrl+I)"
+
+msgid "Strikethrough"
+msgstr "取り消し線"
+
+msgid "Code"
+msgstr "コード"
+
+msgid "Inline Code"
+msgstr "インラインコード"
+
+msgid "Headings"
+msgstr "見出し"
+
+msgid "Heading 1"
+msgstr "見出し1"
+
+msgid "Heading 2"
+msgstr "見出し2"
+
+msgid "Heading 3"
+msgstr "見出し3"
+
+msgid "Heading 4"
+msgstr "見出し4"
+
+msgid "H1"
+msgstr "H1"
+
+msgid "H2"
+msgstr "H2"
+
+msgid "H3"
+msgstr "H3"
+
+msgid "H4"
+msgstr "H4"
+
+msgid "Lists & Blocks"
+msgstr "リストとブロック"
+
+msgid "Bullet List"
+msgstr "箇条書きリスト"
+
+msgid "Numbered List"
+msgstr "番号付きリスト"
+
+msgid "Block Quote"
+msgstr "引用ブロック"
+
+msgid "Code Block"
+msgstr "コードブロック"
+
+msgid "Insert"
+msgstr "挿入"
+
+msgid "Insert Link"
+msgstr "リンクを挿入"
+
+msgid "Insert Table"
+msgstr "テーブルを挿入"
+
+msgid "Link Text:"
+msgstr "リンクテキスト："
+
+msgid "Click here"
+msgstr "ここをクリック"
+
+msgid "URL:"
+msgstr "URL："
+
+msgid "https://example.com"
+msgstr "https://example.com"
+
+msgid "Select Image"
+msgstr "画像を選択"
+
+msgid "Table"
+msgstr "テーブル"
+
+msgid "Mermaid Diagram"
+msgstr "Mermaid図"
+
+msgid "Rows"
+msgstr "行"
+
+msgid "Cols"
+msgstr "列"
+
+msgid "Rows: 0"
+msgstr "行: 0"
+
+msgid "Cols: 0"
+msgstr "列: 0"
+
+msgid "×"
+msgstr "×"
+
+# Search and Replace
+msgid "Search..."
+msgstr "検索..."
+
+msgid "Replace with..."
+msgstr "置換..."
+
+msgid "Previous Match"
+msgstr "前の一致"
+
+msgid "Next Match"
+msgstr "次の一致"
+
+msgid "Case Sensitive"
+msgstr "大文字と小文字を区別"
+
+msgid "Whole Word"
+msgstr "単語全体"
+
+msgid "Use Regular Expression"
+msgstr "正規表現を使用"
+
+msgid "Replace All"
+msgstr "すべて置換"
+
+msgid "Toggle Replace"
+msgstr "置換の切り替え"
+
+# File Manager
+msgid "Current File:"
+msgstr "現在のファイル："
+
+msgid "No file loaded"
+msgstr "ファイルが読み込まれていません"
+
+msgid "Recent Files:"
+msgstr "最近使用したファイル："
+
+msgid "Clear History"
+msgstr "履歴をクリア"
+
+msgid "Clear History?"
+msgstr "履歴をクリアしますか？"
+
+msgid "This will remove all file history. This action cannot be undone."
+msgstr ""
+"これによりすべてのファイル履歴が削除されます。この操作は元に戻せません。"
+
+msgid "Remove from history"
+msgstr "履歴から削除"
+
+msgid "Created"
+msgstr "作成済み"
+
+msgid "Opened"
+msgstr "開いた"
+
+msgid "Edited"
+msgstr "編集済み"
+
+msgid "Opened {count}x"
+msgstr "{count}回開いた"
+
+# Statistics
+msgid "Words"
+msgstr "単語"
+
+msgid "Letters"
+msgstr "文字"
+
+msgid "Paragraphs"
+msgstr "段落"
+
+# Shortcuts Window
+msgid "File Operations"
+msgstr "ファイル操作"
+
+msgid "Create a new markdown file"
+msgstr "新しいmarkdownファイルを作成"
+
+msgid "Open a new window"
+msgstr "新しいウィンドウを開く"
+
+msgid "Open an existing file"
+msgstr "既存のファイルを開く"
+
+msgid "Save the current file"
+msgstr "現在のファイルを保存"
+
+msgid "Save file with a new name"
+msgstr "新しい名前でファイルを保存"
+
+msgid "Open file manager"
+msgstr "ファイルマネージャーを開く"
+
+msgid "Export document"
+msgstr "ドキュメントをエクスポート"
+
+msgid "Editing"
+msgstr "編集"
+
+msgid "Search in document"
+msgstr "ドキュメント内を検索"
+
+msgid "Find and replace text"
+msgstr "テキストを検索して置換"
+
+msgid "Sync editor and preview scrolling"
+msgstr "エディタとプレビューのスクロールを同期"
+
+msgid "View"
+msgstr "表示"
+
+msgid "Show or hide sidebar"
+msgstr "サイドバーの表示/非表示"
+
+msgid "Application"
+msgstr "アプリケーション"
+
+msgid "Show this help dialog"
+msgstr "このヘルプダイアログを表示"
+
+msgid "About"
+msgstr "について"
+
+msgid "Close all windows and quit"
+msgstr "すべてのウィンドウを閉じて終了"
+
+# #-#-#-#-#  ja.po (propad 2.0.0)  #-#-#-#-#
+# Support / Buy Me a Coffee dialog
+msgid "Support ProPad"
+msgstr "ProPadをサポート"
+
+# Tooltips
+msgid "New File (Ctrl+N)"
+msgstr "新規ファイル (Ctrl+N)"
+
+msgid "Open File (Ctrl+O)"
+msgstr "ファイルを開く (Ctrl+O)"
+
+msgid "Save (Ctrl+S)"
+msgstr "保存 (Ctrl+S)"
+
+msgid "Toggle Scroll Sync (Ctrl+Alt+S)"
+msgstr "スクロール同期の切り替え (Ctrl+Alt+S)"
+
+msgid "Main Menu"
+msgstr "メインメニュー"
+
+# Additional UI elements
+msgid "Tags: Created • Opened • Edited"
+msgstr "タグ: 作成済み • 開いた • 編集済み"
+
+msgid "Find Text"
+msgstr "テキスト検索"
+
+msgid "Find and Replace"
+msgstr "検索と置換"
+
+msgid "If you enjoy using ProPad, consider buying me a coffee!"
+msgstr ""
+"ProPadをお使いいただいて気に入っていただけたら、コーヒー1杯分のサポートをいた"
+"だけると嬉しいです！"
+
+msgid "Your support helps keep the project alive."
+msgstr "皆様のご支援がプロジェクトを存続させます。"
+
+msgid "Scan with your phone or click these buttons to open the link"
+msgstr "携帯電話でスキャンするか、これらのボタンをクリックしてリンクを開きます"
+
+msgid "Open Buy Me a Coffee"
+msgstr "Buy Me a Coffeeを開く"
+
+msgid "<span size='xx-large' weight='bold'>☕ Support ProPad</span>"
+msgstr "<span size='xx-large' weight='bold'>☕ ProPad を支援する</span>"
+
+msgid "☕ Open Buy Me a Coffee"
+msgstr "☕ 「コーヒーを買って」を開く"
+
+msgid ""
+"If you enjoy using ProPad, consider buying me a coffee!\n"
+"Your support helps keep the project alive."
+msgstr ""
+"ProPad の使用を気に入っていただけましたら、私にコーヒーをおごってみてくださ"
+"い！\n"
+"あなたのサポートはプロジェクトを存続させるのに役立ちます。"
+
+msgid "💝 Support Development"
+msgstr "💝 開発をサポートする"
+
+msgid "Link"
+msgstr "リンク"

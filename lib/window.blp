@@ -2,7 +2,7 @@ using Gtk 4.0;
 using Adw 1;
 
 template $Window: Adw.ApplicationWindow {
-  title: "ProPad";
+  title: _("ProPad");
   default-width: 900;
   default-height: 750;
   
@@ -47,7 +47,7 @@ template $Window: Adw.ApplicationWindow {
         content: Adw.ViewStack stack {
           Adw.ViewStackPage {
             name: "webview_page";
-            title: "Preview";
+            title: _("Preview");
             icon-name: "media-view-subtitles-symbolic";
     
             child: Adw.LayoutSlot {
@@ -57,7 +57,7 @@ template $Window: Adw.ApplicationWindow {
     
           Adw.ViewStackPage {
             name: "editor_page";
-            title: "Editor";
+            title: _("Editor");
             icon-name: "document-edit-symbolic";
     
             child: Adw.LayoutSlot {
@@ -84,27 +84,27 @@ template $Window: Adw.ApplicationWindow {
         [start]
         Gtk.Button toggle_sidebar_btn {
           icon-name: "sidebar-show-symbolic";
-          tooltip-text: "Toggle Sidebar";
+          tooltip-text: _("Toggle Sidebar");
         }
 
         [start]
         Gtk.Button btn_new {
           icon-name: "document-new-symbolic";
-          tooltip-text: "New File (Ctrl+N)";
+          tooltip-text: _("New File (Ctrl+N)");
           action-name: "win.new-file";
         }
 
         [start]
         Gtk.Button btn_open {
           icon-name: "document-open-symbolic";
-          tooltip-text: "Open File (Ctrl+O)";
+          tooltip-text: _("Open File (Ctrl+O)");
           action-name: "win.open-file";
         }
 
         [start]
         Gtk.Button btn_save {
           icon-name: "document-save-symbolic";
-          tooltip-text: "Save (Ctrl+S)";
+          tooltip-text: _("Save (Ctrl+S)");
           action-name: "win.save-file";
         }
 
@@ -116,13 +116,13 @@ template $Window: Adw.ApplicationWindow {
         [start]
         Gtk.Button toggle_sync_scroll_btn {
           icon-name: "view-dual-symbolic";
-          tooltip-text: "Toggle Scroll Sync (Ctrl+Alt+S)";
+          tooltip-text: _("Toggle Scroll Sync (Ctrl+Alt+S)");
         }
 
         [end]
         Gtk.MenuButton menu_btn {
           icon-name: "open-menu-symbolic";
-          tooltip-text: "Main Menu";
+          tooltip-text: _("Main Menu");
           menu-model: main_menu;
         }
       }
@@ -166,65 +166,65 @@ template $Window: Adw.ApplicationWindow {
 menu main_menu {
   section {
     item {
-      label: "New File";
+      label: _("New File");
       action: "win.new-file";
     }
 
     item {
-      label: "Open File...";
+      label: _("Open File...");
       action: "win.open-file";
     }
 
     item {
-      label: "Save";
+      label: _("Save");
       action: "win.save-file";
     }
 
     item {
-      label: "Save As...";
+      label: _("Save As...");
       action: "win.save-as";
     }
   }
 
   section {
     item {
-      label: "File Manager";
+      label: _("File Manager");
       action: "app.file-manager";
     }
 
     item {
-      label: "Export...";
+      label: _("Export...");
       action: "app.export";
     }
   }
 
   section {
     item {
-      label: "Find";
+      label: _("Find");
       action: "app.find";
     }
 
     item {
-      label: "Replace";
+      label: _("Replace");
       action: "app.replace";
     }
   }
 
   section {
     item {
-      label: "Toggle Scroll Sync";
+      label: _("Toggle Scroll Sync");
       action: "win.toggle-sync-scroll";
     }
   }
 
   section {
     item {
-      label: "Keyboard Shortcuts";
+      label: _("Keyboard Shortcuts");
       action: "app.shortcuts";
     }
 
     item {
-      label: "About ProPad";
+      label: _("About ProPad");
       action: "app.about";
     }
   }

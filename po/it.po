@@ -1,0 +1,505 @@
+# Italian translations for propad package.
+msgid ""
+msgstr ""
+"Project-Id-Version: propad 2.0.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2025-11-30 22:55+0530\n"
+"PO-Revision-Date: 2025-12-02 00:00+0100\n"
+"Last-Translator: Complete Translation\n"
+"Language-Team: Italian <it@li.org>\n"
+"Language: it\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+# Window and Basic UI
+msgid "ProPad"
+msgstr "ProPad"
+
+msgid "Editor"
+msgstr "Editor"
+
+msgid "Preview"
+msgstr "Anteprima"
+
+msgid "New Window"
+msgstr "Nuova finestra"
+
+msgid "New File"
+msgstr "Nuovo file"
+
+msgid "Open File"
+msgstr "Apri file"
+
+msgid "Open File..."
+msgstr "Apri file..."
+
+msgid "Save"
+msgstr "Salva"
+
+msgid "Save File"
+msgstr "Salva file"
+
+msgid "Save As"
+msgstr "Salva come"
+
+msgid "Save As..."
+msgstr "Salva come..."
+
+msgid "File Manager"
+msgstr "Gestore file"
+
+msgid "Export"
+msgstr "Esporta"
+
+msgid "Export..."
+msgstr "Esporta..."
+
+msgid "Find"
+msgstr "Trova"
+
+msgid "Replace"
+msgstr "Sostituisci"
+
+msgid "Toggle Scroll Sync"
+msgstr "Attiva/disattiva sincronizzazione scorrimento"
+
+msgid "Toggle Sidebar"
+msgstr "Attiva/disattiva barra laterale"
+
+msgid "Keyboard Shortcuts"
+msgstr "Scorciatoie da tastiera"
+
+msgid "About ProPad"
+msgstr "Informazioni su ProPad"
+
+msgid "Quit"
+msgstr "Esci"
+
+# File operations
+msgid "All Files"
+msgstr "Tutti i file"
+
+msgid "Markdown Files"
+msgstr "File Markdown"
+
+msgid "Open Markdown File"
+msgstr "Apri file Markdown"
+
+msgid "Save Markdown File"
+msgstr "Salva file Markdown"
+
+msgid "Untitled"
+msgstr "Senza titolo"
+
+msgid "Cancel"
+msgstr "Annulla"
+
+msgid "Discard"
+msgstr "Ignora"
+
+msgid "Close"
+msgstr "Chiudi"
+
+# Dialogs
+msgid "Save Changes?"
+msgstr "Salvare le modifiche?"
+
+msgid "The document has unsaved changes. Do you want to save them?"
+msgstr "Il documento ha modifiche non salvate. Vuoi salvarle?"
+
+# Features
+msgid "Welcome to ProPad"
+msgstr "Benvenuto in ProPad"
+
+msgid "Features"
+msgstr "Funzionalità"
+
+msgid "Live Preview"
+msgstr "Anteprima in tempo reale"
+
+msgid "with synchronized scrolling"
+msgstr "con scorrimento sincronizzato"
+
+msgid "Markdown Tables"
+msgstr "Tabelle Markdown"
+
+msgid "support"
+msgstr "supporto"
+
+msgid "Mermaid Diagrams"
+msgstr "Diagrammi Mermaid"
+
+msgid "rendering"
+msgstr "renderizzazione"
+
+msgid "LaTeX Math"
+msgstr "Matematica LaTeX"
+
+msgid "equations"
+msgstr "equazioni"
+
+msgid "GitHub Alerts"
+msgstr "Avvisi GitHub"
+
+msgid "File History"
+msgstr "Cronologia file"
+
+msgid "with tags"
+msgstr "con tag"
+
+msgid "Start editing to see the preview!"
+msgstr "Inizia a modificare per vedere l'anteprima!"
+
+msgid "This is a GitHub-style note alert!"
+msgstr "Questo è un avviso di nota in stile GitHub!"
+
+# Sync Scroll
+msgid "Sync Scroll Enabled"
+msgstr "Scorrimento sincronizzato abilitato"
+
+msgid "Sync Scroll Disabled"
+msgstr "Scorrimento sincronizzato disabilitato"
+
+# Preview controls
+msgid "Hide Preview"
+msgstr "Nascondi anteprima"
+
+msgid "Show Preview"
+msgstr "Mostra anteprima"
+
+# Export
+msgid "Export as HTML"
+msgstr "Esporta come HTML"
+
+msgid "Export as PDF"
+msgstr "Esporta come PDF"
+
+msgid "Export as Image"
+msgstr "Esporta come immagine"
+
+msgid "HTML Files"
+msgstr "File HTML"
+
+msgid "Image Files"
+msgstr "File immagine"
+
+msgid "Export Document"
+msgstr "Esporta documento"
+
+msgid "Export Format:"
+msgstr "Formato di esportazione:"
+
+msgid "Export Options:"
+msgstr "Opzioni di esportazione:"
+
+msgid "Include Custom CSS"
+msgstr "Includi CSS personalizzato"
+
+msgid "Create Standalone File"
+msgstr "Crea file autonomo"
+
+msgid "Image Format:"
+msgstr "Formato immagine:"
+
+msgid "HTML"
+msgstr "HTML"
+
+msgid "PDF"
+msgstr "PDF"
+
+msgid "Image"
+msgstr "Immagine"
+
+# Formatting toolbar
+msgid "Text Formatting"
+msgstr "Formattazione testo"
+
+msgid "Formatting"
+msgstr "Formattazione"
+
+msgid "Bold"
+msgstr "Grassetto"
+
+msgid "Bold (Ctrl+B)"
+msgstr "Grassetto (Ctrl+B)"
+
+msgid "Italic"
+msgstr "Corsivo"
+
+msgid "Italic (Ctrl+I)"
+msgstr "Corsivo (Ctrl+I)"
+
+msgid "Strikethrough"
+msgstr "Barrato"
+
+msgid "Code"
+msgstr "Codice"
+
+msgid "Inline Code"
+msgstr "Codice in linea"
+
+msgid "Headings"
+msgstr "Intestazioni"
+
+msgid "Heading 1"
+msgstr "Intestazione 1"
+
+msgid "Heading 2"
+msgstr "Intestazione 2"
+
+msgid "Heading 3"
+msgstr "Intestazione 3"
+
+msgid "Heading 4"
+msgstr "Intestazione 4"
+
+msgid "H1"
+msgstr "H1"
+
+msgid "H2"
+msgstr "H2"
+
+msgid "H3"
+msgstr "H3"
+
+msgid "H4"
+msgstr "H4"
+
+msgid "Lists & Blocks"
+msgstr "Elenchi e blocchi"
+
+msgid "Bullet List"
+msgstr "Elenco puntato"
+
+msgid "Numbered List"
+msgstr "Elenco numerato"
+
+msgid "Block Quote"
+msgstr "Citazione blocco"
+
+msgid "Code Block"
+msgstr "Blocco di codice"
+
+msgid "Insert"
+msgstr "Inserisci"
+
+msgid "Insert Link"
+msgstr "Inserisci link"
+
+msgid "Insert Table"
+msgstr "Inserisci tabella"
+
+msgid "Link Text:"
+msgstr "Testo del link:"
+
+msgid "Click here"
+msgstr "Clicca qui"
+
+msgid "URL:"
+msgstr "URL:"
+
+msgid "https://example.com"
+msgstr "https://example.com"
+
+msgid "Select Image"
+msgstr "Seleziona immagine"
+
+msgid "Table"
+msgstr "Tabella"
+
+msgid "Mermaid Diagram"
+msgstr "Diagramma Mermaid"
+
+msgid "Rows"
+msgstr "Righe"
+
+msgid "Cols"
+msgstr "Colonne"
+
+msgid "Rows: 0"
+msgstr "Righe: 0"
+
+msgid "Cols: 0"
+msgstr "Colonne: 0"
+
+msgid "×"
+msgstr "×"
+
+# Search and Replace
+msgid "Search..."
+msgstr "Cerca..."
+
+msgid "Replace with..."
+msgstr "Sostituisci con..."
+
+msgid "Previous Match"
+msgstr "Corrispondenza precedente"
+
+msgid "Next Match"
+msgstr "Prossima corrispondenza"
+
+msgid "Case Sensitive"
+msgstr "Maiuscole/minuscole"
+
+msgid "Whole Word"
+msgstr "Parola intera"
+
+msgid "Use Regular Expression"
+msgstr "Usa espressione regolare"
+
+msgid "Replace All"
+msgstr "Sostituisci tutto"
+
+msgid "Toggle Replace"
+msgstr "Attiva/disattiva sostituzione"
+
+# File Manager
+msgid "Current File:"
+msgstr "File corrente:"
+
+msgid "No file loaded"
+msgstr "Nessun file caricato"
+
+msgid "Recent Files:"
+msgstr "File recenti:"
+
+msgid "Clear History"
+msgstr "Cancella cronologia"
+
+msgid "Clear History?"
+msgstr "Cancellare la cronologia?"
+
+msgid "This will remove all file history. This action cannot be undone."
+msgstr ""
+"Questo rimuoverà tutta la cronologia dei file. Questa azione non può essere "
+"annullata."
+
+msgid "Remove from history"
+msgstr "Rimuovi dalla cronologia"
+
+msgid "Created"
+msgstr "Creato"
+
+msgid "Opened"
+msgstr "Aperto"
+
+msgid "Edited"
+msgstr "Modificato"
+
+msgid "Opened {count}x"
+msgstr "Aperto {count} volte"
+
+# Statistics
+msgid "Words"
+msgstr "Parole"
+
+msgid "Letters"
+msgstr "Lettere"
+
+msgid "Paragraphs"
+msgstr "Paragrafi"
+
+# Shortcuts Window
+msgid "File Operations"
+msgstr "Operazioni file"
+
+msgid "Create a new markdown file"
+msgstr "Crea un nuovo file markdown"
+
+msgid "Open a new window"
+msgstr "Apri una nuova finestra"
+
+msgid "Open an existing file"
+msgstr "Apri un file esistente"
+
+msgid "Save the current file"
+msgstr "Salva il file corrente"
+
+msgid "Save file with a new name"
+msgstr "Salva file con un nuovo nome"
+
+msgid "Open file manager"
+msgstr "Apri gestore file"
+
+msgid "Export document"
+msgstr "Esporta documento"
+
+msgid "Editing"
+msgstr "Modifica"
+
+msgid "Search in document"
+msgstr "Cerca nel documento"
+
+msgid "Find and replace text"
+msgstr "Trova e sostituisci testo"
+
+msgid "Sync editor and preview scrolling"
+msgstr "Sincronizza scorrimento editor e anteprima"
+
+msgid "View"
+msgstr "Visualizza"
+
+msgid "Show or hide sidebar"
+msgstr "Mostra o nascondi barra laterale"
+
+msgid "Application"
+msgstr "Applicazione"
+
+msgid "Show this help dialog"
+msgstr "Mostra questa finestra di aiuto"
+
+msgid "About"
+msgstr "Informazioni"
+
+msgid "Close all windows and quit"
+msgstr "Chiudi tutte le finestre ed esci"
+
+msgid "Support ProPad"
+msgstr "Supporta ProPad"
+
+# Tooltips
+msgid "New File (Ctrl+N)"
+msgstr "Nuovo file (Ctrl+N)"
+
+msgid "Open File (Ctrl+O)"
+msgstr "Apri file (Ctrl+O)"
+
+msgid "Save (Ctrl+S)"
+msgstr "Salva (Ctrl+S)"
+
+msgid "Toggle Scroll Sync (Ctrl+Alt+S)"
+msgstr "Attiva/disattiva sincronizzazione scorrimento (Ctrl+Alt+S)"
+
+msgid "Main Menu"
+msgstr "Menu principale"
+
+# Additional UI elements
+msgid "Tags: Created • Opened • Edited"
+msgstr "Tag: Creato • Aperto • Modificato"
+
+msgid "Find Text"
+msgstr "Trova testo"
+
+msgid "Find and Replace"
+msgstr "Trova e sostituisci"
+
+msgid ""
+"If you enjoy using ProPad, consider buying me a coffee!\n"
+"Your support helps keep the project alive."
+msgstr ""
+"Se ti piace usare ProPad, considera di offrirmi un caffè!Il tuo supporto "
+"aiuta a mantenere vivo il progetto."
+
+msgid "Scan with your phone or click these buttons to open the link"
+msgstr ""
+"Scansiona con il tuo telefono o clicca su questi pulsanti per aprire il link"
+
+msgid "Open Buy Me a Coffee"
+msgstr "Apri Buy Me a Coffee"
+
+msgid "<span size='xx-large' weight='bold'>☕ Support ProPad</span>"
+msgstr "<span size='xx-large' weight='bold'>☕ Supporta ProPad</span>"
+
+msgid "☕ Open Buy Me a Coffee"
+msgstr "☕ Apri Buy Me a Coffee"

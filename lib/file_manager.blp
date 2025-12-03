@@ -2,7 +2,7 @@ using Gtk 4.0;
 using Adw 1;
 
 template $FileManagerDialog: Adw.Window {
-  title: "File Manager";
+  title: _("File Manager");
   default-width: 750;
   default-height: 550;
   modal: true;
@@ -15,31 +15,31 @@ template $FileManagerDialog: Adw.Window {
       [start]
       Gtk.Button btn_new {
         icon-name: "document-new-symbolic";
-        tooltip-text: "New File";
+        tooltip-text: _("New File");
       }
 
       [start]
       Gtk.Button btn_open {
         icon-name: "document-open-symbolic";
-        tooltip-text: "Open File";
+        tooltip-text: _("Open File");
       }
 
       [start]
       Gtk.Button btn_save {
         icon-name: "document-save-symbolic";
-        tooltip-text: "Save";
+        tooltip-text: _("Save");
       }
 
       [start]
       Gtk.Button btn_save_as {
         icon-name: "document-save-as-symbolic";
-        tooltip-text: "Save As";
+        tooltip-text: _("Save As");
       }
 
       [end]
       Gtk.Button btn_close {
         icon-name: "view-conceal-symbolic";
-        tooltip-text: "Close";
+        tooltip-text: _("Close");
       }
 
       [end]
@@ -60,13 +60,13 @@ template $FileManagerDialog: Adw.Window {
       spacing: 12;
 
       Gtk.Label {
-        label: "Current File:";
+        label: _("Current File:");
         halign: start;
         styles ["heading"]
       }
 
       Gtk.Entry entry_current_file {
-        placeholder-text: "No file loaded";
+        placeholder-text: _("No file loaded");
         editable: false;
         hexpand: true;
       }
@@ -80,14 +80,14 @@ template $FileManagerDialog: Adw.Window {
         spacing: 8;
 
         Gtk.Label {
-          label: "Recent Files:";
+          label: _("Recent Files:");
           halign: start;
           hexpand: true;
           styles ["heading"]
         }
 
         Gtk.Label {
-          label: "Tags: Created • Opened • Edited";
+          label: _("Tags: Created • Opened • Edited");
           halign: end;
           styles ["dim-label", "caption"]
         }

@@ -1,0 +1,569 @@
+# Malayalam translations for propad package.
+# Complete Native Translation
+msgid ""
+msgstr ""
+"Project-Id-Version: propad 2.0.0\n"
+"Report-Msgid-Bugs-To: your-email@example.com\n"
+"POT-Creation-Date: 2024-12-01 00:00+0000\n"
+"PO-Revision-Date: 2024-12-02 00:00+0530\n"
+"Last-Translator: Complete Translation\n"
+"Language-Team: Malayalam <ml@li.org>\n"
+"Language: ml\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: main.py:100
+msgid "New Window"
+msgstr "പുതിയ വിൻഡോ"
+
+#: main.py:120
+msgid "File Manager"
+msgstr "ഫയൽ മാനേജർ"
+
+#: main.py:130
+msgid "Export"
+msgstr "എക്‌സ്‌പോർട്ട് ചെയ്യുക"
+
+#: main.py:140 src/search_replace.py:100
+msgid "Find"
+msgstr "കണ്ടെത്തുക"
+
+#: main.py:150 src/search_replace.py:110
+msgid "Replace"
+msgstr "മാറ്റിസ്ഥാപിക്കുക"
+
+#: main.py:160
+msgid "Keyboard Shortcuts"
+msgstr "കീബോർഡ് കുറുക്കുവഴികൾ"
+
+#: main.py:170
+msgid "About ProPad"
+msgstr "ProPad-നെക്കുറിച്ച്"
+
+#: src/window.py:200
+msgid "Welcome to ProPad"
+msgstr "ProPad-ലേക്ക് സ്വാഗതം"
+
+#: src/window.py:202
+msgid "Features"
+msgstr "സവിശേഷതകൾ"
+
+#: src/window.py:204
+msgid "Live Preview"
+msgstr "തത്സമയ പ്രിവ്യൂ"
+
+#: src/window.py:204
+msgid "with synchronized scrolling"
+msgstr "സമന്വയിപ്പിച്ച സ്ക്രോളിംഗിനൊപ്പം"
+
+#: src/window.py:205
+msgid "Markdown Tables"
+msgstr "മാർക്ക്ഡൗൺ ടേബിളുകൾ"
+
+#: src/window.py:205
+msgid "support"
+msgstr "പിന്തുണ"
+
+#: src/window.py:206
+msgid "Mermaid Diagrams"
+msgstr "മെർമെയ്ഡ് ഡയഗ്രമുകൾ"
+
+#: src/window.py:206
+msgid "rendering"
+msgstr "റെൻഡറിംഗ്"
+
+#: src/window.py:207
+msgid "LaTeX Math"
+msgstr "LaTeX ഗണിതം"
+
+#: src/window.py:207
+msgid "equations"
+msgstr "സമവാക്യങ്ങൾ"
+
+#: src/window.py:208
+msgid "GitHub Alerts"
+msgstr "GitHub അലേർട്ടുകൾ"
+
+#: src/window.py:209
+msgid "File History"
+msgstr "ഫയൽ ചരിത്രം"
+
+#: src/window.py:209
+msgid "with tags"
+msgstr "ടാഗുകളോടൊപ്പം"
+
+#: src/window.py:212
+msgid "This is a GitHub-style note alert!"
+msgstr "ഇതൊരു GitHub ശൈലിയിലുള്ള നോട്ട് അലേർട്ടാണ്!"
+
+#: src/window.py:214
+msgid "Start editing to see the preview!"
+msgstr "പ്രിവ്യൂ കാണാൻ എഡിറ്റിംഗ് ആരംഭിക്കുക!"
+
+#: src/window.py:300
+msgid "Save Changes?"
+msgstr "മാറ്റങ്ങൾ സംരക്ഷിക്കണോ?"
+
+#: src/window.py:301
+msgid "The document has unsaved changes. Do you want to save them?"
+msgstr "ഡോക്യുമെന്റിൽ സംരക്ഷിക്കാത്ത മാറ്റങ്ങളുണ്ട്. നിങ്ങൾക്കത് സംരക്ഷിക്കണോ?"
+
+#: src/window.py:302
+msgid "Discard"
+msgstr "പുറന്തള്ളുക"
+
+#: src/window.py:303
+msgid "Cancel"
+msgstr "റദ്ദാക്കുക"
+
+#: src/window.py:304
+msgid "Save"
+msgstr "സംരക്ഷിക്കുക"
+
+#: src/window.py:350
+msgid "Open Markdown File"
+msgstr "മാർക്ക്ഡൗൺ ഫയൽ തുറക്കുക"
+
+#: src/window.py:352
+msgid "Markdown Files"
+msgstr "മാർക്ക്ഡൗൺ ഫയലുകൾ"
+
+#: src/window.py:356
+msgid "All Files"
+msgstr "എല്ലാ ഫയലുകളും"
+
+#: src/window.py:400
+msgid "Save Markdown File"
+msgstr "മാർക്ക്ഡൗൺ ഫയൽ സംരക്ഷിക്കുക"
+
+#: src/window.py:450
+msgid "Untitled"
+msgstr "പേരിടാത്തത്"
+
+#: src/window.py:500
+msgid "ProPad"
+msgstr "ProPad"
+
+#: src/window.py:550
+msgid "Sync Scroll Enabled"
+msgstr "സമന്വയ സ്ക്രോൾ പ്രവർത്തനക്ഷമമാക്കി"
+
+#: src/window.py:552
+msgid "Sync Scroll Disabled"
+msgstr "സമന്വയ സ്ക്രോൾ പ്രവർത്തനരഹിതമാക്കി"
+
+#: src/window.py:600
+msgid "Hide Preview"
+msgstr "പ്രിവ്യൂ മറയ്ക്കുക"
+
+#: src/window.py:602
+msgid "Show Preview"
+msgstr "പ്രിവ്യൂ കാണിക്കുക"
+
+#: src/export_dialog.py:100
+msgid "Export as HTML"
+msgstr "HTML ആയി എക്‌സ്‌പോർട്ട് ചെയ്യുക"
+
+#: src/export_dialog.py:110
+msgid "HTML Files"
+msgstr "HTML ഫയലുകൾ"
+
+#: src/export_dialog.py:150
+msgid "HTML Export Successful"
+msgstr "HTML എക്‌സ്‌പോർട്ട് വിജയകരം"
+
+#: src/export_dialog.py:151
+msgid "Document exported to:"
+msgstr "ഡോക്യുമെന്റ് എക്‌സ്‌പോർട്ട് ചെയ്‌ത സ്ഥലം:"
+
+#: src/export_dialog.py:200
+msgid "Export as PDF"
+msgstr "PDF ആയി എക്‌സ്‌പോർട്ട് ചെയ്യുക"
+
+#: src/export_dialog.py:250
+msgid "PDF Export Successful"
+msgstr "PDF എക്‌സ്‌പോർട്ട് വിജയകരം"
+
+#: src/export_dialog.py:300
+msgid "Export as Image"
+msgstr "ഇമേജായി എക്‌സ്‌പോർട്ട് ചെയ്യുക"
+
+#: src/export_dialog.py:310
+msgid "Image Files"
+msgstr "ഇമേജ് ഫയലുകൾ"
+
+#: src/export_dialog.py:350
+msgid "Image Export Successful"
+msgstr "ഇമേജ് എക്‌സ്‌പോർട്ട് വിജയകരം"
+
+#: src/export_dialog.py:400
+msgid "Export Failed"
+msgstr "എക്‌സ്‌പോർട്ട് പരാജയപ്പെട്ടു"
+
+#: src/file_manager.py:100
+msgid "Clear History?"
+msgstr "ചരിത്രം മായ്‌ക്കണോ?"
+
+#: src/file_manager.py:101
+msgid "This will remove all file history. This action cannot be undone."
+msgstr "ഇത് എല്ലാ ഫയൽ ചരിത്രവും നീക്കം ചെയ്യും. ഈ പ്രവർത്തനം പഴയപടിയാക്കാൻ കഴിയില്ല."
+
+#: src/file_manager.py:102
+msgid "Clear History"
+msgstr "ചരിത്രം മായ്‌ക്കുക"
+
+#: src/file_manager.py:150
+msgid "Remove from history"
+msgstr "ചരിത്രത്തിൽ നിന്ന് നീക്കം ചെയ്യുക"
+
+#: src/file_manager.py:200
+msgid "Created"
+msgstr "സൃഷ്ടിച്ചു"
+
+#: src/file_manager.py:201
+msgid "Opened"
+msgstr "തുറന്നു"
+
+#: src/file_manager.py:202
+msgid "Edited"
+msgstr "എഡിറ്റ് ചെയ്തു"
+
+#: src/file_manager.py:250
+msgid "Opened {count}x"
+msgstr "{count} തവണ തുറന്നു"
+
+#: src/formatting_toolbar.py:100
+msgid "Insert Table"
+msgstr "ടേബിൾ ചേർക്കുക"
+
+#: src/formatting_toolbar.py:150
+msgid "Rows"
+msgstr "വരികൾ"
+
+#: src/formatting_toolbar.py:151
+msgid "Cols"
+msgstr "കോളങ്ങൾ"
+
+#: src/formatting_toolbar.py:200 src/shortcuts_window.py:73
+msgid "Insert Link"
+msgstr "ലിങ്ക് ചേർക്കുക"
+
+#: src/formatting_toolbar.py:201
+msgid "Link Text:"
+msgstr "ലിങ്ക് ടെക്സ്റ്റ്:"
+
+#: src/formatting_toolbar.py:202
+msgid "Click here"
+msgstr "ഇവിടെ ക്ലിക്ക് ചെയ്യുക"
+
+#: src/formatting_toolbar.py:203
+msgid "URL:"
+msgstr "യുആർഎൽ:"
+
+#: src/formatting_toolbar.py:250
+msgid "Select Image"
+msgstr "ഇമേജ് തിരഞ്ഞെടുക്കുക"
+
+#: src/search_replace.py:120
+msgid "Replace All"
+msgstr "എല്ലാം മാറ്റിസ്ഥാപിക്കുക"
+
+#: src/sidebar.py:100
+msgid "Words"
+msgstr "വാക്കുകൾ"
+
+#: src/sidebar.py:101
+msgid "Letters"
+msgstr "അക്ഷരങ്ങൾ"
+
+#: src/sidebar.py:102
+msgid "Paragraphs"
+msgstr "ഖണ്ഡികകൾ"
+
+#: src/shortcuts_window.py:50
+msgid "File Operations"
+msgstr "ഫയൽ പ്രവർത്തനങ്ങൾ"
+
+#: src/shortcuts_window.py:51
+msgid "New File"
+msgstr "പുതിയ ഫയൽ"
+
+#: src/shortcuts_window.py:52
+msgid "Open File"
+msgstr "ഫയൽ തുറക്കുക"
+
+#: src/shortcuts_window.py:53
+msgid "Save File"
+msgstr "ഫയൽ സംരക്ഷിക്കുക"
+
+#: src/shortcuts_window.py:54
+msgid "Save As"
+msgstr "മറ്റൊരു പേരിൽ സംരക്ഷിക്കുക"
+
+#: src/shortcuts_window.py:60
+msgid "Text Formatting"
+msgstr "ടെക്സ്റ്റ് ഫോർമാറ്റിംഗ്"
+
+#: src/shortcuts_window.py:61
+msgid "Bold"
+msgstr "ബോൾഡ്"
+
+#: src/shortcuts_window.py:62
+msgid "Italic"
+msgstr "ഇറ്റാലിക്"
+
+#: src/shortcuts_window.py:63
+msgid "Strikethrough"
+msgstr "സ്ട്രൈക്ക്ത്രൂ"
+
+#: src/shortcuts_window.py:64
+msgid "Code"
+msgstr "കോഡ്"
+
+#: src/shortcuts_window.py:70
+msgid "Editing"
+msgstr "എഡിറ്റിംഗ്"
+
+#: src/shortcuts_window.py:71
+msgid "Find Text"
+msgstr "ടെക്സ്റ്റ് കണ്ടെത്തുക"
+
+#: src/shortcuts_window.py:72
+msgid "Find and Replace"
+msgstr "കണ്ടെത്തുക, മാറ്റിസ്ഥാപിക്കുക"
+
+#: src/shortcuts_window.py:80
+msgid "View"
+msgstr "കാണുക"
+
+#: src/shortcuts_window.py:81
+msgid "Toggle Sidebar"
+msgstr "സൈഡ്ബാർ ടോഗിൾ ചെയ്യുക"
+
+#: src/shortcuts_window.py:82
+msgid "Toggle Sync Scroll"
+msgstr "സമന്വയ സ്ക്രോൾ ടോഗിൾ ചെയ്യുക"
+
+#: src/shortcuts_window.py:83
+msgid "Show Shortcuts"
+msgstr "കുറുക്കുവഴികൾ കാണിക്കുക"
+
+msgid "About"
+msgstr "കുറിച്ച്"
+
+msgid "Application"
+msgstr "ആപ്ലിക്കേഷൻ"
+
+msgid "Block Quote"
+msgstr "ബ്ലോക്ക് ഉദ്ധരണി"
+
+msgid "Bold (Ctrl+B)"
+msgstr "ബോൾഡ് (Ctrl+B)"
+
+msgid "Bullet List"
+msgstr "ബുള്ളറ്റ് ലിസ്റ്റ്"
+
+msgid "Case Sensitive"
+msgstr "കേസ് സെൻസിറ്റീവ്"
+
+msgid "Close"
+msgstr "അടയ്ക്കുക"
+
+msgid "Close all windows and quit"
+msgstr "എല്ലാ വിൻഡോകളും അടച്ച് പുറത്തുകടക്കുക"
+
+msgid "Code Block"
+msgstr "കോഡ് ബ്ലോക്ക്"
+
+msgid "Cols: 0"
+msgstr "കോളങ്ങൾ: 0"
+
+msgid "Create Standalone File"
+msgstr "ഒറ്റയ്‌ക്ക് നിൽക്കുന്ന ഫയൽ സൃഷ്ടിക്കുക"
+
+msgid "Create a new markdown file"
+msgstr "ഒരു പുതിയ മാർക്ക്ഡൗൺ ഫയൽ സൃഷ്ടിക്കുക"
+
+msgid "Current File:"
+msgstr "നിലവിലെ ഫയൽ:"
+
+msgid "Editor"
+msgstr "എഡിറ്റർ"
+
+msgid "Export Document"
+msgstr "ഡോക്യുമെന്റ് എക്‌സ്‌പോർട്ട് ചെയ്യുക"
+
+msgid "Export Format:"
+msgstr "എക്‌സ്‌പോർട്ട് ഫോർമാറ്റ്:"
+
+msgid "Export Options:"
+msgstr "എക്‌സ്‌പോർട്ട് ഓപ്ഷനുകൾ:"
+
+msgid "Export document"
+msgstr "ഡോക്യുമെന്റ് എക്‌സ്‌പോർട്ട് ചെയ്യുക"
+
+msgid "Export..."
+msgstr "എക്‌സ്‌പോർട്ട്..."
+
+msgid "Find and replace text"
+msgstr "ടെക്സ്റ്റ് കണ്ടെത്തി മാറ്റിസ്ഥാപിക്കുക"
+
+msgid "Formatting"
+msgstr "ഫോർമാറ്റിംഗ്"
+
+msgid "H1"
+msgstr "H1"
+
+msgid "H2"
+msgstr "H2"
+
+msgid "H3"
+msgstr "H3"
+
+msgid "H4"
+msgstr "H4"
+
+msgid "HTML"
+msgstr "HTML"
+
+msgid "Heading 1"
+msgstr "ശീർഷകം 1"
+
+msgid "Heading 2"
+msgstr "ശീർഷകം 2"
+
+msgid "Heading 3"
+msgstr "ശീർഷകം 3"
+
+msgid "Heading 4"
+msgstr "ശീർഷകം 4"
+
+msgid "Headings"
+msgstr "ശീർഷകങ്ങൾ"
+
+msgid "Image"
+msgstr "ഇമേജ്"
+
+msgid "Image Format:"
+msgstr "ഇമേജ് ഫോർമാറ്റ്:"
+
+msgid "Include Custom CSS"
+msgstr "കസ്റ്റം CSS ഉൾപ്പെടുത്തുക"
+
+msgid "Inline Code"
+msgstr "ഇൻലൈൻ കോഡ്"
+
+msgid "Insert"
+msgstr "ചേർക്കുക"
+
+msgid "Italic (Ctrl+I)"
+msgstr "ഇറ്റാലിക് (Ctrl+I)"
+
+msgid "Lists & Blocks"
+msgstr "ലിസ്റ്റുകളും ബ്ലോക്കുകളും"
+
+msgid "Main Menu"
+msgstr "പ്രധാന മെനു"
+
+msgid "Mermaid Diagram"
+msgstr "മെർമെയ്ഡ് ഡയഗ്രം"
+
+msgid "New File (Ctrl+N)"
+msgstr "പുതിയ ഫയൽ (Ctrl+N)"
+
+msgid "Next Match"
+msgstr "അടുത്ത പൊരുത്തം"
+
+msgid "No file loaded"
+msgstr "ഫയൽ ലോഡ് ചെയ്തിട്ടില്ല"
+
+msgid "Numbered List"
+msgstr "നമ്പർ ലിസ്റ്റ്"
+
+msgid "Open File (Ctrl+O)"
+msgstr "ഫയൽ തുറക്കുക (Ctrl+O)"
+
+msgid "Open File..."
+msgstr "ഫയൽ തുറക്കുക..."
+
+msgid "Open a new window"
+msgstr "ഒരു പുതിയ വിൻഡോ തുറക്കുക"
+
+msgid "Open an existing file"
+msgstr "നിലവിലുള്ള ഒരു ഫയൽ തുറക്കുക"
+
+msgid "Open file manager"
+msgstr "ഫയൽ മാനേജർ തുറക്കുക"
+
+msgid "PDF"
+msgstr "PDF"
+
+msgid "Preview"
+msgstr "പ്രിവ്യൂ"
+
+msgid "Previous Match"
+msgstr "മുമ്പത്തെ പൊരുത്തം"
+
+msgid "Quit"
+msgstr "പുറത്തുകടക്കുക"
+
+msgid "Recent Files:"
+msgstr "സമീപകാല ഫയലുകൾ:"
+
+msgid "Replace with..."
+msgstr "മാറ്റിസ്ഥാപിക്കുക..."
+
+msgid "Rows: 0"
+msgstr "വരികൾ: 0"
+
+msgid "Save (Ctrl+S)"
+msgstr "സംരക്ഷിക്കുക (Ctrl+S)"
+
+msgid "Save As..."
+msgstr "മറ്റൊരു പേരിൽ സംരക്ഷിക്കുക..."
+
+msgid "Save file with a new name"
+msgstr "പുതിയ പേരിൽ ഫയൽ സംരക്ഷിക്കുക"
+
+msgid "Save the current file"
+msgstr "നിലവിലെ ഫയൽ സംരക്ഷിക്കുക"
+
+msgid "Search in document"
+msgstr "ഡോക്യുമെന്റിൽ തിരയുക"
+
+msgid "Search..."
+msgstr "തിരയുക..."
+
+msgid "Show or hide sidebar"
+msgstr "സൈഡ്ബാർ കാണിക്കുക അല്ലെങ്കിൽ മറയ്ക്കുക"
+
+msgid "Show this help dialog"
+msgstr "ഈ സഹായ ഡയലോഗ് കാണിക്കുക"
+
+msgid "Support ProPad"
+msgstr "ProPad-നെ പിന്തുണയ്ക്കുക"
+
+msgid "Sync editor and preview scrolling"
+msgstr "എഡിറ്ററും പ്രിവ്യൂ സ്ക്രോളിംഗും സമന്വയിപ്പിക്കുക"
+
+msgid "Table"
+msgstr "ടേബിൾ"
+
+msgid "Tags: Created • Opened • Edited"
+msgstr "ടാഗുകൾ: സൃഷ്ടിച്ചു • തുറന്നു • എഡിറ്റ് ചെയ്തു"
+
+msgid "Toggle Replace"
+msgstr "മാറ്റിസ്ഥാപിക്കൽ ടോഗിൾ ചെയ്യുക"
+
+msgid "Toggle Scroll Sync"
+msgstr "സ്ക്രോൾ സമന്വയം ടോഗിൾ ചെയ്യുക"
+
+msgid "Toggle Scroll Sync (Ctrl+Alt+S)"
+msgstr "സ്ക്രോൾ സമന്വയം ടോഗിൾ ചെയ്യുക (Ctrl+Alt+S)"
+
+msgid "Use Regular Expression"
+msgstr "റെഗുലർ എക്സ്പ്രഷൻ ഉപയോഗിക്കുക"
+
+msgid "Whole Word"
+msgstr "മുഴുവൻ വാക്ക്"

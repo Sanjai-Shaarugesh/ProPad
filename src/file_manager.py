@@ -139,7 +139,7 @@ class FileManagerDialog(Adw.Window):
         self.btn_new.connect("clicked", self._on_new_clicked)
         self.btn_open.connect("clicked", self._on_open_clicked)
         self.btn_save.connect("clicked", self._on_save_clicked)
-        self.btn_save_as.connect("clicked", self._on_save_as_clicked)
+        self.btn_save_as.connect("clicked", self._on_save_clicked)
         self.btn_close.connect("clicked", self._on_close_clicked)
         self.btn_clear_history.connect("clicked", self._on_clear_history)
         self.listbox_recent.connect("row-activated", self._on_recent_activated)
@@ -235,7 +235,7 @@ class FileManagerDialog(Adw.Window):
 
             # Opened count
             if file_data.get("opened_count", 0) > 0:
-                count_label = Gtk.Label(label=f"Opened {file_data['opened_count']}x")
+                count_label = Gtk.Label(label=f"(Opened) {file_data['opened_count']}x")
                 count_label.add_css_class("dim-label")
                 count_label.add_css_class("caption")
                 tags_box.append(count_label)
@@ -297,16 +297,16 @@ class FileManagerDialog(Adw.Window):
     def _on_open_clicked(self, button):
         """Open file dialog."""
         dialog = Gtk.FileDialog()
-        dialog.set_title("Open Markdown File")
+        dialog.set_title(_("Open Markdown File"))
 
         filter_md = Gtk.FileFilter()
-        filter_md.set_name("Markdown Files")
+        filter_md.set_name(_("Markdown Files"))
         filter_md.add_pattern("*.md")
         filter_md.add_pattern("*.markdown")
         filter_md.add_pattern("*.txt")
 
         filter_all = Gtk.FileFilter()
-        filter_all.set_name("All Files")
+        filter_all.set_name(_("All Files"))
         filter_all.add_pattern("*")
 
         filters = Gio.ListStore.new(Gtk.FileFilter)
@@ -369,32 +369,17 @@ class FileManagerDialog(Adw.Window):
         else:
             self._on_save_as_clicked(button)
 
-    def _on_save_as_clicked(self, button):
+    def _on_save_as(self, action, param):
         """Save as dialog."""
         dialog = Gtk.FileDialog()
-        dialog.set_title("Save Markdown File")
+        dialog.set_title(_("Save Markdown File"))
 
         if self.current_file:
             initial_name = os.path.basename(self.current_file)
         else:
-            initial_name = "untitled.md"
+            initial_name = _("Untitled") + ".md"
 
         dialog.set_initial_name(initial_name)
-
-        try:
-            if self.current_file:
-                folder_path = os.path.dirname(self.current_file)
-            else:
-                folder_path = GLib.get_user_special_dir(
-                    GLib.UserDirectory.DIRECTORY_DOCUMENTS
-                )
-
-            if folder_path and os.path.exists(folder_path):
-                initial_folder = Gio.File.new_for_path(folder_path)
-                dialog.set_initial_folder(initial_folder)
-        except:
-            pass
-
         dialog.save(self, None, self._on_save_as_response)
 
     def _on_save_as_response(self, dialog, result):
@@ -454,7 +439,7 @@ class FileManagerDialog(Adw.Window):
 
     def _show_error_dialog(self, heading, body):
         """Show error dialog."""
-        dialog = Adw.MessageDialog(transient_for=self, heading=heading, body=body)
+        dialog = Adw.MessageDialog(transient_for=self, heading=_(heading), body=_(body))
         dialog.add_response("ok", "OK")
         dialog.present()
 

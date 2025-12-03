@@ -5,7 +5,7 @@ import os
 gi.require_version("Gtk", "4.0")
 gi.require_version("Adw", "1")
 
-from gi.repository import Adw, Gdk , Gtk
+from gi.repository import Adw, Gdk, Gtk
 
 
 CONFIG_DIR = os.path.expanduser("~/.config/propad")
@@ -17,18 +17,18 @@ class StateManager:
 
     def __init__(self):
         self.state = self.load_state()
-        
+
         # Listen to system theme changes
         self.style_manager = Adw.StyleManager.get_default()
         self.style_manager.connect("notify::dark", self._on_theme_changed)
-        
+
         # Apply initial theme
         self._apply_theme(self.is_dark_mode())
-        
+
     def is_dark_mode(self) -> bool:
         """Check if system is in dark mode."""
         return self.style_manager.get_dark()
-    
+
     def _apply_theme(self, dark: bool):
         """Apply dark/light theme to the textview."""
         css_provider = Gtk.CssProvider()
@@ -50,11 +50,10 @@ class StateManager:
         Gtk.StyleContext.add_provider_for_display(
             Gdk.Display.get_default(), css_provider, Gtk.STYLE_PROVIDER_PRIORITY_USER
         )
-    
+
     def _on_theme_changed(self, style_manager, param):
         """Automatically update theme when system changes."""
         self._apply_theme(style_manager.get_dark())
-
 
     def load_state(self):
         """Load application state from file."""
@@ -72,6 +71,7 @@ class StateManager:
             "cursor_position": 0,
             "sidebar_visible": True,
             "webview_hidden": False,
+            "scroll_positions": {"sidebar": 0.0, "webview": 0.0},
         }
 
     def save_state(self):
@@ -139,6 +139,18 @@ class StateManager:
     def save_webview_hidden(self, hidden):
         """Save webview hidden state."""
         self.state["webview_hidden"] = hidden
+        self.save_state()
+
+    def get_scroll_positions(self):
+        """Get saved scroll positions."""
+        return self.state.get("scroll_positions", {"sidebar": 0.0, "webview": 0.0})
+
+    def save_scroll_positions(self, sidebar_percentage, webview_percentage):
+        """Save scroll positions."""
+        if "scroll_positions" not in self.state:
+            self.state["scroll_positions"] = {}
+        self.state["scroll_positions"]["sidebar"] = sidebar_percentage
+        self.state["scroll_positions"]["webview"] = webview_percentage
         self.save_state()
 
     def save_all(self, window, sidebar, webview_hidden):

@@ -1,0 +1,587 @@
+# Marathi translations for propad package.
+# Complete Native Translation
+msgid ""
+msgstr ""
+"Project-Id-Version: propad 2.0.0\n"
+"Report-Msgid-Bugs-To: your-email@example.com\n"
+"POT-Creation-Date: 2024-12-01 00:00+0000\n"
+"PO-Revision-Date: 2024-12-02 00:00+0530\n"
+"Last-Translator: Complete Translation\n"
+"Language-Team: Marathi <mr@li.org>\n"
+"Language: mr\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: main.py:100
+msgid "New Window"
+msgstr "नवीन विंडो"
+
+#: main.py:120
+msgid "File Manager"
+msgstr "फाइल व्यवस्थापक"
+
+#: main.py:130
+msgid "Export"
+msgstr "निर्यात करा"
+
+#: main.py:140 src/search_replace.py:100
+msgid "Find"
+msgstr "शोधा"
+
+#: main.py:150 src/search_replace.py:110
+msgid "Replace"
+msgstr "बदला"
+
+#: main.py:160
+msgid "Keyboard Shortcuts"
+msgstr "कीबोर्ड शॉर्टकट"
+
+#: main.py:170
+msgid "About ProPad"
+msgstr "ProPad बद्दल"
+
+#: src/window.py:200
+msgid "Welcome to ProPad"
+msgstr "ProPad मध्ये आपले स्वागत आहे"
+
+#: src/window.py:202
+msgid "Features"
+msgstr "वैशिष्ट्ये"
+
+#: src/window.py:204
+msgid "Live Preview"
+msgstr "थेट पूर्वावलोकन"
+
+#: src/window.py:204
+msgid "with synchronized scrolling"
+msgstr "सिंक्रनाइझ स्क्रोलिंगसह"
+
+#: src/window.py:205
+msgid "Markdown Tables"
+msgstr "मार्कडाउन सारण्या"
+
+#: src/window.py:205
+msgid "support"
+msgstr "समर्थन"
+
+#: src/window.py:206
+msgid "Mermaid Diagrams"
+msgstr "Mermaid आकृत्या"
+
+#: src/window.py:206
+msgid "rendering"
+msgstr "रेंडरिंग"
+
+#: src/window.py:207
+msgid "LaTeX Math"
+msgstr "LaTeX गणित"
+
+#: src/window.py:207
+msgid "equations"
+msgstr "समीकरणे"
+
+#: src/window.py:208
+msgid "GitHub Alerts"
+msgstr "GitHub सूचना"
+
+#: src/window.py:209
+msgid "File History"
+msgstr "फाइल इतिहास"
+
+#: src/window.py:209
+msgid "with tags"
+msgstr "टॅगसह"
+
+#: src/window.py:212
+msgid "This is a GitHub-style note alert!"
+msgstr "ही GitHub-शैलीतील टीप सूचना आहे!"
+
+#: src/window.py:214
+msgid "Start editing to see the preview!"
+msgstr "पूर्वावलोकन पाहण्यासाठी संपादन सुरू करा!"
+
+#: src/window.py:300
+msgid "Save Changes?"
+msgstr "बदल जतन करायचे?"
+
+#: src/window.py:301
+msgid "The document has unsaved changes. Do you want to save them?"
+msgstr "दस्तावेजात जतन न केलेले बदल आहेत. तुम्ही ते जतन करू इच्छिता?"
+
+#: src/window.py:302
+msgid "Discard"
+msgstr "रद्द करा"
+
+#: src/window.py:303
+msgid "Cancel"
+msgstr "रद्द करा"
+
+#: src/window.py:304
+msgid "Save"
+msgstr "जतन करा"
+
+#: src/window.py:350
+msgid "Open Markdown File"
+msgstr "मार्कडाउन फाइल उघडा"
+
+#: src/window.py:352
+msgid "Markdown Files"
+msgstr "मार्कडाउन फाइल्स"
+
+#: src/window.py:356
+msgid "All Files"
+msgstr "सर्व फाइल्स"
+
+#: src/window.py:400
+msgid "Save Markdown File"
+msgstr "मार्कडाउन फाइल जतन करा"
+
+#: src/window.py:450
+msgid "Untitled"
+msgstr "शीर्षक नसलेले"
+
+#: src/window.py:500
+msgid "ProPad"
+msgstr "ProPad"
+
+#: src/window.py:550
+msgid "Sync Scroll Enabled"
+msgstr "सिंक स्क्रोल सक्षम केले"
+
+#: src/window.py:552
+msgid "Sync Scroll Disabled"
+msgstr "सिंक स्क्रोल अक्षम केले"
+
+#: src/window.py:600
+msgid "Hide Preview"
+msgstr "पूर्वावलोकन लपवा"
+
+#: src/window.py:602
+msgid "Show Preview"
+msgstr "पूर्वावलोकन दाखवा"
+
+#: src/export_dialog.py:100
+msgid "Export as HTML"
+msgstr "HTML म्हणून निर्यात करा"
+
+#: src/export_dialog.py:110
+msgid "HTML Files"
+msgstr "HTML फाइल्स"
+
+#: src/export_dialog.py:150
+msgid "HTML Export Successful"
+msgstr "HTML निर्यात यशस्वी"
+
+#: src/export_dialog.py:151
+msgid "Document exported to:"
+msgstr "दस्तावेज येथे निर्यात केला:"
+
+#: src/export_dialog.py:200
+msgid "Export as PDF"
+msgstr "PDF म्हणून निर्यात करा"
+
+#: src/export_dialog.py:250
+msgid "PDF Export Successful"
+msgstr "PDF निर्यात यशस्वी"
+
+#: src/export_dialog.py:300
+msgid "Export as Image"
+msgstr "प्रतिमा म्हणून निर्यात करा"
+
+#: src/export_dialog.py:310
+msgid "Image Files"
+msgstr "प्रतिमा फाइल्स"
+
+#: src/export_dialog.py:350
+msgid "Image Export Successful"
+msgstr "प्रतिमा निर्यात यशस्वी"
+
+#: src/export_dialog.py:400
+msgid "Export Failed"
+msgstr "निर्यात अयशस्वी"
+
+#: src/file_manager.py:100
+msgid "Clear History?"
+msgstr "इतिहास साफ करायचा?"
+
+#: src/file_manager.py:101
+msgid "This will remove all file history. This action cannot be undone."
+msgstr "यामुळे सर्व फाइल इतिहास काढला जाईल. ही क्रिया पूर्ववत करता येणार नाही."
+
+#: src/file_manager.py:102
+msgid "Clear History"
+msgstr "इतिहास साफ करा"
+
+#: src/file_manager.py:150
+msgid "Remove from history"
+msgstr "इतिहासातून काढा"
+
+#: src/file_manager.py:200
+msgid "Created"
+msgstr "तयार केले"
+
+#: src/file_manager.py:201
+msgid "Opened"
+msgstr "उघडले"
+
+#: src/file_manager.py:202
+msgid "Edited"
+msgstr "संपादित केले"
+
+#: src/file_manager.py:250
+msgid "Opened {count}x"
+msgstr "{count} वेळा उघडले"
+
+#: src/formatting_toolbar.py:100
+msgid "Insert Table"
+msgstr "सारणी घाला"
+
+#: src/formatting_toolbar.py:150
+msgid "Rows"
+msgstr "पंक्ती"
+
+#: src/formatting_toolbar.py:151
+msgid "Cols"
+msgstr "स्तंभ"
+
+#: src/formatting_toolbar.py:200 src/shortcuts_window.py:73
+msgid "Insert Link"
+msgstr "लिंक घाला"
+
+#: src/formatting_toolbar.py:201
+msgid "Link Text:"
+msgstr "लिंक मजकूर:"
+
+#: src/formatting_toolbar.py:202
+msgid "Click here"
+msgstr "येथे क्लिक करा"
+
+#: src/formatting_toolbar.py:203
+msgid "URL:"
+msgstr "URL:"
+
+#: src/formatting_toolbar.py:250
+msgid "Select Image"
+msgstr "प्रतिमा निवडा"
+
+#: src/search_replace.py:120
+msgid "Replace All"
+msgstr "सर्व बदला"
+
+#: src/sidebar.py:100
+msgid "Words"
+msgstr "शब्द"
+
+#: src/sidebar.py:101
+msgid "Letters"
+msgstr "अक्षरे"
+
+#: src/sidebar.py:102
+msgid "Paragraphs"
+msgstr "परिच्छेद"
+
+#: src/shortcuts_window.py:50
+msgid "File Operations"
+msgstr "फाइल कार्ये"
+
+#: src/shortcuts_window.py:51
+msgid "New File"
+msgstr "नवीन फाइल"
+
+#: src/shortcuts_window.py:52
+msgid "Open File"
+msgstr "फाइल उघडा"
+
+#: src/shortcuts_window.py:53
+msgid "Save File"
+msgstr "फाइल जतन करा"
+
+#: src/shortcuts_window.py:54
+msgid "Save As"
+msgstr "या नावाने जतन करा"
+
+#: src/shortcuts_window.py:60
+msgid "Text Formatting"
+msgstr "मजकूर स्वरूपण"
+
+#: src/shortcuts_window.py:61
+msgid "Bold"
+msgstr "ठळक"
+
+#: src/shortcuts_window.py:62
+msgid "Italic"
+msgstr "तिरकस"
+
+#: src/shortcuts_window.py:63
+msgid "Strikethrough"
+msgstr "स्ट्राइकथ्रू"
+
+#: src/shortcuts_window.py:64
+msgid "Code"
+msgstr "कोड"
+
+#: src/shortcuts_window.py:70
+msgid "Editing"
+msgstr "संपादन"
+
+#: src/shortcuts_window.py:71
+msgid "Find Text"
+msgstr "मजकूर शोधा"
+
+#: src/shortcuts_window.py:72
+msgid "Find and Replace"
+msgstr "शोधा आणि बदला"
+
+#: src/shortcuts_window.py:80
+msgid "View"
+msgstr "पहा"
+
+#: src/shortcuts_window.py:81
+msgid "Toggle Sidebar"
+msgstr "साइडबार टॉगल करा"
+
+#: src/shortcuts_window.py:82
+msgid "Toggle Sync Scroll"
+msgstr "सिंक स्क्रोल टॉगल करा"
+
+#: src/shortcuts_window.py:83
+msgid "Show Shortcuts"
+msgstr "शॉर्टकट दाखवा"
+
+msgid "About"
+msgstr "बद्दल"
+
+msgid "Application"
+msgstr "अनुप्रयोग"
+
+msgid "Block Quote"
+msgstr "ब्लॉक कोट"
+
+msgid "Bold (Ctrl+B)"
+msgstr "ठळक (Ctrl+B)"
+
+msgid "Bullet List"
+msgstr "बुलेट सूची"
+
+msgid "Case Sensitive"
+msgstr "केस सेन्सिटिव्ह"
+
+msgid "Close"
+msgstr "बंद करा"
+
+msgid "Close all windows and quit"
+msgstr "सर्व विंडो बंद करा आणि सोडा"
+
+msgid "Code Block"
+msgstr "कोड ब्लॉक"
+
+msgid "Cols: 0"
+msgstr "स्तंभ: 0"
+
+msgid "Create Standalone File"
+msgstr "स्वतंत्र फाइल तयार करा"
+
+msgid "Create a new markdown file"
+msgstr "नवीन मार्कडाउन फाइल तयार करा"
+
+msgid "Current File:"
+msgstr "वर्तमान फाइल:"
+
+msgid "Editor"
+msgstr "संपादक"
+
+msgid "Export Document"
+msgstr "दस्तावेज निर्यात करा"
+
+msgid "Export Format:"
+msgstr "निर्यात स्वरूप:"
+
+msgid "Export Options:"
+msgstr "निर्यात पर्याय:"
+
+msgid "Export document"
+msgstr "दस्तावेज निर्यात करा"
+
+msgid "Export..."
+msgstr "निर्यात..."
+
+msgid "Find and replace text"
+msgstr "मजकूर शोधा आणि बदला"
+
+msgid "Formatting"
+msgstr "स्वरूपण"
+
+msgid "H1"
+msgstr "H1"
+
+msgid "H2"
+msgstr "H2"
+
+msgid "H3"
+msgstr "H3"
+
+msgid "H4"
+msgstr "H4"
+
+msgid "HTML"
+msgstr "HTML"
+
+msgid "Heading 1"
+msgstr "शीर्षक 1"
+
+msgid "Heading 2"
+msgstr "शीर्षक 2"
+
+msgid "Heading 3"
+msgstr "शीर्षक 3"
+
+msgid "Heading 4"
+msgstr "शीर्षक 4"
+
+msgid "Headings"
+msgstr "शीर्षके"
+
+msgid "Image"
+msgstr "प्रतिमा"
+
+msgid "Image Format:"
+msgstr "प्रतिमा स्वरूप:"
+
+msgid "Include Custom CSS"
+msgstr "सानुकूल CSS समाविष्ट करा"
+
+msgid "Inline Code"
+msgstr "इनलाइन कोड"
+
+msgid "Insert"
+msgstr "घाला"
+
+msgid "Italic (Ctrl+I)"
+msgstr "तिरकस (Ctrl+I)"
+
+msgid "Lists & Blocks"
+msgstr "सूची आणि ब्लॉक्स"
+
+msgid "Main Menu"
+msgstr "मुख्य मेनू"
+
+msgid "Mermaid Diagram"
+msgstr "Mermaid आकृती"
+
+msgid "New File (Ctrl+N)"
+msgstr "नवीन फाइल (Ctrl+N)"
+
+msgid "Next Match"
+msgstr "पुढील जुळणारे"
+
+msgid "No file loaded"
+msgstr "फाइल लोड झाली नाही"
+
+msgid "Numbered List"
+msgstr "क्रमांकित सूची"
+
+msgid "Open File (Ctrl+O)"
+msgstr "फाइल उघडा (Ctrl+O)"
+
+msgid "Open File..."
+msgstr "फाइल उघडा..."
+
+msgid "Open a new window"
+msgstr "नवीन विंडो उघडा"
+
+msgid "Open an existing file"
+msgstr "विद्यमान फाइल उघडा"
+
+msgid "Open file manager"
+msgstr "फाइल व्यवस्थापक उघडा"
+
+msgid "PDF"
+msgstr "PDF"
+
+msgid "Preview"
+msgstr "पूर्वावलोकन"
+
+msgid "Previous Match"
+msgstr "मागील जुळणारे"
+
+msgid "Quit"
+msgstr "सोडा"
+
+msgid "Recent Files:"
+msgstr "अलीकडील फाइल्स:"
+
+msgid "Replace with..."
+msgstr "याने बदला..."
+
+msgid "Rows: 0"
+msgstr "पंक्ती: 0"
+
+msgid "Save (Ctrl+S)"
+msgstr "जतन करा (Ctrl+S)"
+
+msgid "Save As..."
+msgstr "या नावाने जतन करा..."
+
+msgid "Save file with a new name"
+msgstr "नवीन नावाने फाइल जतन करा"
+
+msgid "Save the current file"
+msgstr "वर्तमान फाइल जतन करा"
+
+msgid "Search in document"
+msgstr "दस्तावेजात शोधा"
+
+msgid "Search..."
+msgstr "शोधा..."
+
+msgid "Show or hide sidebar"
+msgstr "साइडबार दाखवा किंवा लपवा"
+
+msgid "Show this help dialog"
+msgstr "हा मदत संवाद दाखवा"
+
+msgid "Support ProPad"
+msgstr "ProPad चे समर्थन करा"
+
+msgid "Sync editor and preview scrolling"
+msgstr "संपादक आणि पूर्वावलोकन स्क्रोलिंग सिंक करा"
+
+msgid "Table"
+msgstr "सारणी"
+
+msgid "Tags: Created • Opened • Edited"
+msgstr "टॅग्ज: तयार केले • उघडले • संपादित केले"
+
+msgid "Toggle Replace"
+msgstr "बदला टॉगल करा"
+
+msgid "Toggle Scroll Sync"
+msgstr "स्क्रोल सिंक टॉगल करा"
+
+msgid "Toggle Scroll Sync (Ctrl+Alt+S)"
+msgstr "स्क्रोल सिंक टॉगल करा (Ctrl+Alt+S)"
+
+msgid "Use Regular Expression"
+msgstr "नियमित अभिव्यक्ती वापरा"
+
+msgid "Whole Word"
+msgstr "पूर्ण शब्द"
+
+msgid "If you enjoy using ProPad, consider buying me a coffee!"
+msgstr "जर तुम्हाला ProPad वापरणे आवडत असेल तर मला एक कप कॉफी देण्याचा विचार करा!"
+
+msgid "Your support helps keep the project alive."
+msgstr "तुमचा पाठिंबा प्रकल्प जिवंत ठेवण्यास मदत करतो."
+
+msgid "Scan with your phone"
+msgstr "तुमच्या फोनने स्कॅन करा"
+
+msgid "Open Buy Me a Coffee"
+msgstr "Buy Me a Coffee उघडा"
+
+msgid "<span size='xx-large' weight='bold'>☕ Support ProPad</span>"
+msgstr "<span size='xx-large' weight='bold'>☕ ProPad ला समर्थन द्या</span>"
+
+msgid "☕ Open Buy Me a Coffee"
+msgstr "☕ Buy Me a Coffee उघडा"

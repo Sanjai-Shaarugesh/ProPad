@@ -1,0 +1,587 @@
+# Punjabi translations for propad package.
+# Complete Native Translation
+msgid ""
+msgstr ""
+"Project-Id-Version: propad 2.0.0\n"
+"Report-Msgid-Bugs-To: your-email@example.com\n"
+"POT-Creation-Date: 2024-12-01 00:00+0000\n"
+"PO-Revision-Date: 2024-12-02 00:00+0530\n"
+"Last-Translator: Complete Translation\n"
+"Language-Team: Punjabi <pa@li.org>\n"
+"Language: pa\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: main.py:100
+msgid "New Window"
+msgstr "ਨਵੀਂ ਵਿੰਡੋ"
+
+#: main.py:120
+msgid "File Manager"
+msgstr "ਫਾਈਲ ਮੈਨੇਜਰ"
+
+#: main.py:130
+msgid "Export"
+msgstr "ਨਿਰਯਾਤ ਕਰੋ"
+
+#: main.py:140 src/search_replace.py:100
+msgid "Find"
+msgstr "ਲੱਭੋ"
+
+#: main.py:150 src/search_replace.py:110
+msgid "Replace"
+msgstr "ਬਦਲੋ"
+
+#: main.py:160
+msgid "Keyboard Shortcuts"
+msgstr "ਕੀਬੋਰਡ ਸ਼ਾਰਟਕੱਟ"
+
+#: main.py:170
+msgid "About ProPad"
+msgstr "ProPad ਬਾਰੇ"
+
+#: src/window.py:200
+msgid "Welcome to ProPad"
+msgstr "ProPad ਵਿੱਚ ਤੁਹਾਡਾ ਸੁਆਗਤ ਹੈ"
+
+#: src/window.py:202
+msgid "Features"
+msgstr "ਵਿਸ਼ੇਸ਼ਤਾਵਾਂ"
+
+#: src/window.py:204
+msgid "Live Preview"
+msgstr "ਲਾਈਵ ਝਲਕ"
+
+#: src/window.py:204
+msgid "with synchronized scrolling"
+msgstr "ਸਿੰਕ੍ਰੋਨਾਈਜ਼ਡ ਸਕ੍ਰੋਲਿੰਗ ਨਾਲ"
+
+#: src/window.py:205
+msgid "Markdown Tables"
+msgstr "ਮਾਰਕਡਾਊਨ ਟੇਬਲ"
+
+#: src/window.py:205
+msgid "support"
+msgstr "ਸਹਾਇਤਾ"
+
+#: src/window.py:206
+msgid "Mermaid Diagrams"
+msgstr "ਮਰਮੇਡ ਡਾਇਗਰਾਮ"
+
+#: src/window.py:206
+msgid "rendering"
+msgstr "ਰੈਂਡਰਿੰਗ"
+
+#: src/window.py:207
+msgid "LaTeX Math"
+msgstr "LaTeX ਗਣਿਤ"
+
+#: src/window.py:207
+msgid "equations"
+msgstr "ਸਮੀਕਰਨਾਂ"
+
+#: src/window.py:208
+msgid "GitHub Alerts"
+msgstr "GitHub ਅਲਰਟ"
+
+#: src/window.py:209
+msgid "File History"
+msgstr "ਫਾਈਲ ਇਤਿਹਾਸ"
+
+#: src/window.py:209
+msgid "with tags"
+msgstr "ਟੈਗਾਂ ਨਾਲ"
+
+#: src/window.py:212
+msgid "This is a GitHub-style note alert!"
+msgstr "ਇਹ ਇੱਕ GitHub-ਸ਼ੈਲੀ ਨੋਟ ਅਲਰਟ ਹੈ!"
+
+#: src/window.py:214
+msgid "Start editing to see the preview!"
+msgstr "ਝਲਕ ਦੇਖਣ ਲਈ ਸੰਪਾਦਨ ਸ਼ੁਰੂ ਕਰੋ!"
+
+#: src/window.py:300
+msgid "Save Changes?"
+msgstr "ਬਦਲਾਅ ਸੁਰੱਖਿਅਤ ਕਰੀਏ?"
+
+#: src/window.py:301
+msgid "The document has unsaved changes. Do you want to save them?"
+msgstr "ਦਸਤਾਵੇਜ਼ ਵਿੱਚ ਅਣਸੁਰੱਖਿਅਤ ਬਦਲਾਅ ਹਨ। ਕੀ ਤੁਸੀਂ ਉਹਨਾਂ ਨੂੰ ਸੁਰੱਖਿਅਤ ਕਰਨਾ ਚਾਹੁੰਦੇ ਹੋ?"
+
+#: src/window.py:302
+msgid "Discard"
+msgstr "ਰੱਦ ਕਰੋ"
+
+#: src/window.py:303
+msgid "Cancel"
+msgstr "ਰੱਦ ਕਰੋ"
+
+#: src/window.py:304
+msgid "Save"
+msgstr "ਸੁਰੱਖਿਅਤ ਕਰੋ"
+
+#: src/window.py:350
+msgid "Open Markdown File"
+msgstr "ਮਾਰਕਡਾਊਨ ਫਾਈਲ ਖੋਲ੍ਹੋ"
+
+#: src/window.py:352
+msgid "Markdown Files"
+msgstr "ਮਾਰਕਡਾਊਨ ਫਾਈਲਾਂ"
+
+#: src/window.py:356
+msgid "All Files"
+msgstr "ਸਾਰੀਆਂ ਫਾਈਲਾਂ"
+
+#: src/window.py:400
+msgid "Save Markdown File"
+msgstr "ਮਾਰਕਡਾਊਨ ਫਾਈਲ ਸੁਰੱਖਿਅਤ ਕਰੋ"
+
+#: src/window.py:450
+msgid "Untitled"
+msgstr "ਬਿਨਾਂ ਸਿਰਲੇਖ"
+
+#: src/window.py:500
+msgid "ProPad"
+msgstr "ProPad"
+
+#: src/window.py:550
+msgid "Sync Scroll Enabled"
+msgstr "ਸਿੰਕ ਸਕਰੋਲ ਸਮਰੱਥ"
+
+#: src/window.py:552
+msgid "Sync Scroll Disabled"
+msgstr "ਸਿੰਕ ਸਕਰੋਲ ਅਸਮਰੱਥ"
+
+#: src/window.py:600
+msgid "Hide Preview"
+msgstr "ਝਲਕ ਲੁਕਾਓ"
+
+#: src/window.py:602
+msgid "Show Preview"
+msgstr "ਝਲਕ ਦਿਖਾਓ"
+
+#: src/export_dialog.py:100
+msgid "Export as HTML"
+msgstr "HTML ਵਜੋਂ ਨਿਰਯਾਤ ਕਰੋ"
+
+#: src/export_dialog.py:110
+msgid "HTML Files"
+msgstr "HTML ਫਾਈਲਾਂ"
+
+#: src/export_dialog.py:150
+msgid "HTML Export Successful"
+msgstr "HTML ਨਿਰਯਾਤ ਸਫਲ"
+
+#: src/export_dialog.py:151
+msgid "Document exported to:"
+msgstr "ਦਸਤਾਵੇਜ਼ ਨੂੰ ਨਿਰਯਾਤ ਕੀਤਾ ਗਿਆ:"
+
+#: src/export_dialog.py:200
+msgid "Export as PDF"
+msgstr "PDF ਵਜੋਂ ਨਿਰਯਾਤ ਕਰੋ"
+
+#: src/export_dialog.py:250
+msgid "PDF Export Successful"
+msgstr "PDF ਨਿਰਯਾਤ ਸਫਲ"
+
+#: src/export_dialog.py:300
+msgid "Export as Image"
+msgstr "ਚਿੱਤਰ ਵਜੋਂ ਨਿਰਯਾਤ ਕਰੋ"
+
+#: src/export_dialog.py:310
+msgid "Image Files"
+msgstr "ਚਿੱਤਰ ਫਾਈਲਾਂ"
+
+#: src/export_dialog.py:350
+msgid "Image Export Successful"
+msgstr "ਚਿੱਤਰ ਨਿਰਯਾਤ ਸਫਲ"
+
+#: src/export_dialog.py:400
+msgid "Export Failed"
+msgstr "ਨਿਰਯਾਤ ਅਸਫਲ"
+
+#: src/file_manager.py:100
+msgid "Clear History?"
+msgstr "ਇਤਿਹਾਸ ਸਾਫ਼ ਕਰੀਏ?"
+
+#: src/file_manager.py:101
+msgid "This will remove all file history. This action cannot be undone."
+msgstr "ਇਹ ਸਾਰੇ ਫਾਈਲ ਇਤਿਹਾਸ ਨੂੰ ਹਟਾ ਦੇਵੇਗਾ। ਇਹ ਕਾਰਵਾਈ ਵਾਪਸ ਨਹੀਂ ਲਈ ਜਾ ਸਕਦੀ।"
+
+#: src/file_manager.py:102
+msgid "Clear History"
+msgstr "ਇਤਿਹਾਸ ਸਾਫ਼ ਕਰੋ"
+
+#: src/file_manager.py:150
+msgid "Remove from history"
+msgstr "ਇਤਿਹਾਸ ਤੋਂ ਹਟਾਓ"
+
+#: src/file_manager.py:200
+msgid "Created"
+msgstr "ਬਣਾਇਆ"
+
+#: src/file_manager.py:201
+msgid "Opened"
+msgstr "ਖੋਲ੍ਹਿਆ"
+
+#: src/file_manager.py:202
+msgid "Edited"
+msgstr "ਸੰਪਾਦਿਤ ਕੀਤਾ"
+
+#: src/file_manager.py:250
+msgid "Opened {count}x"
+msgstr "{count} ਵਾਰ ਖੋਲ੍ਹਿਆ"
+
+#: src/formatting_toolbar.py:100
+msgid "Insert Table"
+msgstr "ਸਾਰਣੀ ਸ਼ਾਮਲ ਕਰੋ"
+
+#: src/formatting_toolbar.py:150
+msgid "Rows"
+msgstr "ਕਤਾਰਾਂ"
+
+#: src/formatting_toolbar.py:151
+msgid "Cols"
+msgstr "ਕਾਲਮ"
+
+#: src/formatting_toolbar.py:200 src/shortcuts_window.py:73
+msgid "Insert Link"
+msgstr "ਲਿੰਕ ਸ਼ਾਮਲ ਕਰੋ"
+
+#: src/formatting_toolbar.py:201
+msgid "Link Text:"
+msgstr "ਲਿੰਕ ਟੈਕਸਟ:"
+
+#: src/formatting_toolbar.py:202
+msgid "Click here"
+msgstr "ਇੱਥੇ ਕਲਿੱਕ ਕਰੋ"
+
+#: src/formatting_toolbar.py:203
+msgid "URL:"
+msgstr "ਯੂਆਰਐਲ:"
+
+#: src/formatting_toolbar.py:250
+msgid "Select Image"
+msgstr "ਚਿੱਤਰ ਚੁਣੋ"
+
+#: src/search_replace.py:120
+msgid "Replace All"
+msgstr "ਸਭ ਬਦਲੋ"
+
+#: src/sidebar.py:100
+msgid "Words"
+msgstr "ਸ਼ਬਦ"
+
+#: src/sidebar.py:101
+msgid "Letters"
+msgstr "ਅੱਖਰ"
+
+#: src/sidebar.py:102
+msgid "Paragraphs"
+msgstr "ਪੈਰੇ"
+
+#: src/shortcuts_window.py:50
+msgid "File Operations"
+msgstr "ਫਾਈਲ ਓਪਰੇਸ਼ਨ"
+
+#: src/shortcuts_window.py:51
+msgid "New File"
+msgstr "ਨਵੀਂ ਫਾਈਲ"
+
+#: src/shortcuts_window.py:52
+msgid "Open File"
+msgstr "ਫਾਈਲ ਖੋਲ੍ਹੋ"
+
+#: src/shortcuts_window.py:53
+msgid "Save File"
+msgstr "ਫਾਈਲ ਸੁਰੱਖਿਅਤ ਕਰੋ"
+
+#: src/shortcuts_window.py:54
+msgid "Save As"
+msgstr "ਇਸ ਤਰ੍ਹਾਂ ਸੁਰੱਖਿਅਤ ਕਰੋ"
+
+#: src/shortcuts_window.py:60
+msgid "Text Formatting"
+msgstr "ਟੈਕਸਟ ਫਾਰਮੈਟਿੰਗ"
+
+#: src/shortcuts_window.py:61
+msgid "Bold"
+msgstr "ਬੋਲਡ"
+
+#: src/shortcuts_window.py:62
+msgid "Italic"
+msgstr "ਇਟਾਲਿਕ"
+
+#: src/shortcuts_window.py:63
+msgid "Strikethrough"
+msgstr "ਸਟ੍ਰਾਈਕਥਰੂ"
+
+#: src/shortcuts_window.py:64
+msgid "Code"
+msgstr "ਕੋਡ"
+
+#: src/shortcuts_window.py:70
+msgid "Editing"
+msgstr "ਸੰਪਾਦਨ"
+
+#: src/shortcuts_window.py:71
+msgid "Find Text"
+msgstr "ਟੈਕਸਟ ਲੱਭੋ"
+
+#: src/shortcuts_window.py:72
+msgid "Find and Replace"
+msgstr "ਲੱਭੋ ਅਤੇ ਬਦਲੋ"
+
+#: src/shortcuts_window.py:80
+msgid "View"
+msgstr "ਵੇਖੋ"
+
+#: src/shortcuts_window.py:81
+msgid "Toggle Sidebar"
+msgstr "ਸਾਈਡਬਾਰ ਟੌਗਲ ਕਰੋ"
+
+#: src/shortcuts_window.py:82
+msgid "Toggle Sync Scroll"
+msgstr "ਸਿੰਕ ਸਕਰੋਲ ਟੌਗਲ ਕਰੋ"
+
+#: src/shortcuts_window.py:83
+msgid "Show Shortcuts"
+msgstr "ਸ਼ਾਰਟਕੱਟ ਦਿਖਾਓ"
+
+msgid "About"
+msgstr "ਬਾਰੇ"
+
+msgid "Application"
+msgstr "ਐਪਲੀਕੇਸ਼ਨ"
+
+msgid "Block Quote"
+msgstr "ਬਲਾਕ ਕੋਟ"
+
+msgid "Bold (Ctrl+B)"
+msgstr "ਬੋਲਡ (Ctrl+B)"
+
+msgid "Bullet List"
+msgstr "ਬੁਲੇਟ ਸੂਚੀ"
+
+msgid "Case Sensitive"
+msgstr "ਕੇਸ ਸੰਵੇਦਨਸ਼ੀਲ"
+
+msgid "Close"
+msgstr "ਬੰਦ ਕਰੋ"
+
+msgid "Close all windows and quit"
+msgstr "ਸਾਰੀਆਂ ਵਿੰਡੋਜ਼ ਬੰਦ ਕਰੋ ਅਤੇ ਬਾਹਰ ਆਓ"
+
+msgid "Code Block"
+msgstr "ਕੋਡ ਬਲਾਕ"
+
+msgid "Cols: 0"
+msgstr "ਕਾਲਮ: 0"
+
+msgid "Create Standalone File"
+msgstr "ਸਟੈਂਡਅਲੋਨ ਫਾਈਲ ਬਣਾਓ"
+
+msgid "Create a new markdown file"
+msgstr "ਇੱਕ ਨਵੀਂ ਮਾਰਕਡਾਊਨ ਫਾਈਲ ਬਣਾਓ"
+
+msgid "Current File:"
+msgstr "ਮੌਜੂਦਾ ਫਾਈਲ:"
+
+msgid "Editor"
+msgstr "ਸੰਪਾਦਕ"
+
+msgid "Export Document"
+msgstr "ਦਸਤਾਵੇਜ਼ ਨਿਰਯਾਤ ਕਰੋ"
+
+msgid "Export Format:"
+msgstr "ਨਿਰਯਾਤ ਫਾਰਮੈਟ:"
+
+msgid "Export Options:"
+msgstr "ਨਿਰਯਾਤ ਵਿਕਲਪ:"
+
+msgid "Export document"
+msgstr "ਦਸਤਾਵੇਜ਼ ਨਿਰਯਾਤ ਕਰੋ"
+
+msgid "Export..."
+msgstr "ਨਿਰਯਾਤ..."
+
+msgid "Find and replace text"
+msgstr "ਟੈਕਸਟ ਲੱਭੋ ਅਤੇ ਬਦਲੋ"
+
+msgid "Formatting"
+msgstr "ਫਾਰਮੈਟਿੰਗ"
+
+msgid "H1"
+msgstr "H1"
+
+msgid "H2"
+msgstr "H2"
+
+msgid "H3"
+msgstr "H3"
+
+msgid "H4"
+msgstr "H4"
+
+msgid "HTML"
+msgstr "HTML"
+
+msgid "Heading 1"
+msgstr "ਸਿਰਲੇਖ 1"
+
+msgid "Heading 2"
+msgstr "ਸਿਰਲੇਖ 2"
+
+msgid "Heading 3"
+msgstr "ਸਿਰਲੇਖ 3"
+
+msgid "Heading 4"
+msgstr "ਸਿਰਲੇਖ 4"
+
+msgid "Headings"
+msgstr "ਸਿਰਲੇਖ"
+
+msgid "Image"
+msgstr "ਚਿੱਤਰ"
+
+msgid "Image Format:"
+msgstr "ਚਿੱਤਰ ਫਾਰਮੈਟ:"
+
+msgid "Include Custom CSS"
+msgstr "ਕਸਟਮ CSS ਸ਼ਾਮਲ ਕਰੋ"
+
+msgid "Inline Code"
+msgstr "ਇਨਲਾਈਨ ਕੋਡ"
+
+msgid "Insert"
+msgstr "ਸ਼ਾਮਲ ਕਰੋ"
+
+msgid "Italic (Ctrl+I)"
+msgstr "ਇਟਾਲਿਕ (Ctrl+I)"
+
+msgid "Lists & Blocks"
+msgstr "ਸੂਚੀਆਂ ਅਤੇ ਬਲਾਕ"
+
+msgid "Main Menu"
+msgstr "ਮੁੱਖ ਮੇਨੂ"
+
+msgid "Mermaid Diagram"
+msgstr "ਮਰਮੇਡ ਡਾਇਗਰਾਮ"
+
+msgid "New File (Ctrl+N)"
+msgstr "ਨਵੀਂ ਫਾਈਲ (Ctrl+N)"
+
+msgid "Next Match"
+msgstr "ਅਗਲਾ ਮਿਲਾਨ"
+
+msgid "No file loaded"
+msgstr "ਕੋਈ ਫਾਈਲ ਲੋਡ ਨਹੀਂ ਹੋਈ"
+
+msgid "Numbered List"
+msgstr "ਨੰਬਰ ਵਾਲੀ ਸੂਚੀ"
+
+msgid "Open File (Ctrl+O)"
+msgstr "ਫਾਈਲ ਖੋਲ੍ਹੋ (Ctrl+O)"
+
+msgid "Open File..."
+msgstr "ਫਾਈਲ ਖੋਲ੍ਹੋ..."
+
+msgid "Open a new window"
+msgstr "ਇੱਕ ਨਵੀਂ ਵਿੰਡੋ ਖੋਲ੍ਹੋ"
+
+msgid "Open an existing file"
+msgstr "ਇੱਕ ਮੌਜੂਦਾ ਫਾਈਲ ਖੋਲ੍ਹੋ"
+
+msgid "Open file manager"
+msgstr "ਫਾਈਲ ਮੈਨੇਜਰ ਖੋਲ੍ਹੋ"
+
+msgid "PDF"
+msgstr "PDF"
+
+msgid "Preview"
+msgstr "ਝਲਕ"
+
+msgid "Previous Match"
+msgstr "ਪਿਛਲਾ ਮਿਲਾਨ"
+
+msgid "Quit"
+msgstr "ਛੱਡੋ"
+
+msgid "Recent Files:"
+msgstr "ਹਾਲੀਆ ਫਾਈਲਾਂ:"
+
+msgid "Replace with..."
+msgstr "ਇਸ ਨਾਲ ਬਦਲੋ..."
+
+msgid "Rows: 0"
+msgstr "ਕਤਾਰਾਂ: 0"
+
+msgid "Save (Ctrl+S)"
+msgstr "ਸੁਰੱਖਿਅਤ ਕਰੋ (Ctrl+S)"
+
+msgid "Save As..."
+msgstr "ਇਸ ਤਰ੍ਹਾਂ ਸੁਰੱਖਿਅਤ ਕਰੋ..."
+
+msgid "Save file with a new name"
+msgstr "ਇੱਕ ਨਵੇਂ ਨਾਮ ਨਾਲ ਫਾਈਲ ਸੁਰੱਖਿਅਤ ਕਰੋ"
+
+msgid "Save the current file"
+msgstr "ਮੌਜੂਦਾ ਫਾਈਲ ਸੁਰੱਖਿਅਤ ਕਰੋ"
+
+msgid "Search in document"
+msgstr "ਦਸਤਾਵੇਜ਼ ਵਿੱਚ ਖੋਜੋ"
+
+msgid "Search..."
+msgstr "ਖੋਜੋ..."
+
+msgid "Show or hide sidebar"
+msgstr "ਸਾਈਡਬਾਰ ਦਿਖਾਓ ਜਾਂ ਲੁਕਾਓ"
+
+msgid "Show this help dialog"
+msgstr "ਇਹ ਮਦਦ ਡਾਇਲਾਗ ਦਿਖਾਓ"
+
+msgid "Support ProPad"
+msgstr "ProPad ਦੀ ਸਹਾਇਤਾ ਕਰੋ"
+
+msgid "Sync editor and preview scrolling"
+msgstr "ਸੰਪਾਦਕ ਅਤੇ ਝਲਕ ਸਕਰੋਲਿੰਗ ਸਿੰਕ ਕਰੋ"
+
+msgid "Table"
+msgstr "ਸਾਰਣੀ"
+
+msgid "Tags: Created • Opened • Edited"
+msgstr "ਟੈਗ: ਬਣਾਇਆ • ਖੋਲ੍ਹਿਆ • ਸੰਪਾਦਿਤ ਕੀਤਾ"
+
+msgid "Toggle Replace"
+msgstr "ਬਦਲੋ ਟੌਗਲ ਕਰੋ"
+
+msgid "Toggle Scroll Sync"
+msgstr "ਸਕਰੋਲ ਸਿੰਕ ਟੌਗਲ ਕਰੋ"
+
+msgid "Toggle Scroll Sync (Ctrl+Alt+S)"
+msgstr "ਸਕਰੋਲ ਸਿੰਕ ਟੌਗਲ ਕਰੋ (Ctrl+Alt+S)"
+
+msgid "Use Regular Expression"
+msgstr "ਨਿਯਮਤ ਸਮੀਕਰਨ ਵਰਤੋਂ"
+
+msgid "Whole Word"
+msgstr "ਪੂਰਾ ਸ਼ਬਦ"
+
+msgid "If you enjoy using ProPad, consider buying me a coffee!"
+msgstr "ਜੇ ਤੁਹਾਨੂੰ ProPad ਵਰਤਣਾ ਪਸੰਦ ਹੈ, ਤਾਂ ਮੇਰੇ ਲਈ ਇੱਕ ਕਾਫੀ ਖਰੀਦਣ ਬਾਰੇ ਸੋਚੋ!"
+
+msgid "Your support helps keep the project alive."
+msgstr "ਤੁਹਾਡਾ ਸਮਰਥਨ ਪ੍ਰੋਜੈਕਟ ਨੂੰ ਜਿੰਦਾ ਰੱਖਣ ਵਿੱਚ ਮਦਦ ਕਰਦਾ ਹੈ।"
+
+msgid "Scan with your phone"
+msgstr "ਆਪਣੇ ਫ਼ੋਨ ਨਾਲ ਸਕੈਨ ਕਰੋ"
+
+msgid "Open Buy Me a Coffee"
+msgstr "Buy Me a Coffee ਖੋਲ੍ਹੋ"
+
+msgid "<span size='xx-large' weight='bold'>☕ Support ProPad</span>"
+msgstr "<span size='xx-large' weight='bold'>☕ ProPad ਦਾ ਸਮਰਥਨ ਕਰੋ</span>"
+
+msgid "☕ Open Buy Me a Coffee"
+msgstr "☕ Buy Me a Coffee ਖੋਲ੍ਹੋ"

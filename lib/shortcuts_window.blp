@@ -1,0 +1,192 @@
+using Gtk 4.0;
+using Adw 1;
+
+template $ShortcutsDialog: Adw.Dialog {
+  title: _("Keyboard Shortcuts");
+  content-width: 650;
+  content-height: 600;
+
+  child: Adw.ToolbarView {
+    [top]
+    Adw.HeaderBar {
+      show-title: true;
+    }
+
+    content: Adw.Clamp {
+      maximum-size: 800;
+      tightening-threshold: 600;
+
+      child: Adw.PreferencesPage {
+        Adw.PreferencesGroup {
+          title: _("File Operations");
+
+          Adw.ActionRow {
+            title: _("New File");
+            subtitle: _("Create a new markdown file");
+            
+            [suffix]
+            Gtk.Label {
+              label: "Ctrl+N";
+              styles ["dim-label", "numeric"]
+            }
+          }
+
+          Adw.ActionRow {
+            title: _("New Window");
+            subtitle: _("Open a new window");
+            
+            [suffix]
+            Gtk.Label {
+              label: "Ctrl+Shift+N";
+              styles ["dim-label", "numeric"]
+            }
+          }
+
+          Adw.ActionRow {
+            title: _("Open File");
+            subtitle: _("Open an existing file");
+            
+            [suffix]
+            Gtk.Label {
+              label: "Ctrl+O";
+              styles ["dim-label", "numeric"]
+            }
+          }
+
+          Adw.ActionRow {
+            title: _("Save File");
+            subtitle: _("Save the current file");
+            
+            [suffix]
+            Gtk.Label {
+              label: "Ctrl+S";
+              styles ["dim-label", "numeric"]
+            }
+          }
+
+          Adw.ActionRow {
+            title: _("Save As");
+            subtitle: _("Save file with a new name");
+            
+            [suffix]
+            Gtk.Label {
+              label: "Ctrl+Shift+S";
+              styles ["dim-label", "numeric"]
+            }
+          }
+
+          Adw.ActionRow {
+            title: _("File Manager");
+            subtitle: _("Open file manager");
+            
+            [suffix]
+            Gtk.Label {
+              label: "Ctrl+Shift+F";
+              styles ["dim-label", "numeric"]
+            }
+          }
+
+          Adw.ActionRow {
+            title: _("Export");
+            subtitle: _("Export document");
+            
+            [suffix]
+            Gtk.Label {
+              label: "Ctrl+Shift+E";
+              styles ["dim-label", "numeric"]
+            }
+          }
+        }
+
+        Adw.PreferencesGroup {
+          title: _("Editing");
+
+          Adw.ActionRow {
+            title: _("Find");
+            subtitle: _("Search in document");
+            
+            [suffix]
+            Gtk.Label {
+              label: "Ctrl+F";
+              styles ["dim-label", "numeric"]
+            }
+          }
+
+          Adw.ActionRow {
+            title: _("Replace");
+            subtitle: _("Find and replace text");
+            
+            [suffix]
+            Gtk.Label {
+              label: "Ctrl+H";
+              styles ["dim-label", "numeric"]
+            }
+          }
+
+          Adw.ActionRow {
+            title: _("Toggle Sync Scroll");
+            subtitle: _("Sync editor and preview scrolling");
+            
+            [suffix]
+            Gtk.Label {
+              label: "Ctrl+Alt+S";
+              styles ["dim-label", "numeric"]
+            }
+          }
+        }
+
+        Adw.PreferencesGroup {
+          title: _("View");
+
+          Adw.ActionRow {
+            title: _("Toggle Sidebar");
+            subtitle: _("Show or hide sidebar");
+            
+            [suffix]
+            Gtk.Label {
+              label: "F9";
+              styles ["dim-label", "numeric"]
+            }
+          }
+        }
+
+        Adw.PreferencesGroup {
+          title: _("Application");
+
+          Adw.ActionRow {
+            title: _("Keyboard Shortcuts");
+            subtitle: _("Show this help dialog");
+            
+            [suffix]
+            Gtk.Label {
+              label: "Ctrl+?";
+              styles ["dim-label", "numeric"]
+            }
+          }
+
+          Adw.ActionRow {
+            title: _("About");
+            subtitle: _("About ProPad");
+            
+            [suffix]
+            Gtk.Label {
+              label: "F1";
+              styles ["dim-label", "numeric"]
+            }
+          }
+
+          Adw.ActionRow {
+            title: _("Quit");
+            subtitle: _("Close all windows and quit");
+            
+            [suffix]
+            Gtk.Label {
+              label: "Ctrl+Q";
+              styles ["dim-label", "numeric"]
+            }
+          }
+        }
+      };
+    };
+  };
+}

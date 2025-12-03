@@ -13,6 +13,7 @@ from gi.repository import Gtk, WebKit, Adw, GLib, Gdk
 from typing import Optional, Callable
 import comrak
 import re
+from src.i18n import _
 
 UI_FILE = "ui/webview.ui"
 
@@ -114,14 +115,20 @@ class WebViewWidget(Gtk.Box):
         self.sync_scroll_enabled = enabled
 
     def scroll_to_percentage(self, percentage: float):
-        """Scroll webview with smooth 60fps animation."""
-        if not self.sync_scroll_enabled or self._is_programmatic_scroll:
+        """Enhanced scroll with better restoration support."""
+        if not self.sync_scroll_enabled and self._is_programmatic_scroll:
             return
 
+        # Temporarily disable to prevent feedback
+        was_syncing = self.sync_scroll_enabled
+        self.sync_scroll_enabled = False
         self._is_programmatic_scroll = True
+
         self._target_scroll_percentage = max(0.0, min(1.0, percentage))
 
-        # Smooth scroll with requestAnimationFrame
+        print(f"🌐 WebView scrolling to {percentage:.3f}")
+
+        # Enhanced smooth scroll with requestAnimationFrame
         js_code = f"""
         (function() {{
             const targetPercentage = {self._target_scroll_percentage};
@@ -133,27 +140,29 @@ class WebViewWidget(Gtk.Box):
             const currentScroll = window.pageYOffset || document.documentElement.scrollTop;
             const distance = targetScroll - currentScroll;
             
+            console.log('WebView scroll - target:', targetPercentage, 'targetScroll:', targetScroll, 'current:', currentScroll);
+            
             // Cancel any existing animation
             if (window.scrollAnimation) {{
                 cancelAnimationFrame(window.scrollAnimation);
             }}
             
-            // For small movements, jump instantly
-            if (Math.abs(distance) < 5) {{
+            // For restoration or large movements, use smooth animation
+            if (Math.abs(distance) < 10) {{
                 window.scrollTo(0, targetScroll);
                 return;
             }}
             
-            // Smooth animation at 60fps
+            // Smooth animation
             const startTime = performance.now();
-            const duration = 100; // 100ms for quick response
+            const duration = 200; // 200ms for smooth restoration
             
             function animate(currentTime) {{
                 const elapsed = currentTime - startTime;
                 const progress = Math.min(elapsed / duration, 1);
                 
-                // Ease-out quad for smooth feel
-                const eased = 1 - (1 - progress) * (1 - progress);
+                // Ease-out cubic for smooth feel
+                const eased = 1 - Math.pow(1 - progress, 3);
                 const current = currentScroll + (distance * eased);
                 
                 window.scrollTo(0, current);
@@ -162,6 +171,7 @@ class WebViewWidget(Gtk.Box):
                     window.scrollAnimation = requestAnimationFrame(animate);
                 }} else {{
                     window.scrollAnimation = null;
+                    console.log('WebView scroll complete at:', window.pageYOffset);
                 }}
             }}
             
@@ -174,10 +184,13 @@ class WebViewWidget(Gtk.Box):
         except Exception as e:
             print(f"Error scrolling webview: {e}")
 
-        # Reset flag after animation
-        GLib.timeout_add(
-            150, lambda: setattr(self, "_is_programmatic_scroll", False) or False
-        )
+        # Re-enable sync after animation
+        def reset_flags():
+            self._is_programmatic_scroll = False
+            self.sync_scroll_enabled = was_syncing
+            return False
+
+        GLib.timeout_add(250, reset_flags)
 
     def get_scroll_percentage(self, callback: Callable[[float], None]):
         """Get current scroll percentage."""
@@ -306,7 +319,6 @@ class WebViewWidget(Gtk.Box):
                 # Reload with the same HTML to update colors
                 self.load_html(self._last_html, is_dark=is_dark)
 
-
     def _apply_theme_instantly(self, is_dark):
         """Apply theme instantly using CSS injection."""
         bg_color = "#1e1e1e" if is_dark else "#ffffff"
@@ -373,18 +385,86 @@ class WebViewWidget(Gtk.Box):
             request = nav_action.get_request()
             uri = request.get_uri()
 
+            # Allow file:// URIs (local content) - but check if it's actually a web URL
             if uri and uri.startswith("file://"):
+                # Extract the path part after file://
+                path_part = uri[7:]  # Remove "file://"
+
+                # Check if this looks like a web URL that was incorrectly prefixed with file://
+                if self._is_web_url(path_part):
+                    # It's actually a web URL, open in external browser
+                    full_uri = f"https://{path_part.lstrip('/')}"
+                    Gtk.show_uri(None, full_uri, 0)
+                    decision.ignore()
+                    return True
+
+                # It's a legitimate local file
                 decision.use()
                 return False
 
+            # Handle external URLs with protocol
             if uri and (uri.startswith("http://") or uri.startswith("https://")):
                 Gtk.show_uri(None, uri, 0)
+                decision.ignore()
+                return True
+
+            # Handle web URLs without protocol
+            if uri and self._is_web_url(uri):
+                full_uri = f"https://{uri}"
+                Gtk.show_uri(None, full_uri, 0)
                 decision.ignore()
                 return True
 
             decision.use()
             return False
         return False
+
+    def _is_web_url(self, uri: str) -> bool:
+        """Check if a URI looks like a web URL without protocol."""
+        if not uri:
+            return False
+
+        # Remove any leading/trailing whitespace and slashes
+        uri = uri.strip().lstrip("/")
+
+        # Ignore if it looks like a local path
+        if uri.startswith("/") or uri.startswith("./") or uri.startswith("../"):
+            return False
+
+        # Check for common web patterns
+        if uri.startswith("www."):
+            return True
+
+        # Check if it contains common TLDs
+        common_tlds = [
+            ".com",
+            ".org",
+            ".net",
+            ".edu",
+            ".gov",
+            ".io",
+            ".co",
+            ".uk",
+            ".de",
+            ".fr",
+            ".jp",
+            ".cn",
+            ".in",
+            ".br",
+            ".au",
+            ".ca",
+        ]
+        has_tld = any(tld in uri.lower() for tld in common_tlds)
+
+        # Must have a dot, not be at start/end, and no spaces
+        has_valid_structure = (
+            "." in uri
+            and not uri.startswith(".")
+            and not uri.endswith(".")
+            and " " not in uri
+        )
+
+        return has_tld and has_valid_structure
 
     def _on_context_menu(self, webview, context_menu, hit_test_result):
         """Handle context menu."""
@@ -496,7 +576,6 @@ class WebViewWidget(Gtk.Box):
         if self._last_html:
             # Reload the last HTML with new theme
             self.load_html(self._last_html, is_dark=is_dark)
-
 
     def _load_external_file(self, filename: str) -> str:
         """Load content from external file."""

@@ -1,0 +1,237 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2025-12-03 02:46+0530\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: src/window.py:761
+msgid "<span size='xx-large' weight='bold'>☕ Support ProPad</span>"
+msgstr ""
+
+#: src/file_manager.py:308 src/formatting_toolbar.py:597 src/window.py:416
+#: src/window.py:491
+msgid "All Files"
+msgstr ""
+
+#: src/window.py:448
+msgid "Cancel"
+msgstr ""
+
+#: src/formatting_toolbar.py:538
+msgid "Click here"
+msgstr ""
+
+#: src/formatting_toolbar.py:89
+msgid "Cols: 0"
+msgstr ""
+
+#: src/window.py:447
+msgid "Discard"
+msgstr ""
+
+#: src/export_dialog.py:320
+msgid "Export as HTML"
+msgstr ""
+
+#: src/export_dialog.py:582
+msgid "Export as Image"
+msgstr ""
+
+#: src/window.py:100
+msgid "Features"
+msgstr ""
+
+#: src/window.py:107
+msgid "File History"
+msgstr ""
+
+#: src/window.py:106
+msgid "GitHub Alerts"
+msgstr ""
+
+#: src/export_dialog.py:347
+msgid "HTML Files"
+msgstr ""
+
+#: src/sidebar.py:306
+msgid "Hide Preview"
+msgstr ""
+
+#: src/window.py:769
+msgid ""
+"If you enjoy using ProPad, consider buying me a coffee!\n"
+"Your support helps keep the project alive."
+msgstr ""
+
+#: src/formatting_toolbar.py:582
+msgid "Image Files"
+msgstr ""
+
+#: src/formatting_toolbar.py:523
+msgid "Insert Link"
+msgstr ""
+
+#: src/formatting_toolbar.py:34
+msgid "Insert Table"
+msgstr ""
+
+#: src/window.py:105
+msgid "LaTeX Math"
+msgstr ""
+
+#: src/sidebar.py:92
+msgid "Letters"
+msgstr ""
+
+#: src/formatting_toolbar.py:535
+msgid "Link Text:"
+msgstr ""
+
+#: src/window.py:102
+msgid "Live Preview"
+msgstr ""
+
+#: src/file_manager.py:302 src/window.py:410 src/window.py:485
+msgid "Markdown Files"
+msgstr ""
+
+#: src/window.py:103
+msgid "Markdown Tables"
+msgstr ""
+
+#: src/window.py:104
+msgid "Mermaid Diagrams"
+msgstr ""
+
+#: src/file_manager.py:299 src/window.py:482
+msgid "Open Markdown File"
+msgstr ""
+
+#: src/window.py:407
+msgid "Open in New Window"
+msgstr ""
+
+#: src/sidebar.py:92
+msgid "Paragraphs"
+msgstr ""
+
+#: src/window.py:944 src/window.py:946 src/window.py:949 src/window.py:951
+msgid "ProPad"
+msgstr ""
+
+#: src/formatting_toolbar.py:79
+msgid "Rows: 0"
+msgstr ""
+
+#: src/window.py:449
+msgid "Save"
+msgstr ""
+
+#: src/window.py:443
+msgid "Save Changes?"
+msgstr ""
+
+#: src/file_manager.py:374 src/window.py:548
+msgid "Save Markdown File"
+msgstr ""
+
+#: src/window.py:797
+msgid "Scan with your phone or click these buttons to open the link"
+msgstr ""
+
+#: src/formatting_toolbar.py:572
+msgid "Select Image"
+msgstr ""
+
+#: src/sidebar.py:297
+msgid "Show Preview"
+msgstr ""
+
+#: src/window.py:112
+msgid "Start editing to see the preview!"
+msgstr ""
+
+#: src/window.py:734
+msgid "Support ProPad"
+msgstr ""
+
+#: src/window.py:234
+msgid "Sync Scroll Disabled"
+msgstr ""
+
+#: src/window.py:230
+msgid "Sync Scroll Enabled"
+msgstr ""
+
+#: src/window.py:445
+msgid "The document has unsaved changes. Do you want to save them?"
+msgstr ""
+
+#: src/window.py:110
+msgid "This is a GitHub-style note alert!"
+msgstr ""
+
+#: src/formatting_toolbar.py:540
+msgid "URL:"
+msgstr ""
+
+#: src/file_manager.py:379 src/window.py:949
+msgid "Untitled"
+msgstr ""
+
+#: src/window.py:98
+msgid "Welcome to ProPad"
+msgstr ""
+
+#: src/sidebar.py:92
+msgid "Words"
+msgstr ""
+
+#: src/window.py:105
+msgid "equations"
+msgstr ""
+
+#: src/formatting_toolbar.py:543
+msgid "https://example.com"
+msgstr ""
+
+#: src/window.py:104
+msgid "rendering"
+msgstr ""
+
+#: src/window.py:103
+msgid "support"
+msgstr ""
+
+#: src/window.py:102
+msgid "with synchronized scrolling"
+msgstr ""
+
+#: src/window.py:107
+msgid "with tags"
+msgstr ""
+
+#: src/formatting_toolbar.py:84
+msgid "×"
+msgstr ""
+
+#: src/window.py:834
+msgid "☕ Open Buy Me a Coffee"
+msgstr ""
+
+#: src/window.py:719
+msgid "💝 Support Development"
+msgstr ""

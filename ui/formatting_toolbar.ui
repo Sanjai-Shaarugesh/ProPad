@@ -17,7 +17,7 @@ corresponding .blp file and regenerate this file with blueprint-compiler.
         <property name="margin-bottom">12</property>
         <child>
           <object class="GtkLabel">
-            <property name="label">Text Formatting</property>
+            <property name="label" translatable="yes">Text Formatting</property>
             <style>
               <class name="heading"/>
             </style>
@@ -32,25 +32,25 @@ corresponding .blp file and regenerate this file with blueprint-compiler.
             <child>
               <object class="GtkButton" id="btn_bold">
                 <property name="icon-name">format-text-bold-symbolic</property>
-                <property name="tooltip-text">Bold (Ctrl+B)</property>
+                <property name="tooltip-text" translatable="yes">Bold (Ctrl+B)</property>
               </object>
             </child>
             <child>
               <object class="GtkButton" id="btn_italic">
                 <property name="icon-name">format-text-italic-symbolic</property>
-                <property name="tooltip-text">Italic (Ctrl+I)</property>
+                <property name="tooltip-text" translatable="yes">Italic (Ctrl+I)</property>
               </object>
             </child>
             <child>
               <object class="GtkButton" id="btn_strikethrough">
                 <property name="icon-name">format-text-strikethrough-symbolic</property>
-                <property name="tooltip-text">Strikethrough</property>
+                <property name="tooltip-text" translatable="yes">Strikethrough</property>
               </object>
             </child>
             <child>
               <object class="GtkButton" id="btn_code">
                 <property name="icon-name">text-x-generic-symbolic</property>
-                <property name="tooltip-text">Inline Code</property>
+                <property name="tooltip-text" translatable="yes">Inline Code</property>
               </object>
             </child>
           </object>
@@ -60,7 +60,7 @@ corresponding .blp file and regenerate this file with blueprint-compiler.
         </child>
         <child>
           <object class="GtkLabel">
-            <property name="label">Headings</property>
+            <property name="label" translatable="yes">Headings</property>
             <style>
               <class name="heading"/>
             </style>
@@ -74,26 +74,26 @@ corresponding .blp file and regenerate this file with blueprint-compiler.
             <property name="homogeneous">true</property>
             <child>
               <object class="GtkButton" id="btn_h1">
-                <property name="label">H1</property>
-                <property name="tooltip-text">Heading 1</property>
+                <property name="label" translatable="yes">H1</property>
+                <property name="tooltip-text" translatable="yes">Heading 1</property>
               </object>
             </child>
             <child>
               <object class="GtkButton" id="btn_h2">
-                <property name="label">H2</property>
-                <property name="tooltip-text">Heading 2</property>
+                <property name="label" translatable="yes">H2</property>
+                <property name="tooltip-text" translatable="yes">Heading 2</property>
               </object>
             </child>
             <child>
               <object class="GtkButton" id="btn_h3">
-                <property name="label">H3</property>
-                <property name="tooltip-text">Heading 3</property>
+                <property name="label" translatable="yes">H3</property>
+                <property name="tooltip-text" translatable="yes">Heading 3</property>
               </object>
             </child>
             <child>
               <object class="GtkButton" id="btn_h4">
-                <property name="label">H4</property>
-                <property name="tooltip-text">Heading 4</property>
+                <property name="label" translatable="yes">H4</property>
+                <property name="tooltip-text" translatable="yes">Heading 4</property>
               </object>
             </child>
           </object>
@@ -103,7 +103,7 @@ corresponding .blp file and regenerate this file with blueprint-compiler.
         </child>
         <child>
           <object class="GtkLabel">
-            <property name="label">Lists &amp; Blocks</property>
+            <property name="label" translatable="yes">Lists &amp; Blocks</property>
             <style>
               <class name="heading"/>
             </style>
@@ -118,25 +118,25 @@ corresponding .blp file and regenerate this file with blueprint-compiler.
             <child>
               <object class="GtkButton" id="btn_bullet_list">
                 <property name="icon-name">view-list-symbolic</property>
-                <property name="tooltip-text">Bullet List</property>
+                <property name="tooltip-text" translatable="yes">Bullet List</property>
               </object>
             </child>
             <child>
               <object class="GtkButton" id="btn_numbered_list">
                 <property name="icon-name">view-list-ordered-symbolic</property>
-                <property name="tooltip-text">Numbered List</property>
+                <property name="tooltip-text" translatable="yes">Numbered List</property>
               </object>
             </child>
             <child>
               <object class="GtkButton" id="btn_quote">
                 <property name="icon-name">format-indent-more-symbolic</property>
-                <property name="tooltip-text">Block Quote</property>
+                <property name="tooltip-text" translatable="yes">Block Quote</property>
               </object>
             </child>
             <child>
               <object class="GtkButton" id="btn_code_block">
                 <property name="icon-name">utilities-terminal-symbolic</property>
-                <property name="tooltip-text">Code Block</property>
+                <property name="tooltip-text" translatable="yes">Code Block</property>
               </object>
             </child>
           </object>
@@ -146,7 +146,7 @@ corresponding .blp file and regenerate this file with blueprint-compiler.
         </child>
         <child>
           <object class="GtkLabel">
-            <property name="label">Insert</property>
+            <property name="label" translatable="yes">Insert</property>
             <style>
               <class name="heading"/>
             </style>
@@ -169,7 +169,7 @@ corresponding .blp file and regenerate this file with blueprint-compiler.
                     </child>
                     <child>
                       <object class="GtkLabel">
-                        <property name="label">Link</property>
+                        <property name="label" translatable="yes">Link</property>
                         <property name="hexpand">true</property>
                         <property name="halign">1</property>
                       </object>
@@ -190,7 +190,7 @@ corresponding .blp file and regenerate this file with blueprint-compiler.
                     </child>
                     <child>
                       <object class="GtkLabel">
-                        <property name="label">Image</property>
+                        <property name="label" translatable="yes">Image</property>
                         <property name="hexpand">true</property>
                         <property name="halign">1</property>
                       </object>
@@ -211,7 +211,7 @@ corresponding .blp file and regenerate this file with blueprint-compiler.
                     </child>
                     <child>
                       <object class="GtkLabel">
-                        <property name="label">Table</property>
+                        <property name="label" translatable="yes">Table</property>
                         <property name="hexpand">true</property>
                         <property name="halign">1</property>
                       </object>
@@ -232,7 +232,7 @@ corresponding .blp file and regenerate this file with blueprint-compiler.
                     </child>
                     <child>
                       <object class="GtkLabel">
-                        <property name="label">Mermaid Diagram</property>
+                        <property name="label" translatable="yes">Mermaid Diagram</property>
                         <property name="hexpand">true</property>
                         <property name="halign">1</property>
                       </object>
@@ -253,7 +253,7 @@ corresponding .blp file and regenerate this file with blueprint-compiler.
                     </child>
                     <child>
                       <object class="GtkLabel">
-                        <property name="label">LaTeX Math</property>
+                        <property name="label" translatable="yes">LaTeX Math</property>
                         <property name="hexpand">true</property>
                         <property name="halign">1</property>
                       </object>

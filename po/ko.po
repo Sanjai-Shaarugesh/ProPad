@@ -1,0 +1,594 @@
+# SOME DESCRIPTIVE TITLE.
+# Machine-translated Korean file
+msgid ""
+msgstr ""
+"Project-Id-Version: propad 2.0.0\n"
+"Report-Msgid-Bugs-To: your-email@example.com\n"
+"POT-Creation-Date: 2024-12-01 00:00+0000\n"
+"PO-Revision-Date: 2024-12-02 00:00+0900\n"
+"Last-Translator: Complete Translation <auto@translate.local>\n"
+"Language-Team: Korean <ko@li.org>\n"
+"Language: ko\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: main.py:100
+msgid "New Window"
+msgstr "새 창"
+
+#: main.py:120
+msgid "File Manager"
+msgstr "파일 관리자"
+
+#: main.py:130
+msgid "Export"
+msgstr "내보내기"
+
+#: main.py:140 src/search_replace.py:100
+msgid "Find"
+msgstr "찾기"
+
+#: main.py:150 src/search_replace.py:110
+msgid "Replace"
+msgstr "바꾸기"
+
+#: main.py:160
+msgid "Keyboard Shortcuts"
+msgstr "단축키"
+
+#: main.py:170
+msgid "About ProPad"
+msgstr "ProPad 정보"
+
+#: src/window.py:200
+msgid "Welcome to ProPad"
+msgstr "ProPad에 오신 것을 환영합니다"
+
+#: src/window.py:202
+msgid "Features"
+msgstr "기능"
+
+#: src/window.py:204
+msgid "Live Preview"
+msgstr "실시간 미리보기"
+
+#: src/window.py:204
+msgid "with synchronized scrolling"
+msgstr "동기화된 스크롤링 기능"
+
+#: src/window.py:205
+msgid "Markdown Tables"
+msgstr "마크다운 표"
+
+#: src/window.py:205
+msgid "support"
+msgstr "지원"
+
+#: src/window.py:206
+msgid "Mermaid Diagrams"
+msgstr "Mermaid 다이어그램"
+
+#: src/window.py:206
+msgid "rendering"
+msgstr "렌더링"
+
+#: src/window.py:207
+msgid "LaTeX Math"
+msgstr "LaTeX 수학 공식"
+
+#: src/window.py:207
+msgid "equations"
+msgstr "수식"
+
+#: src/window.py:208
+msgid "GitHub Alerts"
+msgstr "GitHub 알림"
+
+#: src/window.py:209
+msgid "File History"
+msgstr "파일 기록"
+
+#: src/window.py:209
+msgid "with tags"
+msgstr "태그 포함"
+
+#: src/window.py:212
+msgid "This is a GitHub-style note alert!"
+msgstr "이것은 GitHub 스타일의 노트 알림입니다!"
+
+#: src/window.py:214
+msgid "Start editing to see the preview!"
+msgstr "미리보기를 보려면 편집을 시작하세요!"
+
+#: src/window.py:300
+msgid "Save Changes?"
+msgstr "변경 사항을 저장하시겠습니까?"
+
+#: src/window.py:301
+msgid "The document has unsaved changes. Do you want to save them?"
+msgstr "문서에 저장되지 않은 변경 사항이 있습니다. 저장하시겠습니까?"
+
+#: src/window.py:302
+msgid "Discard"
+msgstr "취소"
+
+#: src/window.py:303
+msgid "Cancel"
+msgstr "취소"
+
+#: src/window.py:304
+msgid "Save"
+msgstr "저장"
+
+#: src/window.py:350
+msgid "Open Markdown File"
+msgstr "마크다운 파일 열기"
+
+#: src/window.py:352
+msgid "Markdown Files"
+msgstr "마크다운 파일"
+
+#: src/window.py:356
+msgid "All Files"
+msgstr "모든 파일"
+
+#: src/window.py:400
+msgid "Save Markdown File"
+msgstr "마크다운 파일 저장"
+
+#: src/window.py:450
+msgid "Untitled"
+msgstr "제목 없음"
+
+#: src/window.py:500
+msgid "ProPad"
+msgstr "ProPad"
+
+#: src/window.py:550
+msgid "Sync Scroll Enabled"
+msgstr "스크롤 동기화 활성화됨"
+
+#: src/window.py:552
+msgid "Sync Scroll Disabled"
+msgstr "스크롤 동기화 비활성화됨"
+
+#: src/window.py:600
+msgid "Hide Preview"
+msgstr "미리보기 숨기기"
+
+#: src/window.py:602
+msgid "Show Preview"
+msgstr "미리보기 표시"
+
+#: src/export_dialog.py:100
+msgid "Export as HTML"
+msgstr "HTML로 내보내기"
+
+#: src/export_dialog.py:110
+msgid "HTML Files"
+msgstr "HTML 파일"
+
+#: src/export_dialog.py:150
+msgid "HTML Export Successful"
+msgstr "HTML 내보내기 성공"
+
+#: src/export_dialog.py:151
+msgid "Document exported to:"
+msgstr "문서가 다음 위치로 내보내졌습니다:"
+
+#: src/export_dialog.py:200
+msgid "Export as PDF"
+msgstr "PDF로 내보내기"
+
+#: src/export_dialog.py:250
+msgid "PDF Export Successful"
+msgstr "PDF 내보내기 성공"
+
+#: src/export_dialog.py:300
+msgid "Export as Image"
+msgstr "이미지로 내보내기"
+
+#: src/export_dialog.py:310
+msgid "Image Files"
+msgstr "이미지 파일"
+
+#: src/export_dialog.py:350
+msgid "Image Export Successful"
+msgstr "이미지 내보내기 성공"
+
+#: src/export_dialog.py:400
+msgid "Export Failed"
+msgstr "내보내기 실패"
+
+#: src/file_manager.py:100
+msgid "Clear History?"
+msgstr "기록을 지우시겠습니까?"
+
+#: src/file_manager.py:101
+msgid "This will remove all file history. This action cannot be undone."
+msgstr "모든 파일 기록이 제거됩니다. 이 작업은 되돌릴 수 없습니다."
+
+#: src/file_manager.py:102
+msgid "Clear History"
+msgstr "기록 지우기"
+
+#: src/file_manager.py:150
+msgid "Remove from history"
+msgstr "기록에서 제거"
+
+#: src/file_manager.py:200
+msgid "Created"
+msgstr "생성됨"
+
+#: src/file_manager.py:201
+msgid "Opened"
+msgstr "열림"
+
+#: src/file_manager.py:202
+msgid "Edited"
+msgstr "편집됨"
+
+#: src/file_manager.py:250
+msgid "Opened {count}x"
+msgstr "{count}회 열림"
+
+#: src/formatting_toolbar.py:100
+msgid "Insert Table"
+msgstr "표 삽입"
+
+#: src/formatting_toolbar.py:150
+msgid "Rows"
+msgstr "행"
+
+#: src/formatting_toolbar.py:151
+msgid "Cols"
+msgstr "열"
+
+#: src/formatting_toolbar.py:200 src/shortcuts_window.py:73
+msgid "Insert Link"
+msgstr "링크 삽입"
+
+#: src/formatting_toolbar.py:201
+msgid "Link Text:"
+msgstr "링크 텍스트:"
+
+#: src/formatting_toolbar.py:202
+msgid "Click here"
+msgstr "여기를 클릭"
+
+#: src/formatting_toolbar.py:203
+msgid "URL:"
+msgstr "URL:"
+
+#: src/formatting_toolbar.py:250
+msgid "Select Image"
+msgstr "이미지 선택"
+
+#: src/search_replace.py:120
+msgid "Replace All"
+msgstr "모두 바꾸기"
+
+#: src/sidebar.py:100
+msgid "Words"
+msgstr "단어"
+
+#: src/sidebar.py:101
+msgid "Letters"
+msgstr "글자"
+
+#: src/sidebar.py:102
+msgid "Paragraphs"
+msgstr "단락"
+
+#: src/shortcuts_window.py:50
+msgid "File Operations"
+msgstr "파일 작업"
+
+#: src/shortcuts_window.py:51
+msgid "New File"
+msgstr "새 파일"
+
+#: src/shortcuts_window.py:52
+msgid "Open File"
+msgstr "파일 열기"
+
+#: src/shortcuts_window.py:53
+msgid "Save File"
+msgstr "파일 저장"
+
+#: src/shortcuts_window.py:54
+msgid "Save As"
+msgstr "다른 이름으로 저장"
+
+#: src/shortcuts_window.py:60
+msgid "Text Formatting"
+msgstr "텍스트 서식"
+
+#: src/shortcuts_window.py:61
+msgid "Bold"
+msgstr "굵게"
+
+#: src/shortcuts_window.py:62
+msgid "Italic"
+msgstr "기울임꼴"
+
+#: src/shortcuts_window.py:63
+msgid "Strikethrough"
+msgstr "취소선"
+
+#: src/shortcuts_window.py:64
+msgid "Code"
+msgstr "코드"
+
+#: src/shortcuts_window.py:70
+msgid "Editing"
+msgstr "편집"
+
+#: src/shortcuts_window.py:71
+msgid "Find Text"
+msgstr "텍스트 찾기"
+
+#: src/shortcuts_window.py:72
+msgid "Find and Replace"
+msgstr "찾기 및 바꾸기"
+
+#: src/shortcuts_window.py:80
+msgid "View"
+msgstr "보기"
+
+#: src/shortcuts_window.py:81
+msgid "Toggle Sidebar"
+msgstr "사이드바 토글"
+
+#: src/shortcuts_window.py:82
+msgid "Toggle Sync Scroll"
+msgstr "스크롤 동기화 토글"
+
+#: src/shortcuts_window.py:83
+msgid "Show Shortcuts"
+msgstr "단축키 표시"
+
+msgid "About"
+msgstr "정보"
+
+msgid "Application"
+msgstr "응용 프로그램"
+
+msgid "Block Quote"
+msgstr "인용 블록"
+
+msgid "Bold (Ctrl+B)"
+msgstr "굵게 (Ctrl+B)"
+
+msgid "Bullet List"
+msgstr "글머리 기호 목록"
+
+msgid "Case Sensitive"
+msgstr "대소문자 구분"
+
+msgid "Close"
+msgstr "닫기"
+
+msgid "Close all windows and quit"
+msgstr "모든 창 닫고 종료"
+
+msgid "Code Block"
+msgstr "코드 블록"
+
+msgid "Cols: 0"
+msgstr "열: 0"
+
+msgid "Create Standalone File"
+msgstr "독립 실행형 파일 생성"
+
+msgid "Create a new markdown file"
+msgstr "새 마크다운 파일 생성"
+
+msgid "Current File:"
+msgstr "현재 파일:"
+
+msgid "Editor"
+msgstr "편집기"
+
+msgid "Export Document"
+msgstr "문서 내보내기"
+
+msgid "Export Format:"
+msgstr "내보내기 형식:"
+
+msgid "Export Options:"
+msgstr "내보내기 옵션:"
+
+msgid "Export document"
+msgstr "문서 내보내기"
+
+msgid "Export..."
+msgstr "내보내기..."
+
+msgid "Find and replace text"
+msgstr "텍스트 찾기 및 바꾸기"
+
+msgid "Formatting"
+msgstr "서식"
+
+msgid "H1"
+msgstr "H1"
+
+msgid "H2"
+msgstr "H2"
+
+msgid "H3"
+msgstr "H3"
+
+msgid "H4"
+msgstr "H4"
+
+msgid "HTML"
+msgstr "HTML"
+
+msgid "Heading 1"
+msgstr "제목 1"
+
+msgid "Heading 2"
+msgstr "제목 2"
+
+msgid "Heading 3"
+msgstr "제목 3"
+
+msgid "Heading 4"
+msgstr "제목 4"
+
+msgid "Headings"
+msgstr "제목"
+
+msgid "Image"
+msgstr "이미지"
+
+msgid "Image Format:"
+msgstr "이미지 형식:"
+
+msgid "Include Custom CSS"
+msgstr "사용자 지정 CSS 포함"
+
+msgid "Inline Code"
+msgstr "인라인 코드"
+
+msgid "Insert"
+msgstr "삽입"
+
+msgid "Italic (Ctrl+I)"
+msgstr "기울임꼴 (Ctrl+I)"
+
+msgid "Lists & Blocks"
+msgstr "목록 및 블록"
+
+msgid "Main Menu"
+msgstr "주 메뉴"
+
+msgid "Mermaid Diagram"
+msgstr "Mermaid 다이어그램"
+
+msgid "New File (Ctrl+N)"
+msgstr "새 파일 (Ctrl+N)"
+
+msgid "Next Match"
+msgstr "다음 일치"
+
+msgid "No file loaded"
+msgstr "로드된 파일 없음"
+
+msgid "Numbered List"
+msgstr "번호 매기기 목록"
+
+msgid "Open File (Ctrl+O)"
+msgstr "파일 열기 (Ctrl+O)"
+
+msgid "Open File..."
+msgstr "파일 열기..."
+
+msgid "Open a new window"
+msgstr "새 창 열기"
+
+msgid "Open an existing file"
+msgstr "기존 파일 열기"
+
+msgid "Open file manager"
+msgstr "파일 관리자 열기"
+
+msgid "PDF"
+msgstr "PDF"
+
+msgid "Preview"
+msgstr "미리보기"
+
+msgid "Previous Match"
+msgstr "이전 일치"
+
+msgid "Quit"
+msgstr "종료"
+
+msgid "Recent Files:"
+msgstr "최근 파일:"
+
+msgid "Replace with..."
+msgstr "다음으로 바꾸기..."
+
+msgid "Rows: 0"
+msgstr "행: 0"
+
+msgid "Save (Ctrl+S)"
+msgstr "저장 (Ctrl+S)"
+
+msgid "Save As..."
+msgstr "다른 이름으로 저장..."
+
+msgid "Save file with a new name"
+msgstr "새 이름으로 파일 저장"
+
+msgid "Save the current file"
+msgstr "현재 파일 저장"
+
+msgid "Search in document"
+msgstr "문서에서 검색"
+
+msgid "Search..."
+msgstr "검색..."
+
+msgid "Show or hide sidebar"
+msgstr "사이드바 표시 또는 숨기기"
+
+msgid "Show this help dialog"
+msgstr "이 도움말 대화 상자 표시"
+
+msgid "Support ProPad"
+msgstr "ProPad 지원"
+
+msgid "Sync editor and preview scrolling"
+msgstr "편집기와 미리보기 스크롤 동기화"
+
+msgid "Table"
+msgstr "표"
+
+msgid "Tags: Created • Opened • Edited"
+msgstr "태그: 생성됨 • 열림 • 편집됨"
+
+msgid "Toggle Replace"
+msgstr "바꾸기 토글"
+
+msgid "Toggle Scroll Sync"
+msgstr "스크롤 동기화 토글"
+
+msgid "Toggle Scroll Sync (Ctrl+Alt+S)"
+msgstr "스크롤 동기화 토글 (Ctrl+Alt+S)"
+
+msgid "Use Regular Expression"
+msgstr "정규 표현식 사용"
+
+msgid "Whole Word"
+msgstr "전체 단어"
+
+msgid ""
+"If you enjoy using ProPad, consider buying me a coffee!\n"
+"Your support helps keep the project alive."
+msgstr ""
+"ProPad를 즐겨 사용하신다면, 저에게 커피 한 잔 사주는 것을 고려해주세요!여러분"
+"의 지원은 프로젝트가 계속 이어지도록 도와줍니다."
+
+msgid "Scan with your phone or click these buttons to open the link"
+msgstr "휴대폰으로 스캔하거나 이 버튼을 클릭하여 링크를 열어보세요."
+
+msgid "Open Buy Me a Coffee"
+msgstr "Buy Me a Coffee 열기"
+
+msgid "<span size='xx-large' weight='bold'>☕ Support ProPad</span>"
+msgstr "<span size='xx-large' weight='bold'>☕ ProPad 지원하기</span>"
+
+msgid "☕ Open Buy Me a Coffee"
+msgstr "☕ 오픈 Buy Me a Coffee"
+
+msgid "💝 Support Development"
+msgstr "💝 개발 지원"
+
+msgid "Link"
+msgstr "링크"

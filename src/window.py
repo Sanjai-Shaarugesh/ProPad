@@ -13,6 +13,7 @@ from src.state_manager import StateManager
 from src.file_manager import FileManagerDialog, FileHistory
 from src.export_dialog import ExportDialog
 from src.shortcuts_window import ShortcutsWindow
+from src.i18n import _
 
 import comrak
 import os
@@ -45,7 +46,7 @@ class Window(Adw.ApplicationWindow):
         self.content_modified = False
         self.current_file = None
         self.sync_scroll_enabled = True
-        
+
         self.style_manager = Adw.StyleManager.get_default()
         self.style_manager.connect("notify::dark", self._on_theme_changed)
 
@@ -94,21 +95,21 @@ class Window(Adw.ApplicationWindow):
 
         # If no saved content, show welcome message
         if not self.sidebar_widget.get_text():
-            initial_text = """# Welcome to ProPad
-
-## Features
-
-- **Live Preview** with synchronized scrolling
-- **Markdown Tables** support
-- **Mermaid Diagrams** rendering
-- **LaTeX Math** equations
-- **GitHub Alerts** (Note, Tip, Important, Warning, Caution)
-- **File History** with tags
-
-> [!NOTE]
-> This is a GitHub-style note alert!
-
-Start editing to see the preview!"""
+            initial_text = f"""# {_("Welcome to ProPad")}
+        
+        ## {_("Features")}
+        
+        - **{_("Live Preview")}** {_("with synchronized scrolling")}
+        - **{_("Markdown Tables")}** {_("support")}
+        - **{_("Mermaid Diagrams")}** {_("rendering")}
+        - **{_("LaTeX Math")}** {_("equations")}
+        - **{_("GitHub Alerts")}**
+        - **{_("File History")}** {_("with tags")}
+        
+        > [!NOTE]
+        > {_("This is a GitHub-style note alert!")}
+        
+        {_("Start editing to see the preview!")}"""
 
             self.sidebar_widget.set_text(initial_text)
             self._render_markdown_async(initial_text)
@@ -157,8 +158,7 @@ Start editing to see the preview!"""
 
         # Auto-save timer (every 30 seconds)
         GLib.timeout_add_seconds(30, self._auto_save_state)
-        
-        
+
     def _on_theme_changed(self, style_manager, param):
         """Automatically update UI when theme changes."""
         # Update webview
@@ -167,10 +167,9 @@ Start editing to see the preview!"""
             current_text, extension_options=comrak.ExtensionOptions()
         )
         self.webview_widget.load_html(html, is_dark=self.is_dark_mode())
-    
+
         # Update sidebar theme (optional, if you want textview colors to change)
         self.sidebar_widget._apply_theme(self.is_dark_mode())
-
 
     def _setup_bidirectional_scroll_sync(self):
         """Setup lightweight bidirectional scroll synchronization."""
@@ -236,15 +235,11 @@ Start editing to see the preview!"""
         """Update sync scroll button appearance."""
         if self.sync_scroll_enabled:
             self.toggle_sync_scroll_btn.set_icon_name("view-dual-symbolic")
-            self.toggle_sync_scroll_btn.set_tooltip_text(
-                "Sync Scroll Enabled (Ctrl+Alt+S)"
-            )
+            self.toggle_sync_scroll_btn.set_tooltip_text(_("Sync Scroll Enabled"))
             self.toggle_sync_scroll_btn.remove_css_class("dim-label")
         else:
             self.toggle_sync_scroll_btn.set_icon_name("view-paged-symbolic")
-            self.toggle_sync_scroll_btn.set_tooltip_text(
-                "Sync Scroll Disabled (Ctrl+Alt+S)"
-            )
+            self.toggle_sync_scroll_btn.set_tooltip_text(_("Sync Scroll Disabled"))
             self.toggle_sync_scroll_btn.add_css_class("dim-label")
 
     def _debounced_render(self, text):
@@ -388,6 +383,11 @@ Start editing to see the preview!"""
 
     def _setup_headerbar_buttons(self):
         """Add file operation buttons to the headerbar."""
+        # New window action (Ctrl+Shift+N)
+        new_window_action = Gio.SimpleAction.new("new-window", None)
+        new_window_action.connect("activate", self._on_new_window)
+        self.add_action(new_window_action)
+
         # New file action (Ctrl+N)
         new_action = Gio.SimpleAction.new("new-file", None)
         new_action.connect("activate", self._on_new_file)
@@ -397,6 +397,11 @@ Start editing to see the preview!"""
         open_action = Gio.SimpleAction.new("open-file", None)
         open_action.connect("activate", self._on_open_file)
         self.add_action(open_action)
+
+        # Open file in new window action
+        open_new_window_action = Gio.SimpleAction.new("open-in-new-window", None)
+        open_new_window_action.connect("activate", self._on_open_in_new_window)
+        self.add_action(open_new_window_action)
 
         # Save file action (Ctrl+S)
         save_action = Gio.SimpleAction.new("save-file", None)
@@ -415,17 +420,58 @@ Start editing to see the preview!"""
         )
         self.add_action(toggle_sync_action)
 
+    def _on_new_window(self, action, param):
+        """Open a new window."""
+        app = self.get_application()
+        if app:
+            app._open_new_window()
+
+    def _on_open_in_new_window(self, action, param):
+        """Open file in a new window."""
+        dialog = Gtk.FileDialog()
+        dialog.set_title(_("Open in New Window"))
+
+        filter_md = Gtk.FileFilter()
+        filter_md.set_name(_("Markdown Files"))
+        filter_md.add_pattern("*.md")
+        filter_md.add_pattern("*.markdown")
+        filter_md.add_pattern("*.txt")
+
+        filter_all = Gtk.FileFilter()
+        filter_all.set_name(_("All Files"))
+        filter_all.add_pattern("*")
+
+        filters = Gio.ListStore.new(Gtk.FileFilter)
+        filters.append(filter_md)
+        filters.append(filter_all)
+        dialog.set_filters(filters)
+
+        dialog.open(self, None, self._on_open_in_new_window_response)
+
+    def _on_open_in_new_window_response(self, dialog, result):
+        """Handle open in new window response."""
+        try:
+            file = dialog.open_finish(result)
+            if file:
+                filepath = file.get_path()
+                app = self.get_application()
+                if app:
+                    app._open_new_window(filepath)
+        except Exception as e:
+            if "dismissed" not in str(e).lower():
+                print(f"Error opening file in new window: {e}")
+
     def _on_new_file(self, action, param):
         """Create new file and track in history."""
         if self.content_modified:
             dialog = Adw.MessageDialog.new(self)
-            dialog.set_heading("Save Changes?")
+            dialog.set_heading(_("Save Changes?"))
             dialog.set_body(
-                "The document has unsaved changes. Do you want to save them?"
+                _("The document has unsaved changes. Do you want to save them?")
             )
-            dialog.add_response("discard", "Discard")
-            dialog.add_response("cancel", "Cancel")
-            dialog.add_response("save", "Save")
+            dialog.add_response("discard", _("Discard"))
+            dialog.add_response("cancel", _("Cancel"))
+            dialog.add_response("save", _("Save"))
             dialog.set_response_appearance("save", Adw.ResponseAppearance.SUGGESTED)
             dialog.set_response_appearance(
                 "discard", Adw.ResponseAppearance.DESTRUCTIVE
@@ -458,16 +504,16 @@ Start editing to see the preview!"""
     def _on_open_file(self, action, param):
         """Open file dialog."""
         dialog = Gtk.FileDialog()
-        dialog.set_title("Open Markdown File")
+        dialog.set_title(_("Open Markdown File"))
 
         filter_md = Gtk.FileFilter()
-        filter_md.set_name("Markdown Files")
+        filter_md.set_name(_("Markdown Files"))
         filter_md.add_pattern("*.md")
         filter_md.add_pattern("*.markdown")
         filter_md.add_pattern("*.txt")
 
         filter_all = Gtk.FileFilter()
-        filter_all.set_name("All Files")
+        filter_all.set_name(_("All Files"))
         filter_all.add_pattern("*")
 
         filters = Gio.ListStore.new(Gtk.FileFilter)
@@ -524,7 +570,7 @@ Start editing to see the preview!"""
     def _on_save_as(self, action, param):
         """Save as dialog."""
         dialog = Gtk.FileDialog()
-        dialog.set_title("Save Markdown File")
+        dialog.set_title(_("Save Markdown File"))
 
         if self.current_file:
             initial_name = os.path.basename(self.current_file)
@@ -603,11 +649,93 @@ Start editing to see the preview!"""
         shortcuts_window = ShortcutsWindow(parent=self)
         shortcuts_window.present()
 
+    def _restore_state(self):
+        """Restore application state."""
+        # -----------------------------------------
+        # Restore window size + maximized state
+        # -----------------------------------------
+        window_state = self.state_manager.get_window_state()
+        self.set_default_size(
+            window_state.get("width", 950), window_state.get("height", 700)
+        )
+
+        if window_state.get("maximized", False):
+            self.maximize()
+
+        # -----------------------------------------
+        # Restore text content + cursor
+        # -----------------------------------------
+        content = self.state_manager.get_content()
+        if content:
+            self.sidebar_widget.set_text(content)
+            cursor_pos = self.state_manager.get_cursor_position()
+            try:
+                self.sidebar_widget.set_cursor_position(cursor_pos)
+            except Exception:
+                # If sidebar doesn't expose set_cursor_position, ignore
+                pass
+
+        # -----------------------------------------
+        # Restore last opened file
+        # -----------------------------------------
+        self.current_file = self.state_manager.get_current_file()
+
+        # -----------------------------------------
+        # Restore WebView hidden state
+        # -----------------------------------------
+        self.webview_hidden = self.state_manager.is_webview_hidden()
+
+        # -----------------------------------------
+        # Restore sync scroll state
+        # -----------------------------------------
+        self.sync_scroll_enabled = self.state_manager.state.get(
+            "sync_scroll_enabled", True
+        )
+        self.sidebar_widget.set_sync_scroll_enabled(self.sync_scroll_enabled)
+        self.webview_widget.set_sync_scroll_enabled(self.sync_scroll_enabled)
+
+        # -----------------------------------------
+        # Apply WebView visibility
+        # -----------------------------------------
+        if self.webview_hidden:
+            GLib.idle_add(self._apply_webview_hidden_state)
+
+        # Nothing has changed after restore
+        self.content_modified = False
+
+        # ============================================================
+        #                 RESTORE SCROLL POSITIONS
+        # ============================================================
+        scroll_positions = self.state_manager.get_scroll_positions()
+        saved_sidebar_scroll = scroll_positions.get("sidebar", 0.0)
+        saved_webview_scroll = scroll_positions.get("webview", 0.0)
+
+        def restore_scrolls():
+            # Restore Sidebar scroll
+            try:
+                self.sidebar_widget.scroll_to_percentage(saved_sidebar_scroll)
+            except Exception as e:
+                print("Sidebar scroll restore error:", e)
+
+            # WebView needs delay for HTML layout
+            def later():
+                try:
+                    self.webview_widget.scroll_to_percentage(saved_webview_scroll)
+                except Exception as e:
+                    print("WebView scroll restore error:", e)
+                return False
+
+            GLib.timeout_add(350, later)
+            return False
+
+        # Run AFTER widgets fully appear
+        GLib.idle_add(restore_scrolls)
+
     def _on_about_activate(self, action, param):
-        """Show about dialog."""
+        """Show about dialog with Buy Me a Coffee support."""
         about = Adw.AboutDialog.new()
         about.set_application_name("ProPad")
-        about.set_application_icon("text-editor-symbolic")
+        about.set_application_icon("io.github.sanjai.ProPad")
         about.set_developer_name("ProPad Team")
         about.set_version("2.0.0")
         about.set_website("https://github.com/yourusername/propad")
@@ -621,38 +749,171 @@ Start editing to see the preview!"""
             "file history tracking, and support for tables, "
             "Mermaid diagrams, LaTeX math, and GitHub alerts."
         )
+
+        # Add custom "Support" link that opens support dialog
+        about.add_link("💝 Support Development", "support://show")
+
+        # Handle link activation
+        def on_activate_link(dialog, uri):
+            if uri == "support://show":
+                self._show_support_dialog()
+                return True
+            return False
+
+        about.connect("activate-link", on_activate_link)
         about.present(self)
 
-    def _restore_state(self):
-        """Restore application state."""
-        window_state = self.state_manager.get_window_state()
-        self.set_default_size(
-            window_state.get("width", 950), window_state.get("height", 7)
+    def _show_support_dialog(self):
+        """Show support dialog with QR code embedded."""
+        # Create custom dialog window
+        dialog = Adw.Window()
+        dialog.set_title(_("Support ProPad"))
+        dialog.set_default_size(450, 600)
+        dialog.set_modal(True)
+        dialog.set_transient_for(self)
+
+        # Create main content
+        toolbar_view = Adw.ToolbarView()
+
+        # Header bar
+        header = Adw.HeaderBar()
+        header.set_show_end_title_buttons(False)
+
+        # Close button
+        close_btn = Gtk.Button()
+        close_btn.set_icon_name("window-close-symbolic")
+        close_btn.connect("clicked", lambda btn: dialog.close())
+        header.pack_end(close_btn)
+
+        toolbar_view.add_top_bar(header)
+
+        # Content box
+        content_box = Gtk.Box(orientation=Gtk.Orientation.VERTICAL, spacing=20)
+        content_box.set_margin_top(30)
+        content_box.set_margin_bottom(30)
+        content_box.set_margin_start(30)
+        content_box.set_margin_end(30)
+        content_box.set_halign(Gtk.Align.CENTER)
+        content_box.set_valign(Gtk.Align.CENTER)
+
+        # Title
+        title_label = Gtk.Label()
+        title_label.set_markup(
+            "<span size='xx-large' weight='bold'>☕ Support ProPad</span>"
         )
+        title_label.set_halign(Gtk.Align.CENTER)
+        content_box.append(title_label)
 
-        if window_state.get("maximized", False):
-            self.maximize()
+        # Description
+        desc_label = Gtk.Label()
+        desc_label.set_text(
+            "If you enjoy using ProPad, consider buying me a coffee!\n"
+            "Your support helps keep the project alive."
+        )
+        desc_label.set_justify(Gtk.Justification.CENTER)
+        desc_label.set_wrap(True)
+        desc_label.set_halign(Gtk.Align.CENTER)
+        desc_label.add_css_class("dim-label")
+        content_box.append(desc_label)
 
-        content = self.state_manager.get_content()
-        if content:
+        # QR Code
+        qr_image_path = "data/images/buymeacoffee-qr.png"
+        if os.path.exists(qr_image_path):
+            # Frame for QR code
+            qr_frame = Gtk.Frame()
+            qr_frame.set_halign(Gtk.Align.CENTER)
+
+            qr_image = Gtk.Picture.new_for_filename(qr_image_path)
+            qr_image.set_size_request(200, 200)
+            qr_image.set_halign(Gtk.Align.CENTER)
+            qr_image.set_valign(Gtk.Align.CENTER)
+
+            qr_frame.set_child(qr_image)
+            content_box.append(qr_frame)
+
+            # QR label
+            qr_label = Gtk.Label()
+            qr_label.set_text("Scan with your phone")
+            qr_label.add_css_class("dim-label")
+            qr_label.set_halign(Gtk.Align.CENTER)
+            content_box.append(qr_label)
+        else:
+            # Placeholder
+            placeholder = Gtk.Label()
+            placeholder.set_markup(
+                "<span size='xx-large'>📱</span>\n"
+                "<small>Place QR code at:\ndata/images/buymeacoffee-qr.png</small>"
+            )
+            placeholder.set_justify(Gtk.Justification.CENTER)
+            placeholder.set_halign(Gtk.Align.CENTER)
+            content_box.append(placeholder)
+
+        # Separator
+        separator = Gtk.Separator(orientation=Gtk.Orientation.HORIZONTAL)
+        separator.set_margin_top(10)
+        separator.set_margin_bottom(10)
+        content_box.append(separator)
+
+        # Button image or text button
+        button_image_path = "data/images/buymeacoffee-button.png"
+        if os.path.exists(button_image_path):
+            # Use image button
+            image_button = Gtk.Button()
+            button_image = Gtk.Picture.new_for_filename(button_image_path)
+            button_image.set_size_request(170, 50)
+            image_button.set_child(button_image)
+            image_button.add_css_class("flat")
+            image_button.set_halign(Gtk.Align.CENTER)
+            image_button.connect(
+                "clicked",
+                lambda btn: Gtk.show_uri(
+                    self, "https://buymeacoffee.com/yourusername", 0
+                ),
+            )
+            content_box.append(image_button)
+        else:
+            # Use text button
+            coffee_button = Gtk.Button()
+            coffee_button.set_label("☕ Open Buy Me a Coffee")
+            coffee_button.add_css_class("pill")
+            coffee_button.add_css_class("suggested-action")
+            coffee_button.set_halign(Gtk.Align.CENTER)
+            coffee_button.set_size_request(250, -1)
+            coffee_button.connect(
+                "clicked",
+                lambda btn: Gtk.show_uri(
+                    self, "https://buymeacoffee.com/yourusername", 0
+                ),
+            )
+            content_box.append(coffee_button)
+
+        # Scroll window for content
+        scrolled = Gtk.ScrolledWindow()
+        scrolled.set_policy(Gtk.PolicyType.NEVER, Gtk.PolicyType.AUTOMATIC)
+        scrolled.set_child(content_box)
+
+        toolbar_view.set_content(scrolled)
+        dialog.set_content(toolbar_view)
+        dialog.present()
+
+    def load_file(self, filepath):
+        """Load a file into this window."""
+        try:
+            with open(filepath, "r", encoding="utf-8") as f:
+                content = f.read()
+
             self.sidebar_widget.set_text(content)
-            cursor_pos = self.state_manager.get_cursor_position()
-            self.sidebar_widget.set_cursor_position(cursor_pos)
+            self.current_file = filepath
+            self.content_modified = False
+            self._update_title()
+            self.state_manager.save_current_file(filepath)
 
-        self.current_file = self.state_manager.get_current_file()
-        self.webview_hidden = self.state_manager.is_webview_hidden()
-        self.sync_scroll_enabled = self.state_manager.state.get(
-            "sync_scroll_enabled", True
-        )
+            # Track in file history
+            self.file_history.add_file(filepath, "opened")
 
-        # Update widgets with sync scroll state
-        self.sidebar_widget.set_sync_scroll_enabled(self.sync_scroll_enabled)
-        self.webview_widget.set_sync_scroll_enabled(self.sync_scroll_enabled)
-
-        if self.webview_hidden:
-            GLib.idle_add(self._apply_webview_hidden_state)
-
-        self.content_modified = False
+            print(f"✅ Loaded file: {filepath}")
+        except Exception as e:
+            print(f"❌ Error loading file: {e}")
 
     def _apply_webview_hidden_state(self):
         """Apply the webview hidden state to UI."""
@@ -708,6 +969,17 @@ Start editing to see the preview!"""
 
     def _on_close_request(self, window):
         """Handle window close request."""
+
+        # Save scroll positions before exit
+        self.sidebar_widget.get_scroll_percentage(
+            lambda sidebar_pos: self.webview_widget.get_scroll_percentage(
+                lambda webview_pos: self.state_manager.save_scroll_positions(
+                    sidebar_pos, webview_pos
+                )
+            )
+        )
+
+        # Save rest of the state
         self._save_state()
         time.sleep(0.1)
         return False
@@ -717,14 +989,14 @@ Start editing to see the preview!"""
         if self.current_file:
             filename = os.path.basename(self.current_file)
             if self.content_modified:
-                self.set_title(f"● {filename} - ProPad")
+                self.set_title(f"● {filename} - {_('ProPad')}")
             else:
-                self.set_title(f"{filename} - ProPad")
+                self.set_title(f"{filename} - {_('ProPad')}")
         else:
             if self.content_modified:
-                self.set_title("● Untitled - ProPad")
+                self.set_title(f"● {_('Untitled')} - {_('ProPad')}")
             else:
-                self.set_title("ProPad")
+                self.set_title(_("ProPad"))
 
     def set_current_file(self, filepath):
         """Set current file and update state."""

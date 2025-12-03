@@ -12,6 +12,7 @@ gi.require_version("Gdk", "4.0")
 
 from gi.repository import Gtk, Adw, Gio, WebKit, GLib, Gdk
 import comrak
+from src.i18n import _
 
 
 UI_FILE = "ui/export_dialog.ui"
@@ -42,7 +43,7 @@ class ExportDialog(Adw.Window):
 
         # Pre-load external files in background
         self._preload_external_files()
-        
+
         # Disable WebKit sandbox for Flatpak compatibility
         self._setup_webkit_context()
 
@@ -65,26 +66,28 @@ class ExportDialog(Adw.Window):
         """Setup WebKit context to disable sandboxing for Flatpak."""
         try:
             # Set environment variables to disable WebKit sandbox
-            os.environ['WEBKIT_DISABLE_SANDBOX_THIS_IS_DANGEROUS'] = '1'
-            os.environ['WEBKIT_FORCE_SANDBOX'] = '0'
-            
+            os.environ["WEBKIT_DISABLE_SANDBOX_THIS_IS_DANGEROUS"] = "1"
+            os.environ["WEBKIT_FORCE_SANDBOX"] = "0"
+
             # Get the default web context and disable sandbox
             context = WebKit.WebContext.get_default()
-            
+
             # Set process model to shared (avoids multiple sandbox processes)
             # Only if the method exists (WebKit2GTK 2.26+)
-            if hasattr(context, 'set_process_model'):
+            if hasattr(context, "set_process_model"):
                 try:
-                    context.set_process_model(WebKit.ProcessModel.SHARED_SECONDARY_PROCESS)
+                    context.set_process_model(
+                        WebKit.ProcessModel.SHARED_SECONDARY_PROCESS
+                    )
                 except:
                     pass
-            
+
             # Set cache model
             try:
                 context.set_cache_model(WebKit.CacheModel.DOCUMENT_VIEWER)
             except:
                 pass
-            
+
             print("WebKit sandbox disabled for Flatpak compatibility")
         except Exception as e:
             print(f"Note: WebKit context configuration skipped: {e}")
@@ -320,14 +323,18 @@ class ExportDialog(Adw.Window):
     def _on_export_html(self, button):
         """Export as HTML - Fixed version."""
         dialog = Gtk.FileDialog()
-        dialog.set_title("Export as HTML")
+        dialog.set_title(_("Export as HTML"))
 
-        if self.parent_window and hasattr(self.parent_window, 'current_file') and self.parent_window.current_file:
+        if (
+            self.parent_window
+            and hasattr(self.parent_window, "current_file")
+            and self.parent_window.current_file
+        ):
             base_name = os.path.splitext(
                 os.path.basename(self.parent_window.current_file)
             )[0]
             dialog.set_initial_name(f"{base_name}.html")
-            
+
             # Set initial folder to the current file's directory
             current_dir = os.path.dirname(self.parent_window.current_file)
             if current_dir and os.path.exists(current_dir):
@@ -343,7 +350,7 @@ class ExportDialog(Adw.Window):
                 dialog.set_initial_folder(Gio.File.new_for_path(home_dir))
 
         filter_html = Gtk.FileFilter()
-        filter_html.set_name("HTML Files")
+        filter_html.set_name(_("HTML Files"))
         filter_html.add_pattern("*.html")
         filter_html.add_pattern("*.htm")
 
@@ -360,34 +367,36 @@ class ExportDialog(Adw.Window):
             file = dialog.save_finish(result)
             if file:
                 html_content = self.get_full_html_document_from_webview(for_pdf=False)
-                
+
                 # Get the file path
                 filepath = file.get_path()
-                
+
                 # Check if we got a portal path (should not happen with --filesystem=host)
-                if filepath and '/run/user/' in filepath and '/doc/' in filepath:
+                if filepath and "/run/user/" in filepath and "/doc/" in filepath:
                     print(f"Warning: Got portal path: {filepath}")
-                    print("This means the Flatpak doesn't have --filesystem=host permission")
+                    print(
+                        "This means the Flatpak doesn't have --filesystem=host permission"
+                    )
                     self._show_error_message(
                         "Permission Error",
-                        "The app needs filesystem access. Please rebuild with --filesystem=host"
+                        "The app needs filesystem access. Please rebuild with --filesystem=host",
                     )
                     return
-                
+
                 # Write directly to file path
                 if filepath:
                     try:
                         # Ensure directory exists
                         os.makedirs(os.path.dirname(filepath), exist_ok=True)
-                        
+
                         # Write file directly
-                        with open(filepath, 'w', encoding='utf-8') as f:
+                        with open(filepath, "w", encoding="utf-8") as f:
                             f.write(html_content)
-                        
+
                         print(f"Exported to HTML: {filepath}")
                         self._show_success_message(
-                            "HTML Export Successful", 
-                            f"Document exported to:\n{filepath}"
+                            "HTML Export Successful",
+                            f"Document exported to:\n{filepath}",
                         )
                     except Exception as write_error:
                         print(f"Error writing file: {write_error}")
@@ -397,27 +406,26 @@ class ExportDialog(Adw.Window):
                                 None,
                                 False,
                                 Gio.FileCreateFlags.REPLACE_DESTINATION,
-                                None
+                                None,
                             )
-                            output_stream.write(html_content.encode('utf-8'), None)
+                            output_stream.write(html_content.encode("utf-8"), None)
                             output_stream.close(None)
                             print(f"Exported via GIO fallback: {filepath}")
                             self._show_success_message(
-                                "HTML Export Successful", 
-                                f"Document exported successfully!"
+                                "HTML Export Successful",
+                                f"Document exported successfully!",
                             )
                         except Exception as gio_error:
                             print(f"GIO fallback also failed: {gio_error}")
                             self._show_error_message(
-                                "Export Failed", 
-                                f"Could not write file: {str(write_error)}"
+                                "Export Failed",
+                                f"Could not write file: {str(write_error)}",
                             )
                 else:
                     self._show_error_message(
-                        "Export Failed",
-                        "Could not determine file path"
+                        "Export Failed", "Could not determine file path"
                     )
-                    
+
         except GLib.Error as e:
             # Handle dialog cancellation gracefully
             if e.code != Gtk.DialogError.DISMISSED:
@@ -435,7 +443,11 @@ class ExportDialog(Adw.Window):
         """Export as PDF using WebKit print operation with GTK print dialog."""
         html_content = self.get_full_html_document_from_webview(for_pdf=True)
 
-        if self.parent_window and hasattr(self.parent_window, 'current_file') and self.parent_window.current_file:
+        if (
+            self.parent_window
+            and hasattr(self.parent_window, "current_file")
+            and self.parent_window.current_file
+        ):
             base_name = os.path.splitext(
                 os.path.basename(self.parent_window.current_file)
             )[0]
@@ -454,41 +466,40 @@ class ExportDialog(Adw.Window):
         self._prepare_pdf_webview()
 
     def _prepare_pdf_webview(self):
-            """Prepare WebView for PDF export."""
-            settings = WebKit.Settings()
-            settings.set_enable_webgl(True)
-            settings.set_enable_webaudio(True)
-            settings.set_hardware_acceleration_policy(
-                WebKit.HardwareAccelerationPolicy.ALWAYS
-            )
-            settings.set_enable_page_cache(True)
-            settings.set_enable_javascript(True)
-    
-            webview = WebKit.WebView()
-            webview.set_settings(settings)
-            webview.set_size_request(800, 600)
-    
-            try:
-                webview.set_background_color(Gdk.RGBA(1, 1, 1, 1))
-            except:
-                pass
-    
-            self._pdf_webview = webview
-            self._render_timeout_id = None
-    
-            def on_load_finished(web_view, event):
-                if event == WebKit.LoadEvent.FINISHED:
-                    GLib.idle_add(self._show_print_dialog_immediate)
-    
-            webview.connect("load-changed", on_load_finished)
-    
-            self._pdf_html_content = self.get_full_html_document_from_webview(for_pdf=True)
-    
-            def load_html_async():
-                GLib.idle_add(lambda: webview.load_html(self._pdf_html_content, "file:///"))
-    
-            self._thread_pool.submit(load_html_async)
+        """Prepare WebView for PDF export."""
+        settings = WebKit.Settings()
+        settings.set_enable_webgl(True)
+        settings.set_enable_webaudio(True)
+        settings.set_hardware_acceleration_policy(
+            WebKit.HardwareAccelerationPolicy.ALWAYS
+        )
+        settings.set_enable_page_cache(True)
+        settings.set_enable_javascript(True)
 
+        webview = WebKit.WebView()
+        webview.set_settings(settings)
+        webview.set_size_request(800, 600)
+
+        try:
+            webview.set_background_color(Gdk.RGBA(1, 1, 1, 1))
+        except:
+            pass
+
+        self._pdf_webview = webview
+        self._render_timeout_id = None
+
+        def on_load_finished(web_view, event):
+            if event == WebKit.LoadEvent.FINISHED:
+                GLib.idle_add(self._show_print_dialog_immediate)
+
+        webview.connect("load-changed", on_load_finished)
+
+        self._pdf_html_content = self.get_full_html_document_from_webview(for_pdf=True)
+
+        def load_html_async():
+            GLib.idle_add(lambda: webview.load_html(self._pdf_html_content, "file:///"))
+
+        self._thread_pool.submit(load_html_async)
 
     def _show_print_dialog_immediate(self):
         """Show print dialog immediately without artificial delay."""
@@ -582,14 +593,18 @@ class ExportDialog(Adw.Window):
         format_ext = formats[selected_index]
 
         dialog = Gtk.FileDialog()
-        dialog.set_title("Export as Image")
+        dialog.set_title(_("Export as Image"))
 
-        if self.parent_window and hasattr(self.parent_window, 'current_file') and self.parent_window.current_file:
+        if (
+            self.parent_window
+            and hasattr(self.parent_window, "current_file")
+            and self.parent_window.current_file
+        ):
             base_name = os.path.splitext(
                 os.path.basename(self.parent_window.current_file)
             )[0]
             dialog.set_initial_name(f"{base_name}.{format_ext}")
-            
+
             # Set initial folder to the current file's directory
             current_dir = os.path.dirname(self.parent_window.current_file)
             if current_dir and os.path.exists(current_dir):
@@ -605,7 +620,7 @@ class ExportDialog(Adw.Window):
                 dialog.set_initial_folder(Gio.File.new_for_path(home_dir))
 
         filter_img = Gtk.FileFilter()
-        filter_img.set_name(f"{format_ext.upper()} Files")
+        filter_img.set_name(f"{_(format_ext.upper())} Files")
         filter_img.add_pattern(f"*.{format_ext}")
 
         filters = Gio.ListStore.new(Gtk.FileFilter)
@@ -635,65 +650,68 @@ class ExportDialog(Adw.Window):
                 "Export Failed", f"Could not export to image: {str(e)}"
             )
 
-    def _generate_image(self, filepath, format_ext,width=1920, height=1080):
-            """Generate image from HTML content."""
-            settings = WebKit.Settings()
-            settings.set_enable_webgl(True)
-            settings.set_hardware_acceleration_policy(
-                WebKit.HardwareAccelerationPolicy.ALWAYS
-            )
-            settings.set_enable_javascript(True)
-            
-            STANDARD_WIDTH = 1920
-            STANDARD_HEIGHT = 1080
-    
-            webview = WebKit.WebView()
-            webview.set_settings(settings)
-            
-            webview.set_size_request(STANDARD_WIDTH, STANDARD_HEIGHT)
-            
-            html_content = self.get_full_html_document_from_webview(for_pdf=False)
-    
-            def on_snapshot_ready(source, result, user_data):
-                try:
-                    texture = webview.get_snapshot_finish(result)
-                    
-                    # Save to REAL path (PNG only; for other formats, convert if needed)
-                    path_str = filepath.get_path() if isinstance(filepath, Gio.File) else filepath
-                    print(f"💾 Saving {format_ext.upper()} to: {filepath}")
-                    success = texture.save_to_png(path_str)
-                    
-                    if success and os.path.exists(filepath):
-                        print(f"✅ Exported {format_ext.upper()} to: {filepath}")
-                        self._show_success_message(
-                            f"{format_ext.upper()} Export Successful",
-                            f"Document exported to:\n{os.path.basename(filepath)}",
-                        )
-                    else:
-                        raise Exception("Failed to save image")
-                except Exception as e:
-                    import traceback
-                    print(f"❌ Error saving snapshot: {e}")
-                    print(traceback.format_exc())
-                    self._show_error_message(
-                        "Export Failed", f"Could not save image: {str(e)}"
-                    )
-    
-            def on_load_finished(web_view, event):
-                if event == WebKit.LoadEvent.FINISHED:
-                    GLib.timeout_add(500, lambda: take_snapshot())
-    
-            def take_snapshot():
-                webview.get_snapshot(
-                    WebKit.SnapshotRegion.FULL_DOCUMENT,
-                    WebKit.SnapshotOptions.NONE,
-                    None,
-                    on_snapshot_ready,
-                    None,
+    def _generate_image(self, filepath, format_ext, width=1920, height=1080):
+        """Generate image from HTML content."""
+        settings = WebKit.Settings()
+        settings.set_enable_webgl(True)
+        settings.set_hardware_acceleration_policy(
+            WebKit.HardwareAccelerationPolicy.ALWAYS
+        )
+        settings.set_enable_javascript(True)
+
+        STANDARD_WIDTH = 1920
+        STANDARD_HEIGHT = 1080
+
+        webview = WebKit.WebView()
+        webview.set_settings(settings)
+
+        webview.set_size_request(STANDARD_WIDTH, STANDARD_HEIGHT)
+
+        html_content = self.get_full_html_document_from_webview(for_pdf=False)
+
+        def on_snapshot_ready(source, result, user_data):
+            try:
+                texture = webview.get_snapshot_finish(result)
+
+                # Save to REAL path (PNG only; for other formats, convert if needed)
+                path_str = (
+                    filepath.get_path() if isinstance(filepath, Gio.File) else filepath
                 )
-    
-            webview.connect("load-changed", on_load_finished)
-            webview.load_html(html_content, "file:///")
+                print(f"💾 Saving {format_ext.upper()} to: {filepath}")
+                success = texture.save_to_png(path_str)
+
+                if success and os.path.exists(filepath):
+                    print(f"✅ Exported {format_ext.upper()} to: {filepath}")
+                    self._show_success_message(
+                        f"{format_ext.upper()} Export Successful",
+                        f"Document exported to:\n{os.path.basename(filepath)}",
+                    )
+                else:
+                    raise Exception("Failed to save image")
+            except Exception as e:
+                import traceback
+
+                print(f"❌ Error saving snapshot: {e}")
+                print(traceback.format_exc())
+                self._show_error_message(
+                    "Export Failed", f"Could not save image: {str(e)}"
+                )
+
+        def on_load_finished(web_view, event):
+            if event == WebKit.LoadEvent.FINISHED:
+                GLib.timeout_add(500, lambda: take_snapshot())
+
+        def take_snapshot():
+            webview.get_snapshot(
+                WebKit.SnapshotRegion.FULL_DOCUMENT,
+                WebKit.SnapshotOptions.NONE,
+                None,
+                on_snapshot_ready,
+                None,
+            )
+
+        webview.connect("load-changed", on_load_finished)
+        webview.load_html(html_content, "file:///")
 
     def _show_success_message(self, heading, body):
         """Show success message dialog."""
