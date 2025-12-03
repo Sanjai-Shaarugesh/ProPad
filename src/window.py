@@ -47,6 +47,9 @@ class Window(Adw.ApplicationWindow):
         self.current_file = None
         self.sync_scroll_enabled = True
 
+        self.is_typing = False
+        self._typing_debounce_id = None
+
         self.style_manager = Adw.StyleManager.get_default()
         self.style_manager.connect("notify::dark", self._on_theme_changed)
 
@@ -119,24 +122,21 @@ class Window(Adw.ApplicationWindow):
 
         # Connect to text buffer changes with debouncing
         def on_text_update(text):
-            # Mark that user is typing to prevent scroll sync interference
-            self._user_is_typing = True
-            
+            self.is_typing = True  # Freeze sync immediately on typing
             self._debounced_render(text)
             self.content_modified = True
             self._update_title()
-        
+
             # Track file edits
             if self.current_file:
                 self.file_history.add_file(self.current_file, "edited")
-            
-            # Reset typing flag after rendering completes
-            def reset_typing_flag():
-                self._user_is_typing = False
-                return False
-            GLib.timeout_add(300, reset_typing_flag)
-        
-        self.sidebar_widget.connect_text_changed(on_text_update)
+
+            # Debounce reset of typing state (300ms idle = resume sync)
+            if self._typing_debounce_id:
+                GLib.source_remove(self._typing_debounce_id)
+            self._typing_debounce_id = GLib.timeout_add(300, self._reset_typing_state)
+
+        # Add this new method (place after _debounced_render, around line 200)
 
         self.sidebar_widget.connect_text_changed(on_text_update)
 
@@ -182,56 +182,63 @@ class Window(Adw.ApplicationWindow):
         # Update sidebar theme (optional, if you want textview colors to change)
         self.sidebar_widget._apply_theme(self.is_dark_mode())
 
+    def _reset_typing_state(self):
+        """Reset typing state after idle period, resuming sync."""
+        self.is_typing = False
+        self._typing_debounce_id = None
+        print("✨ Typing paused - resuming scroll sync")
+        return False  # Remove the timeout
+
     def _setup_bidirectional_scroll_sync(self):
-        """Setup optimized bidirectional scroll synchronization."""
+        """Setup lightweight bidirectional scroll synchronization with typing freeze."""
         # Initialize scroll tracking
         self._last_sidebar_percentage = 0.0
         self._last_webview_percentage = 0.0
         self._scroll_lock = False
-        self._user_is_typing = False
-    
-        print("🚀 Setting up optimized bidirectional scroll sync...")
-    
+
+        print("🚀 Setting up bidirectional scroll sync with typing freeze...")
+
         # DIRECTION 1: Sidebar → WebView (Editor scrolls, Preview follows)
         def on_sidebar_scroll(percentage):
-            if self.sync_scroll_enabled and not self._scroll_lock and not self._user_is_typing:
-                # Balanced threshold
-                if abs(percentage - self._last_sidebar_percentage) > 0.003:
-                    self._last_sidebar_percentage = percentage
-                    self._scroll_lock = True
-    
-                    # Scroll webview with animation
-                    self.webview_widget.scroll_to_percentage(percentage)
-    
-                    # Reset lock after animation
-                    GLib.timeout_add(
-                        150, lambda: setattr(self, "_scroll_lock", False)
-                    )
-    
+            if (
+                not self.sync_scroll_enabled or self.is_typing or self._scroll_lock
+            ):  # ADD: or self.is_typing
+                return
+            # Larger threshold to reduce updates
+            if abs(percentage - self._last_sidebar_percentage) > 0.005:
+                self._last_sidebar_percentage = percentage
+                self._scroll_lock = True
+
+                # Scroll webview
+                self.webview_widget.scroll_to_percentage(percentage)
+
+                # Reset lock
+                GLib.timeout_add(100, lambda: setattr(self, "_scroll_lock", False))
+
         self.sidebar_widget.connect_scroll_changed(on_sidebar_scroll)
-        print("✅ Sidebar → WebView sync enabled")
-    
+        print("✅ Sidebar → WebView sync enabled (with typing freeze)")
+
         # DIRECTION 2: WebView → Sidebar (Preview scrolls, Editor follows)
         def on_webview_scroll(percentage):
-            if self.sync_scroll_enabled and not self._scroll_lock and not self._user_is_typing:
-                # Balanced threshold
-                if abs(percentage - self._last_webview_percentage) > 0.003:
-                    self._last_webview_percentage = percentage
-                    self._scroll_lock = True
-    
-                    # Scroll sidebar instantly for better text rendering
-                    self.sidebar_widget.scroll_to_percentage(percentage)
-    
-                    # Reset lock quickly
-                    GLib.timeout_add(
-                        100, lambda: setattr(self, "_scroll_lock", False)
-                    )
-    
-        self.webview_widget.connect_scroll_changed(on_webview_scroll)
-        print("✅ WebView → Sidebar sync enabled")
-    
-        print("✨ Optimized bidirectional scroll sync complete!")
+            if (
+                not self.sync_scroll_enabled or self.is_typing or self._scroll_lock
+            ):  # ADD: or self.is_typing
+                return
+            # Larger threshold to reduce updates
+            if abs(percentage - self._last_webview_percentage) > 0.005:
+                self._last_webview_percentage = percentage
+                self._scroll_lock = True
 
+                # Scroll sidebar
+                self.sidebar_widget.scroll_to_percentage(percentage)
+
+                # Reset lock
+                GLib.timeout_add(100, lambda: setattr(self, "_scroll_lock", False))
+
+        self.webview_widget.connect_scroll_changed(on_webview_scroll)
+        print("✅ WebView → Sidebar sync enabled (with typing freeze)")
+
+        print("✨ Bidirectional scroll sync complete with typing freeze!")
 
     def _on_toggle_sync_scroll(self, button):
         """Toggle scroll synchronization."""
@@ -269,55 +276,6 @@ class Window(Adw.ApplicationWindow):
         # Wait 100ms before rendering (faster for better responsiveness)
         self._update_timer_id = GLib.timeout_add(100, self._process_pending_text)
 
-        def _setup_bidirectional_scroll_sync(self):
-            """Setup ultra-smooth 120fps bidirectional scroll synchronization."""
-            # Initialize scroll tracking
-            self._last_sidebar_percentage = 0.0
-            self._last_webview_percentage = 0.0
-            self._scroll_lock = False
-
-            print("🚀 Setting up ultra-smooth 120fps bidirectional scroll sync...")
-
-            # DIRECTION 1: Sidebar → WebView (Editor scrolls, Preview follows)
-            def on_sidebar_scroll(percentage):
-                if self.sync_scroll_enabled and not self._scroll_lock:
-                    # Fine-grained threshold for smooth tracking
-                    if abs(percentage - self._last_sidebar_percentage) > 0.001:
-                        self._last_sidebar_percentage = percentage
-                        self._scroll_lock = True
-
-                        # Scroll webview with animation
-                        self.webview_widget.scroll_to_percentage(percentage)
-
-                        # Quick unlock for continuous scrolling (200ms to allow animation)
-                        GLib.timeout_add(
-                            200, lambda: setattr(self, "_scroll_lock", False)
-                        )
-
-            self.sidebar_widget.connect_scroll_changed(on_sidebar_scroll)
-            print("✅ Sidebar → WebView sync enabled (120fps)")
-
-            # DIRECTION 2: WebView → Sidebar (Preview scrolls, Editor follows)
-            def on_webview_scroll(percentage):
-                if self.sync_scroll_enabled and not self._scroll_lock:
-                    # Fine-grained threshold for smooth tracking
-                    if abs(percentage - self._last_webview_percentage) > 0.001:
-                        self._last_webview_percentage = percentage
-                        self._scroll_lock = True
-
-                        # Scroll sidebar with animation
-                        self.sidebar_widget.scroll_to_percentage(percentage)
-
-                        # Quick unlock for continuous scrolling (200ms to allow animation)
-                        GLib.timeout_add(
-                            200, lambda: setattr(self, "_scroll_lock", False)
-                        )
-
-            self.webview_widget.connect_scroll_changed(on_webview_scroll)
-            print("✅ WebView → Sidebar sync enabled (120fps)")
-
-            print("✨ Ultra-smooth 120fps bidirectional scroll sync complete!")
-
     def _process_pending_text(self):
         """Process pending text after debounce period."""
         if self._pending_text is not None:
@@ -328,55 +286,6 @@ class Window(Adw.ApplicationWindow):
 
     def _render_markdown_async(self, text):
         """Render markdown in background thread."""
-
-        def _setup_bidirectional_scroll_sync(self):
-            """Setup optimized bidirectional scroll synchronization."""
-            # Initialize scroll tracking
-            self._last_sidebar_percentage = 0.0
-            self._last_webview_percentage = 0.0
-            self._scroll_lock = False
-
-            print("🚀 Setting up optimized bidirectional scroll sync...")
-
-            # DIRECTION 1: Sidebar → WebView (Editor scrolls, Preview follows)
-            def on_sidebar_scroll(percentage):
-                if self.sync_scroll_enabled and not self._scroll_lock:
-                    # Balanced threshold
-                    if abs(percentage - self._last_sidebar_percentage) > 0.003:
-                        self._last_sidebar_percentage = percentage
-                        self._scroll_lock = True
-
-                        # Scroll webview with animation
-                        self.webview_widget.scroll_to_percentage(percentage)
-
-                        # Reset lock after animation
-                        GLib.timeout_add(
-                            150, lambda: setattr(self, "_scroll_lock", False)
-                        )
-
-            self.sidebar_widget.connect_scroll_changed(on_sidebar_scroll)
-            print("✅ Sidebar → WebView sync enabled")
-
-            # DIRECTION 2: WebView → Sidebar (Preview scrolls, Editor follows)
-            def on_webview_scroll(percentage):
-                if self.sync_scroll_enabled and not self._scroll_lock:
-                    # Balanced threshold
-                    if abs(percentage - self._last_webview_percentage) > 0.003:
-                        self._last_webview_percentage = percentage
-                        self._scroll_lock = True
-
-                        # Scroll sidebar instantly for better text rendering
-                        self.sidebar_widget.scroll_to_percentage(percentage)
-
-                        # Reset lock quickly
-                        GLib.timeout_add(
-                            100, lambda: setattr(self, "_scroll_lock", False)
-                        )
-
-            self.webview_widget.connect_scroll_changed(on_webview_scroll)
-            print("✅ WebView → Sidebar sync enabled")
-
-            print("✨ Optimized bidirectional scroll sync complete!")
 
         def render():
             with self._rendering_lock:
@@ -723,9 +632,9 @@ class Window(Adw.ApplicationWindow):
         # ============================================================
         #                 RESTORE SCROLL POSITIONS
         # ============================================================
-        # scroll_positions = self.state_manager.get_scroll_positions()
-        # saved_sidebar_scroll = scroll_positions.get("sidebar", 0.0)
-        # saved_webview_scroll = scroll_positions.get("webview", 0.0)
+        scroll_positions = self.state_manager.get_scroll_positions()
+        saved_sidebar_scroll = scroll_positions.get("sidebar", 0.0)
+        saved_webview_scroll = scroll_positions.get("webview", 0.0)
 
         def restore_scrolls():
             # Restore Sidebar scroll
@@ -979,8 +888,8 @@ class Window(Adw.ApplicationWindow):
             self.state_manager.save_webview_hidden(self.webview_hidden)
 
             # Save sync scroll state
-            # self.state_manager.state["sync_scroll_enabled"] = self.sync_scroll_enabled
-            # self.state_manager.save_state()
+            self.state_manager.state["sync_scroll_enabled"] = self.sync_scroll_enabled
+            self.state_manager.save_state()
 
         self._thread_pool.submit(save_async)
 
@@ -988,13 +897,13 @@ class Window(Adw.ApplicationWindow):
         """Handle window close request."""
 
         # Save scroll positions before exit
-        # self.sidebar_widget.get_scroll_percentage(
-        #     lambda sidebar_pos: self.webview_widget.get_scroll_percentage(
-        #         lambda webview_pos: self.state_manager.save_scroll_positions(
-        #             sidebar_pos, webview_pos
-        #         )
-        #     )
-        # )
+        self.sidebar_widget.get_scroll_percentage(
+            lambda sidebar_pos: self.webview_widget.get_scroll_percentage(
+                lambda webview_pos: self.state_manager.save_scroll_positions(
+                    sidebar_pos, webview_pos
+                )
+            )
+        )
 
         # Save rest of the state
         self._save_state()
