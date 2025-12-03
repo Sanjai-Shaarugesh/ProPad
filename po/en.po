@@ -1,0 +1,325 @@
+# English translation (template)
+msgid ""
+msgstr ""
+"Project-Id-Version: propad 2.0.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2025-11-30 22:55+0530\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: English <LL@li.org>\n"
+"Language: en\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: src/file_manager.py:309 src/formatting_toolbar.py:608 src/window.py:441
+#: src/window.py:516
+msgid "All Files"
+msgstr "All Files"
+
+#: src/window.py:473
+msgid "Cancel"
+msgstr "Cancel"
+
+#: src/formatting_toolbar.py:549
+msgid "Click here"
+msgstr "Click here"
+
+#: src/formatting_toolbar.py:90
+#, fuzzy
+msgid "Cols: 0"
+msgstr "Cols"
+
+#: src/window.py:472
+msgid "Discard"
+msgstr "Discard"
+
+#: src/export_dialog.py:326
+msgid "Export as HTML"
+msgstr "Export as HTML"
+
+#: src/export_dialog.py:596
+msgid "Export as Image"
+msgstr "Export as Image"
+
+#: src/window.py:100
+msgid "Features"
+msgstr "Features"
+
+#: src/window.py:107
+msgid "File History"
+msgstr "File History"
+
+#: src/window.py:106
+msgid "GitHub Alerts"
+msgstr "GitHub Alerts"
+
+#: src/export_dialog.py:353
+msgid "HTML Files"
+msgstr "HTML Files"
+
+#: src/sidebar.py:314
+msgid "Hide Preview"
+msgstr "Hide Preview"
+
+#: src/formatting_toolbar.py:593
+msgid "Image Files"
+msgstr "Image Files"
+
+#: src/formatting_toolbar.py:534
+msgid "Insert Link"
+msgstr "Insert Link"
+
+#: src/formatting_toolbar.py:34
+msgid "Insert Table"
+msgstr "Insert Table"
+
+#: src/window.py:105
+msgid "LaTeX Math"
+msgstr "LaTeX Math"
+
+#: src/sidebar.py:100
+msgid "Letters"
+msgstr "Letters"
+
+#: src/formatting_toolbar.py:546
+msgid "Link Text:"
+msgstr "Link Text:"
+
+#: src/window.py:102
+msgid "Live Preview"
+msgstr "Live Preview"
+
+#: src/file_manager.py:303 src/window.py:435 src/window.py:510
+msgid "Markdown Files"
+msgstr "Markdown Files"
+
+#: src/window.py:103
+msgid "Markdown Tables"
+msgstr "Markdown Tables"
+
+#: src/window.py:104
+msgid "Mermaid Diagrams"
+msgstr "Mermaid Diagrams"
+
+#: src/file_manager.py:300 src/window.py:507
+msgid "Open Markdown File"
+msgstr "Open Markdown File"
+
+#: src/window.py:432
+#, fuzzy
+msgid "Open in New Window"
+msgstr "New Window"
+
+#: src/sidebar.py:100
+msgid "Paragraphs"
+msgstr "Paragraphs"
+
+#: src/window.py:992 src/window.py:994 src/window.py:997 src/window.py:999
+msgid "ProPad"
+msgstr "ProPad"
+
+#: src/formatting_toolbar.py:80
+#, fuzzy
+msgid "Rows: 0"
+msgstr "Rows"
+
+#: src/window.py:474
+msgid "Save"
+msgstr "Save"
+
+#: src/window.py:468
+msgid "Save Changes?"
+msgstr "Save Changes?"
+
+#: src/file_manager.py:375 src/window.py:573
+msgid "Save Markdown File"
+msgstr "Save Markdown File"
+
+#: src/formatting_toolbar.py:583
+msgid "Select Image"
+msgstr "Select Image"
+
+#: src/sidebar.py:305
+msgid "Show Preview"
+msgstr "Show Preview"
+
+#: src/window.py:112
+msgid "Start editing to see the preview!"
+msgstr "Start editing to see the preview!"
+
+#: src/window.py:770
+#, fuzzy
+msgid "Support ProPad"
+msgstr "About ProPad"
+
+#: src/window.py:242
+msgid "Sync Scroll Disabled"
+msgstr "Sync Scroll Disabled"
+
+#: src/window.py:238
+msgid "Sync Scroll Enabled"
+msgstr "Sync Scroll Enabled"
+
+#: src/window.py:470
+msgid "The document has unsaved changes. Do you want to save them?"
+msgstr "The document has unsaved changes. Do you want to save them?"
+
+#: src/window.py:110
+msgid "This is a GitHub-style note alert!"
+msgstr "This is a GitHub-style note alert!"
+
+#: src/formatting_toolbar.py:551
+msgid "URL:"
+msgstr "URL:"
+
+#: src/file_manager.py:380 src/window.py:997
+msgid "Untitled"
+msgstr "Untitled"
+
+#: src/window.py:98
+msgid "Welcome to ProPad"
+msgstr "Welcome to ProPad"
+
+#: src/sidebar.py:100
+msgid "Words"
+msgstr "Words"
+
+#: src/window.py:105
+msgid "equations"
+msgstr "equations"
+
+#: src/formatting_toolbar.py:554
+msgid "https://example.com"
+msgstr ""
+
+#: src/window.py:104
+msgid "rendering"
+msgstr "rendering"
+
+#: src/window.py:103
+msgid "support"
+msgstr "support"
+
+#: src/window.py:102
+msgid "with synchronized scrolling"
+msgstr "with synchronized scrolling"
+
+#: src/window.py:107
+msgid "with tags"
+msgstr "with tags"
+
+#: src/formatting_toolbar.py:85
+msgid "×"
+msgstr ""
+
+#~ msgid "File Manager"
+#~ msgstr "File Manager"
+
+#~ msgid "Export"
+#~ msgstr "Export"
+
+#~ msgid "Find"
+#~ msgstr "Find"
+
+#~ msgid "Replace"
+#~ msgstr "Replace"
+
+#~ msgid "Keyboard Shortcuts"
+#~ msgstr "Keyboard Shortcuts"
+
+#~ msgid "HTML Export Successful"
+#~ msgstr "HTML Export Successful"
+
+#~ msgid "Document exported to:"
+#~ msgstr "Document exported to:"
+
+#~ msgid "Export as PDF"
+#~ msgstr "Export as PDF"
+
+#~ msgid "PDF Export Successful"
+#~ msgstr "PDF Export Successful"
+
+#~ msgid "Image Export Successful"
+#~ msgstr "Image Export Successful"
+
+#~ msgid "Export Failed"
+#~ msgstr "Export Failed"
+
+#~ msgid "Clear History?"
+#~ msgstr "Clear History?"
+
+#~ msgid "This will remove all file history. This action cannot be undone."
+#~ msgstr "This will remove all file history. This action cannot be undone."
+
+#~ msgid "Clear History"
+#~ msgstr "Clear History"
+
+#~ msgid "Remove from history"
+#~ msgstr "Remove from history"
+
+#~ msgid "Created"
+#~ msgstr "Created"
+
+#~ msgid "Opened"
+#~ msgstr "Opened"
+
+#~ msgid "Edited"
+#~ msgstr "Edited"
+
+#~ msgid "Opened {count}x"
+#~ msgstr "Opened {count}x"
+
+#~ msgid "Replace All"
+#~ msgstr "Replace All"
+
+#~ msgid "File Operations"
+#~ msgstr "File Operations"
+
+#~ msgid "New File"
+#~ msgstr "New File"
+
+#~ msgid "Open File"
+#~ msgstr "Open File"
+
+#~ msgid "Save File"
+#~ msgstr "Save File"
+
+#~ msgid "Save As"
+#~ msgstr "Save As"
+
+#~ msgid "Text Formatting"
+#~ msgstr "Text Formatting"
+
+#~ msgid "Bold"
+#~ msgstr "Bold"
+
+#~ msgid "Italic"
+#~ msgstr "Italic"
+
+#~ msgid "Strikethrough"
+#~ msgstr "Strikethrough"
+
+#~ msgid "Code"
+#~ msgstr "Code"
+
+#~ msgid "Editing"
+#~ msgstr "Editing"
+
+#~ msgid "Find Text"
+#~ msgstr "Find Text"
+
+#~ msgid "Find and Replace"
+#~ msgstr "Find and Replace"
+
+#~ msgid "View"
+#~ msgstr "View"
+
+#~ msgid "Toggle Sidebar"
+#~ msgstr "Toggle Sidebar"
+
+#~ msgid "Toggle Sync Scroll"
+#~ msgstr "Toggle Sync Scroll"
+
+#~ msgid "Show Shortcuts"
+#~ msgstr "Show Shortcuts"

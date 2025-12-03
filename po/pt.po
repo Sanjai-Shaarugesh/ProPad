@@ -1,0 +1,592 @@
+# SOME DESCRIPTIVE TITLE.
+# Machine-translated Portuguese file
+msgid ""
+msgstr ""
+"Project-Id-Version: propad 2.0.0\n"
+"Report-Msgid-Bugs-To: your-email@example.com\n"
+"POT-Creation-Date: 2024-12-01 00:00+0000\n"
+"PO-Revision-Date: 2024-12-02 00:00+0000\n"
+"Last-Translator: Complete Translation <auto@translate.local>\n"
+"Language-Team: Portuguese <pt@li.org>\n"
+"Language: pt\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: main.py:100
+msgid "New Window"
+msgstr "Nova janela"
+
+#: main.py:120
+msgid "File Manager"
+msgstr "Gerenciador de arquivos"
+
+#: main.py:130
+msgid "Export"
+msgstr "Exportar"
+
+#: main.py:140 src/search_replace.py:100
+msgid "Find"
+msgstr "Encontrar"
+
+#: main.py:150 src/search_replace.py:110
+msgid "Replace"
+msgstr "Substituir"
+
+#: main.py:160
+msgid "Keyboard Shortcuts"
+msgstr "Atalhos de teclado"
+
+#: main.py:170
+msgid "About ProPad"
+msgstr "Sobre o ProPad"
+
+#: src/window.py:200
+msgid "Welcome to ProPad"
+msgstr "Bem-vindo ao ProPad"
+
+#: src/window.py:202
+msgid "Features"
+msgstr "Recursos"
+
+#: src/window.py:204
+msgid "Live Preview"
+msgstr "Pré-visualização em tempo real"
+
+#: src/window.py:204
+msgid "with synchronized scrolling"
+msgstr "com rolagem sincronizada"
+
+#: src/window.py:205
+msgid "Markdown Tables"
+msgstr "Tabelas Markdown"
+
+#: src/window.py:205
+msgid "support"
+msgstr "suporte"
+
+#: src/window.py:206
+msgid "Mermaid Diagrams"
+msgstr "Diagramas Mermaid"
+
+#: src/window.py:206
+msgid "rendering"
+msgstr "renderização"
+
+#: src/window.py:207
+msgid "LaTeX Math"
+msgstr "Matemática LaTeX"
+
+#: src/window.py:207
+msgid "equations"
+msgstr "equações"
+
+#: src/window.py:208
+msgid "GitHub Alerts"
+msgstr "Alertas do GitHub"
+
+#: src/window.py:209
+msgid "File History"
+msgstr "Histórico de arquivos"
+
+#: src/window.py:209
+msgid "with tags"
+msgstr "com tags"
+
+#: src/window.py:212
+msgid "This is a GitHub-style note alert!"
+msgstr "Este é um alerta de nota no estilo GitHub!"
+
+#: src/window.py:214
+msgid "Start editing to see the preview!"
+msgstr "Comece a editar para ver a pré-visualização!"
+
+#: src/window.py:300
+msgid "Save Changes?"
+msgstr "Salvar alterações?"
+
+#: src/window.py:301
+msgid "The document has unsaved changes. Do you want to save them?"
+msgstr "O documento tem alterações não salvas. Deseja salvá-las?"
+
+#: src/window.py:302
+msgid "Discard"
+msgstr "Descartar"
+
+#: src/window.py:303
+msgid "Cancel"
+msgstr "Cancelar"
+
+#: src/window.py:304
+msgid "Save"
+msgstr "Salvar"
+
+#: src/window.py:350
+msgid "Open Markdown File"
+msgstr "Abrir Arquivo Markdown"
+
+#: src/window.py:352
+msgid "Markdown Files"
+msgstr "Arquivos Markdown"
+
+#: src/window.py:356
+msgid "All Files"
+msgstr "Todos os arquivos"
+
+#: src/window.py:400
+msgid "Save Markdown File"
+msgstr "Salvar Arquivo Markdown"
+
+#: src/window.py:450
+msgid "Untitled"
+msgstr "Sem título"
+
+#: src/window.py:500
+msgid "ProPad"
+msgstr "ProPad"
+
+#: src/window.py:550
+msgid "Sync Scroll Enabled"
+msgstr "Rolagem Sincronizada Ativada"
+
+#: src/window.py:552
+msgid "Sync Scroll Disabled"
+msgstr "Rolagem Sincronizada Desativada"
+
+#: src/window.py:600
+msgid "Hide Preview"
+msgstr "Ocultar Pré-visualização"
+
+#: src/window.py:602
+msgid "Show Preview"
+msgstr "Mostrar Pré-visualização"
+
+#: src/export_dialog.py:100
+msgid "Export as HTML"
+msgstr "Exportar como HTML"
+
+#: src/export_dialog.py:110
+msgid "HTML Files"
+msgstr "Arquivos HTML"
+
+#: src/export_dialog.py:150
+msgid "HTML Export Successful"
+msgstr "Exportação HTML bem-sucedida"
+
+#: src/export_dialog.py:151
+msgid "Document exported to:"
+msgstr "Documento exportado para:"
+
+#: src/export_dialog.py:200
+msgid "Export as PDF"
+msgstr "Exportar como PDF"
+
+#: src/export_dialog.py:250
+msgid "PDF Export Successful"
+msgstr "Exportação PDF bem-sucedida"
+
+#: src/export_dialog.py:300
+msgid "Export as Image"
+msgstr "Exportar como Imagem"
+
+#: src/export_dialog.py:310
+msgid "Image Files"
+msgstr "Arquivos de Imagem"
+
+#: src/export_dialog.py:350
+msgid "Image Export Successful"
+msgstr "Exportação de Imagem bem-sucedida"
+
+#: src/export_dialog.py:400
+msgid "Export Failed"
+msgstr "Exportação falhou"
+
+#: src/file_manager.py:100
+msgid "Clear History?"
+msgstr "Limpar Histórico?"
+
+#: src/file_manager.py:101
+msgid "This will remove all file history. This action cannot be undone."
+msgstr ""
+"Isto removerá todo o histórico de arquivos. Esta ação não pode ser desfeita."
+
+#: src/file_manager.py:102
+msgid "Clear History"
+msgstr "Limpar Histórico"
+
+#: src/file_manager.py:150
+msgid "Remove from history"
+msgstr "Remover do histórico"
+
+#: src/file_manager.py:200
+msgid "Created"
+msgstr "Criado"
+
+#: src/file_manager.py:201
+msgid "Opened"
+msgstr "Aberto"
+
+#: src/file_manager.py:202
+msgid "Edited"
+msgstr "Editado"
+
+#: src/file_manager.py:250
+msgid "Opened {count}x"
+msgstr "Aberto {count}x"
+
+#: src/formatting_toolbar.py:100
+msgid "Insert Table"
+msgstr "Inserir Tabela"
+
+#: src/formatting_toolbar.py:150
+msgid "Rows"
+msgstr "Linhas"
+
+#: src/formatting_toolbar.py:151
+msgid "Cols"
+msgstr "Colunas"
+
+#: src/formatting_toolbar.py:200 src/shortcuts_window.py:73
+msgid "Insert Link"
+msgstr "Inserir Link"
+
+#: src/formatting_toolbar.py:201
+msgid "Link Text:"
+msgstr "Texto do Link:"
+
+#: src/formatting_toolbar.py:202
+msgid "Click here"
+msgstr "Clique aqui"
+
+#: src/formatting_toolbar.py:203
+msgid "URL:"
+msgstr "URL:"
+
+#: src/formatting_toolbar.py:250
+msgid "Select Image"
+msgstr "Selecionar Imagem"
+
+#: src/search_replace.py:120
+msgid "Replace All"
+msgstr "Substituir tudo"
+
+#: src/sidebar.py:100
+msgid "Words"
+msgstr "Palavras"
+
+#: src/sidebar.py:101
+msgid "Letters"
+msgstr "Letras"
+
+#: src/sidebar.py:102
+msgid "Paragraphs"
+msgstr "Parágrafos"
+
+#: src/shortcuts_window.py:50
+msgid "File Operations"
+msgstr "Operações de arquivo"
+
+#: src/shortcuts_window.py:51
+msgid "New File"
+msgstr "Novo arquivo"
+
+#: src/shortcuts_window.py:52
+msgid "Open File"
+msgstr "Abrir arquivo"
+
+#: src/shortcuts_window.py:53
+msgid "Save File"
+msgstr "Salvar arquivo"
+
+#: src/shortcuts_window.py:54
+msgid "Save As"
+msgstr "Salvar como"
+
+#: src/shortcuts_window.py:60
+msgid "Text Formatting"
+msgstr "Formatação de texto"
+
+#: src/shortcuts_window.py:61
+msgid "Bold"
+msgstr "Negrito"
+
+#: src/shortcuts_window.py:62
+msgid "Italic"
+msgstr "Itálico"
+
+#: src/shortcuts_window.py:63
+msgid "Strikethrough"
+msgstr "Tachado"
+
+#: src/shortcuts_window.py:64
+msgid "Code"
+msgstr "Código"
+
+#: src/shortcuts_window.py:70
+msgid "Editing"
+msgstr "Edição"
+
+#: src/shortcuts_window.py:71
+msgid "Find Text"
+msgstr "Localizar Texto"
+
+#: src/shortcuts_window.py:72
+msgid "Find and Replace"
+msgstr "Localizar e Substituir"
+
+#: src/shortcuts_window.py:80
+msgid "View"
+msgstr "Visualizar"
+
+#: src/shortcuts_window.py:81
+msgid "Toggle Sidebar"
+msgstr "Alternar Barra Lateral"
+
+#: src/shortcuts_window.py:82
+msgid "Toggle Sync Scroll"
+msgstr "Alternar Rolagem Sincronizada"
+
+#: src/shortcuts_window.py:83
+msgid "Show Shortcuts"
+msgstr "Mostrar Atalhos"
+
+msgid "About"
+msgstr "Sobre"
+
+msgid "Application"
+msgstr "Aplicação"
+
+msgid "Block Quote"
+msgstr "Citação em Bloco"
+
+msgid "Bold (Ctrl+B)"
+msgstr "Negrito (Ctrl+B)"
+
+msgid "Bullet List"
+msgstr "Lista de Itens"
+
+msgid "Case Sensitive"
+msgstr "Diferenciar maiúsculas/minúsculas"
+
+msgid "Close"
+msgstr "Fechar"
+
+msgid "Close all windows and quit"
+msgstr "Fechar todas as janelas e sair"
+
+msgid "Code Block"
+msgstr "Bloco de Código"
+
+msgid "Cols: 0"
+msgstr "Colunas: 0"
+
+msgid "Create Standalone File"
+msgstr "Criar Arquivo Autônomo"
+
+msgid "Create a new markdown file"
+msgstr "Criar um novo arquivo markdown"
+
+msgid "Current File:"
+msgstr "Arquivo Atual:"
+
+msgid "Export Document"
+msgstr "Exportar Documento"
+
+msgid "Export Format:"
+msgstr "Formato de Exportação:"
+
+msgid "Export Options:"
+msgstr "Opções de Exportação:"
+
+msgid "Export document"
+msgstr "Exportar documento"
+
+msgid "Export..."
+msgstr "Exportar..."
+
+msgid "Find and replace text"
+msgstr "Encontrar e substituir texto"
+
+msgid "Formatting"
+msgstr "Formatação"
+
+msgid "H1"
+msgstr "H1"
+
+msgid "H2"
+msgstr "H2"
+
+msgid "H3"
+msgstr "H3"
+
+msgid "H4"
+msgstr "H4"
+
+msgid "HTML"
+msgstr "HTML"
+
+msgid "Heading 1"
+msgstr "Título 1"
+
+msgid "Heading 2"
+msgstr "Título 2"
+
+msgid "Heading 3"
+msgstr "Título 3"
+
+msgid "Heading 4"
+msgstr "Título 4"
+
+msgid "Headings"
+msgstr "Títulos"
+
+msgid "Image"
+msgstr "Imagem"
+
+msgid "Image Format:"
+msgstr "Formato da Imagem:"
+
+msgid "Include Custom CSS"
+msgstr "Incluir CSS Personalizado"
+
+msgid "Inline Code"
+msgstr "Código em linha"
+
+msgid "Insert"
+msgstr "Inserir"
+
+msgid "Italic (Ctrl+I)"
+msgstr "Itálico (Ctrl+I)"
+
+msgid "Lists & Blocks"
+msgstr "Listas e Blocos"
+
+msgid "Main Menu"
+msgstr "Menu Principal"
+
+msgid "Mermaid Diagram"
+msgstr "Diagrama Mermaid"
+
+msgid "New File (Ctrl+N)"
+msgstr "Novo Arquivo (Ctrl+N)"
+
+msgid "Next Match"
+msgstr "Próxima Correspondência"
+
+msgid "No file loaded"
+msgstr "Nenhum arquivo carregado"
+
+msgid "Numbered List"
+msgstr "Lista Numerada"
+
+msgid "Open File (Ctrl+O)"
+msgstr "Abrir Arquivo (Ctrl+O)"
+
+msgid "Open File..."
+msgstr "Abrir Arquivo..."
+
+msgid "Open a new window"
+msgstr "Abrir uma nova janela"
+
+msgid "Open an existing file"
+msgstr "Abrir um arquivo existente"
+
+msgid "Open file manager"
+msgstr "Abrir gerenciador de arquivos"
+
+msgid "PDF"
+msgstr "PDF"
+
+msgid "Preview"
+msgstr "Pré-visualização"
+
+msgid "Previous Match"
+msgstr "Correspondência Anterior"
+
+msgid "Quit"
+msgstr "Sair"
+
+msgid "Recent Files:"
+msgstr "Arquivos Recentes:"
+
+msgid "Replace with..."
+msgstr "Substituir por..."
+
+msgid "Rows: 0"
+msgstr "Linhas: 0"
+
+msgid "Save (Ctrl+S)"
+msgstr "Salvar (Ctrl+S)"
+
+msgid "Save As..."
+msgstr "Salvar Como..."
+
+msgid "Save file with a new name"
+msgstr "Salvar arquivo com um novo nome"
+
+msgid "Save the current file"
+msgstr "Salvar o arquivo atual"
+
+msgid "Search in document"
+msgstr "Pesquisar no documento"
+
+msgid "Search..."
+msgstr "Pesquisar..."
+
+msgid "Show or hide sidebar"
+msgstr "Mostrar ou ocultar barra lateral"
+
+msgid "Show this help dialog"
+msgstr "Mostrar esta caixa de diálogo de ajuda"
+
+msgid "Support ProPad"
+msgstr "Apoiar o ProPad"
+
+msgid "Sync editor and preview scrolling"
+msgstr "Sincronizar a rolagem do editor e da pré-visualização"
+
+msgid "Table"
+msgstr "Tabela"
+
+msgid "Tags: Created • Opened • Edited"
+msgstr "Tags: Criado • Aberto • Editado"
+
+msgid "Toggle Replace"
+msgstr "Alternar Substituir"
+
+msgid "Toggle Scroll Sync"
+msgstr "Alternar Sincronização de Rolagem"
+
+msgid "Toggle Scroll Sync (Ctrl+Alt+S)"
+msgstr "Alternar Sincronização de Rolagem (Ctrl+Alt+S)"
+
+msgid "Use Regular Expression"
+msgstr "Usar Expressão Regular"
+
+msgid "Whole Word"
+msgstr "Palavra Completa"
+
+msgid ""
+"If you enjoy using ProPad, consider buying me a coffee!\n"
+"Your support helps keep the project alive."
+msgstr ""
+"Se você gosta de usar o ProPad, considere me pagar um café!Seu apoio ajuda a "
+"manter o projeto vivo."
+
+msgid "Scan with your phone or click these buttons to open the link"
+msgstr "Escaneie com seu celular ou clique nestes botões para abrir o link."
+
+msgid "Open Buy Me a Coffee"
+msgstr "Abrir Buy Me a Coffee"
+
+msgid "<span size='xx-large' weight='bold'>☕ Support ProPad</span>"
+msgstr "<span size='xx-large' weight='bold'>☕ Apoiar o ProPad</span>"
+
+msgid "☕ Open Buy Me a Coffee"
+msgstr "☕ Abrir Buy Me a Coffee"
+
+msgid "💝 Support Development"
+msgstr "💝 Apoie o Desenvolvimento"
+
+msgid "Editor"
+msgstr "Editora"

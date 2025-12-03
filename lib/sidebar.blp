@@ -15,7 +15,7 @@ template $SidebarWidget: Gtk.Box {
     margin-bottom: 8;
 
     Gtk.Label {
-      label: "Editor";
+      label: _("Editor");
       hexpand: true;
       halign: start;
       styles ["heading"]
@@ -23,12 +23,12 @@ template $SidebarWidget: Gtk.Box {
 
     Gtk.MenuButton btn_formatting {
       icon-name: "format-text-bold-symbolic";
-      tooltip-text: "Formatting";
+      tooltip-text: _("Formatting");
     }
 
     Gtk.Button hide_webview_btn {
       icon-name: "view-conceal-symbolic";
-      tooltip-text: "Hide Preview";
+      tooltip-text: _("Hide Preview");
       valign: center;
       styles ["flat"]
     }

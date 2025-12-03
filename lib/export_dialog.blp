@@ -2,7 +2,7 @@ using Gtk 4.0;
 using Adw 1;
 
 template $ExportDialog: Adw.Window {
-  title: "Export Document";
+  title: _("Export Document");
   default-width: 500;
   default-height: 400;
   modal: true;
@@ -15,7 +15,7 @@ template $ExportDialog: Adw.Window {
       [end]
       Gtk.Button btn_close {
         icon-name: "view-conceal-symbolic";
-        tooltip-text: "Close";
+        tooltip-text: _("Close");
       }
     }
 
@@ -29,7 +29,7 @@ template $ExportDialog: Adw.Window {
       spacing: 16;
 
       Gtk.Label {
-        label: "Export Format:";
+        label: _("Export Format:");
         halign: start;
         styles ["heading"]
       }
@@ -54,7 +54,7 @@ template $ExportDialog: Adw.Window {
             }
             
             Gtk.Label {
-              label: "HTML";
+              label: _("HTML");
               styles ["title-4"]
             }
           }
@@ -78,7 +78,7 @@ template $ExportDialog: Adw.Window {
             }
             
             Gtk.Label {
-              label: "PDF";
+              label: _("PDF");
               styles ["title-4"]
             }
           }
@@ -102,7 +102,7 @@ template $ExportDialog: Adw.Window {
             }
             
             Gtk.Label {
-              label: "Image";
+              label: _("Image");
               styles ["title-4"]
             }
           }
@@ -117,18 +117,18 @@ template $ExportDialog: Adw.Window {
       }
 
       Gtk.Label {
-        label: "Export Options:";
+        label: _("Export Options:");
         halign: start;
         styles ["heading"]
       }
 
       Gtk.CheckButton check_include_css {
-        label: "Include Custom CSS";
+        label: _("Include Custom CSS");
         active: true;
       }
 
       Gtk.CheckButton check_standalone {
-        label: "Create Standalone File";
+        label:_( "Create Standalone File");
         active: true;
       }
 
@@ -137,7 +137,7 @@ template $ExportDialog: Adw.Window {
         spacing: 8;
 
         Gtk.Label {
-          label: "Image Format:";
+          label: _("Image Format:");
           hexpand: true;
           halign: start;
         }

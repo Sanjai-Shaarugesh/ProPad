@@ -1,0 +1,653 @@
+# SOME DESCRIPTIVE TITLE.
+# Machine-translated Tamil file
+msgid ""
+msgstr ""
+"Project-Id-Version: propad 2.0.0\n"
+"Report-Msgid-Bugs-To: your-email@example.com\n"
+"POT-Creation-Date: 2024-12-01 00:00+0000\n"
+"PO-Revision-Date: 2025-12-02 21:52+0530\n"
+"Last-Translator: Gemini AI\n"
+"Language-Team: Tamil <ta@li.org>\n"
+"Language: ta\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: main.py:100
+msgid "New Window"
+msgstr "புதிய சாளரம்"
+
+#: main.py:120
+msgid "File Manager"
+msgstr "கோப்பு மேலாளர்"
+
+#: main.py:130
+msgid "Export"
+msgstr "ஏற்றுமதி செய்க"
+
+#: main.py:140 src/search_replace.py:100
+msgid "Find"
+msgstr "தேடவும்"
+
+#: main.py:150 src/search_replace.py:110
+msgid "Replace"
+msgstr "மாற்று"
+
+#: main.py:160
+msgid "Keyboard Shortcuts"
+msgstr "கீபோர்ட் குறுக்குவழிகள்"
+
+#: main.py:170
+msgid "About ProPad"
+msgstr "ProPad பற்றி"
+
+#: src/window.py:200
+msgid "Welcome to ProPad"
+msgstr "ProPadக்கு வரவேற்கிறோம்"
+
+#: src/window.py:202
+msgid "Features"
+msgstr "அம்சங்கள்"
+
+#: src/window.py:204
+msgid "Live Preview"
+msgstr "நேரடி முன்னோட்டம்"
+
+#: src/window.py:204
+msgid "with synchronized scrolling"
+msgstr "இணைந்த ஸ்க்ரோலிங் உடன்"
+
+#: src/window.py:205
+msgid "Markdown Tables"
+msgstr "மார்க்டவுன் அட்டவணைகள்"
+
+#: src/window.py:205
+msgid "support"
+msgstr "ஆதரவு"
+
+#: src/window.py:206
+msgid "Mermaid Diagrams"
+msgstr "மெர்மெய்டு வரைபடங்கள்"
+
+#: src/window.py:206
+msgid "rendering"
+msgstr "விளக்கம்"
+
+#: src/window.py:207
+msgid "LaTeX Math"
+msgstr "லாடெக்ஸ் கணிதம்"
+
+#: src/window.py:207
+msgid "equations"
+msgstr "சமன்பாடுகள்"
+
+#: src/window.py:208
+msgid "GitHub Alerts"
+msgstr "GitHub அறிவிப்புகள்"
+
+#: src/window.py:209
+msgid "File History"
+msgstr "கோப்பு வரலாறு"
+
+#: src/window.py:209
+msgid "with tags"
+msgstr "குறிச்சொற்களுடன்"
+
+#: src/window.py:212
+msgid "This is a GitHub-style note alert!"
+msgstr "இது GitHub-நூல் மாதிரியான குறிப்பு அறிவிப்பு!"
+
+#: src/window.py:214
+msgid "Start editing to see the preview!"
+msgstr "முன்னோட்டத்தை காண संपादनத்தை தொடங்குங்கள்!"
+
+#: src/window.py:300
+msgid "Save Changes?"
+msgstr "மாற்றங்களைச் சேமிக்கவா?"
+
+#: src/window.py:301
+msgid "The document has unsaved changes. Do you want to save them?"
+msgstr "ஆவணத்தில் சேமிக்கப்படாத மாற்றங்கள் உள்ளன. நீங்கள் அவற்றைச் சேமிக்க விரும்புகிறீர்களா?"
+
+#: src/window.py:302
+msgid "Discard"
+msgstr "நிராகரிக்கவும்"
+
+#: src/window.py:303
+msgid "Cancel"
+msgstr "ரத்து செய்யவும்"
+
+#: src/window.py:304
+msgid "Save"
+msgstr "சேமிக்கவும்"
+
+#: src/window.py:350
+msgid "Open Markdown File"
+msgstr "மார்க்டவுன் கோப்பை திறக்கவும்"
+
+#: src/window.py:352
+msgid "Markdown Files"
+msgstr "மார்க்டவுன் கோப்புகள்"
+
+#: src/window.py:356
+msgid "All Files"
+msgstr "அனைத்து கோப்புகளும்"
+
+#: src/window.py:400
+msgid "Save Markdown File"
+msgstr "மார்க்டவுன் கோப்பை சேமிக்கவும்"
+
+#: src/window.py:450
+msgid "Untitled"
+msgstr "தலைப்பு இல்லாதது"
+
+#: src/window.py:500
+msgid "ProPad"
+msgstr "ProPad"
+
+#: src/window.py:550
+msgid "Sync Scroll Enabled"
+msgstr "இணைந்த ஸ்க்ரோல் செயல்படுத்தப்பட்டது"
+
+#: src/window.py:552
+msgid "Sync Scroll Disabled"
+msgstr "இணைந்த ஸ்க்ரோல் செயலிழந்தது"
+
+#: src/window.py:600
+msgid "Hide Preview"
+msgstr "முன்னோட்டத்தை மறை"
+
+#: src/window.py:602
+msgid "Show Preview"
+msgstr "முன்னோட்டத்தை காண்பி"
+
+#: src/export_dialog.py:100
+msgid "Export as HTML"
+msgstr "HTML ஆக ஏற்றுமதி செய்க"
+
+#: src/export_dialog.py:110
+msgid "HTML Files"
+msgstr "HTML கோப்புகள்"
+
+#: src/export_dialog.py:150
+msgid "HTML Export Successful"
+msgstr "HTML ஏற்றுமதி வெற்றி"
+
+#: src/export_dialog.py:151
+msgid "Document exported to:"
+msgstr "ஆவணம் ஏற்றுமதி செய்யப்பட்டது:"
+
+#: src/export_dialog.py:200
+msgid "Export as PDF"
+msgstr "PDF ஆக ஏற்றுமதி செய்க"
+
+#: src/export_dialog.py:250
+msgid "PDF Export Successful"
+msgstr "PDF ஏற்றுமதி வெற்றி"
+
+#: src/export_dialog.py:300
+msgid "Export as Image"
+msgstr "படமாக ஏற்றுமதி செய்க"
+
+#: src/export_dialog.py:310
+msgid "Image Files"
+msgstr "பட கோப்புகள்"
+
+#: src/export_dialog.py:350
+msgid "Image Export Successful"
+msgstr "பட ஏற்றுமதி வெற்றி"
+
+#: src/export_dialog.py:400
+msgid "Export Failed"
+msgstr "ஏற்றுமதி தோல்வி"
+
+#: src/file_manager.py:100
+msgid "Clear History?"
+msgstr "வரலாற்றை அழிக்கவா?"
+
+#: src/file_manager.py:101
+msgid "This will remove all file history. This action cannot be undone."
+msgstr "இது அனைத்து கோப்பு வரலாறையும் அகற்றும். இந்த நடவடிக்கையை திருப்ப முடியாது."
+
+#: src/file_manager.py:102
+msgid "Clear History"
+msgstr "வரலாற்றை அழிக்கவும்"
+
+#: src/file_manager.py:150
+msgid "Remove from history"
+msgstr "வரலாற்றிலிருந்து அகற்று"
+
+#: src/file_manager.py:200
+msgid "Created"
+msgstr "உருவாக்கப்பட்டது"
+
+#: src/file_manager.py:201
+msgid "Opened"
+msgstr "திறக்கப்பட்டது"
+
+#: src/file_manager.py:202
+msgid "Edited"
+msgstr "தொகுப்பமைக்கப்பட்டது"
+
+#: src/file_manager.py:250
+msgid "Opened {count}x"
+msgstr "{count} முறை திறக்கப்பட்டது"
+
+#: src/formatting_toolbar.py:100
+msgid "Insert Table"
+msgstr "அட்டவணை சேர்க்கவும்"
+
+#: src/formatting_toolbar.py:150
+msgid "Rows"
+msgstr "வரிசைகள்"
+
+#: src/formatting_toolbar.py:151
+msgid "Cols"
+msgstr "நெடுவரிசைகள்"
+
+#: src/formatting_toolbar.py:200 src/shortcuts_window.py:73
+msgid "Insert Link"
+msgstr "இணைப்பு சேர்க்கவும்"
+
+#: src/formatting_toolbar.py:201
+msgid "Link Text:"
+msgstr "இணைப்பு உரை:"
+
+#: src/formatting_toolbar.py:202
+msgid "Click here"
+msgstr "இங்கே கிளிக் செய்க"
+
+#: src/formatting_toolbar.py:203
+msgid "URL:"
+msgstr "URL:"
+
+#: src/formatting_toolbar.py:250
+msgid "Select Image"
+msgstr "படத்தை தேர்ந்தெடு"
+
+#: src/search_replace.py:120
+msgid "Replace All"
+msgstr "அனைத்தையும் மாற்று"
+
+#: src/sidebar.py:100
+msgid "Words"
+msgstr "சொற்கள்"
+
+#: src/sidebar.py:101
+msgid "Letters"
+msgstr "அகரவிண்ணுகள்"
+
+#: src/sidebar.py:102
+msgid "Paragraphs"
+msgstr "பத்திகள்"
+
+#: src/shortcuts_window.py:50
+msgid "File Operations"
+msgstr "கோப்பு செயல்பாடுகள்"
+
+#: src/shortcuts_window.py:51
+msgid "New File"
+msgstr "புதிய கோப்பு"
+
+#: src/shortcuts_window.py:52
+msgid "Open File"
+msgstr "கோப்பை திறக்கவும்"
+
+#: src/shortcuts_window.py:53
+msgid "Save File"
+msgstr "கோப்பை சேமிக்கவும்"
+
+#: src/shortcuts_window.py:54
+msgid "Save As"
+msgstr "வேறு பெயரில் சேமிக்கவும்"
+
+#: src/shortcuts_window.py:60
+msgid "Text Formatting"
+msgstr "உரை வடிவமைப்பு"
+
+#: src/shortcuts_window.py:61
+msgid "Bold"
+msgstr "தாடி எழுத்து"
+
+#: src/shortcuts_window.py:62
+msgid "Italic"
+msgstr "சாய்வெழுத்து"
+
+#: src/shortcuts_window.py:63
+msgid "Strikethrough"
+msgstr "மீட்டெழுத்து"
+
+#: src/shortcuts_window.py:64
+msgid "Code"
+msgstr "கோடு"
+
+#: src/shortcuts_window.py:70
+msgid "Editing"
+msgstr "தொகுப்பு"
+
+#: src/shortcuts_window.py:71
+msgid "Find Text"
+msgstr "உரைத் தேடு"
+
+#: src/shortcuts_window.py:72
+msgid "Find and Replace"
+msgstr "தேடு மற்றும் மாற்று"
+
+#: src/shortcuts_window.py:80
+msgid "View"
+msgstr "காண்க"
+
+#: src/shortcuts_window.py:81
+msgid "Toggle Sidebar"
+msgstr "பக்கப்பகுதி மாற்றவும்"
+
+#: src/shortcuts_window.py:82
+msgid "Toggle Sync Scroll"
+msgstr "இணைந்த ஸ்க்ரோல் மாற்றவும்"
+
+#: src/shortcuts_window.py:83
+msgid "Show Shortcuts"
+msgstr "குறுக்குவழிகள் காண்பி"
+
+msgid "About"
+msgstr "பற்றி"
+
+msgid "Application"
+msgstr "பயன்பாடு"
+
+msgid "Block Quote"
+msgstr "மேற்கோள் பத்தி"
+
+msgid "Bold (Ctrl+B)"
+msgstr "தடித்த எழுத்து (Ctrl+B)"
+
+msgid "Built with PyGObject and GTK4"
+msgstr "PyGObject மற்றும் GTK4 உடன் கட்டப்பட்டது"
+
+msgid "Bullet List"
+msgstr "புல்லட் பட்டியல்"
+
+msgid "Case Sensitive"
+msgstr "பெரிய/சிறிய எழுத்து உணர்திறன்"
+
+msgid "Close"
+msgstr "மூடு"
+
+msgid "Close all windows and quit"
+msgstr "அனைத்து சாளரங்களையும் மூடி வெளியேறு"
+
+msgid "Code Block"
+msgstr "குறியீடு பத்தி"
+
+msgid "Code by"
+msgstr "குறியீடு செய்தவர்"
+
+msgid "Cols: 0"
+msgstr "நெடுவரிசைகள்: 0"
+
+msgid "Create Standalone File"
+msgstr "தனித்த கோப்பை உருவாக்கு"
+
+msgid "Create a new markdown file"
+msgstr "புதிய மார்க்டவுன் கோப்பை உருவாக்கு"
+
+msgid "Credits"
+msgstr "நன்றிகள்"
+
+msgid "Current File:"
+msgstr "தற்போதைய கோப்பு:"
+
+msgid "Editor"
+msgstr "எடிட்டர்"
+
+msgid "Export Document"
+msgstr "ஆவணத்தை ஏற்றுமதி செய்"
+
+msgid "Export Format:"
+msgstr "ஏற்றுமதி வடிவம்:"
+
+msgid "Export Options:"
+msgstr "ஏற்றுமதி விருப்பங்கள்:"
+
+msgid "Export document"
+msgstr "ஆவணத்தை ஏற்றுமதி செய்"
+
+msgid "Export..."
+msgstr "ஏற்றுமதி செய்..."
+
+msgid "Find and replace text"
+msgstr "உரையைத் தேடி மாற்று"
+
+msgid "Formatting"
+msgstr "வடிவமைப்பு"
+
+msgid "H1"
+msgstr "H1"
+
+msgid "H2"
+msgstr "H2"
+
+msgid "H3"
+msgstr "H3"
+
+msgid "H4"
+msgstr "H4"
+
+msgid "HTML"
+msgstr "HTML"
+
+msgid "Heading 1"
+msgstr "தலைப்பு 1"
+
+msgid "Heading 2"
+msgstr "தலைப்பு 2"
+
+msgid "Heading 3"
+msgstr "தலைப்பு 3"
+
+msgid "Heading 4"
+msgstr "தலைப்பு 4"
+
+msgid "Headings"
+msgstr "தலைப்புகள்"
+
+msgid "Image"
+msgstr "படம்"
+
+msgid "Image Format:"
+msgstr "பட வடிவம்:"
+
+msgid "Include Custom CSS"
+msgstr "தனிப்பயன் CSS ஐச் சேர்"
+
+msgid "Inline Code"
+msgstr "இன்லைன் குறியீடு"
+
+msgid "Insert"
+msgstr "சேர்க்க"
+
+msgid "Italic (Ctrl+I)"
+msgstr "சாய்வெழுத்து (Ctrl+I)"
+
+msgid "Legal"
+msgstr "சட்டபூர்வமானது"
+
+msgid "Lists & Blocks"
+msgstr "பட்டியல்கள் & தொகுதிகள்"
+
+msgid "Main Menu"
+msgstr "முக்கிய மெனு"
+
+msgid "Mermaid Diagram"
+msgstr "மெர்மெய்டு வரைபடம்"
+
+msgid "New File (Ctrl+N)"
+msgstr "புதிய கோப்பு (Ctrl+N)"
+
+msgid "Next Match"
+msgstr "அடுத்த பொருத்தம்"
+
+msgid "No file loaded"
+msgstr "கோப்பு எதுவும் ஏற்றப்படவில்லை"
+
+msgid "Numbered List"
+msgstr "எண்ணிடப்பட்ட பட்டியல்"
+
+msgid "Open File (Ctrl+O)"
+msgstr "கோப்பை திறக்கவும் (Ctrl+O)"
+
+msgid "Open File..."
+msgstr "கோப்பை திறக்கவும்..."
+
+msgid "Open a new window"
+msgstr "புதிய சாளரத்தைத் திற"
+
+msgid "Open an existing file"
+msgstr "ஏற்கனவே உள்ள கோப்பை திற"
+
+msgid "Open file manager"
+msgstr "கோப்பு மேலாளரை திற"
+
+msgid "PDF"
+msgstr "PDF"
+
+msgid "Preview"
+msgstr "முன்னோட்டம்"
+
+msgid "Previous Match"
+msgstr "முந்தைய பொருத்தம்"
+
+msgid "ProPad Team"
+msgstr "ProPad குழு"
+
+msgid "Quit"
+msgstr "வெளியேறு"
+
+msgid "Recent Files:"
+msgstr "சமீபத்திய கோப்புகள்:"
+
+msgid "Replace with..."
+msgstr "இதற்கு மாற்று..."
+
+msgid "Report an Issue"
+msgstr "ஒரு சிக்கலை தெரிவிக்கவும்"
+
+msgid "Rows: 0"
+msgstr "வரிசைகள்: 0"
+
+msgid "Save (Ctrl+S)"
+msgstr "சேமிக்கவும் (Ctrl+S)"
+
+msgid "Save As..."
+msgstr "வேறு பெயரில் சேமிக்கவும்..."
+
+msgid "Save file with a new name"
+msgstr "புதிய பெயரில் கோப்பை சேமி"
+
+msgid "Save the current file"
+msgstr "தற்போதைய கோப்பை சேமி"
+
+msgid "Search in document"
+msgstr "ஆவணத்தில் தேடு"
+
+msgid "Search..."
+msgstr "தேடு..."
+
+msgid "Show or hide sidebar"
+msgstr "பக்கப் பட்டியை காட்டு அல்லது மறை"
+
+msgid "Show this help dialog"
+msgstr "இந்த உதவி சாளரத்தைக் காண்பி"
+
+msgid "Support Development"
+msgstr "மேம்பாட்டிற்கு ஆதரவு"
+
+# #-#-#-#-#  ta.po (propad 2.0.0)  #-#-#-#-#
+# Support / Buy Me a Coffee dialog
+#, fuzzy
+msgid "Support ProPad"
+msgstr ""
+"#-#-#-#-#  ta.po (propad 2.0.0)  #-#-#-#-#\n"
+"ProPad ஐ ஆதரிக்கவும்\n"
+"#-#-#-#-#  ta.po (propad 2.0.0)  #-#-#-#-#\n"
+"புரோபேடை ஆதரி"
+
+msgid "Sync editor and preview scrolling"
+msgstr "எடிட்டர் மற்றும் முன்னோட்ட ஸ்க்ரோலிங்கை ஒத்திசை"
+
+msgid "Table"
+msgstr "அட்டவணை"
+
+msgid "Tags: Created • Opened • Edited"
+msgstr "குறிச்சொற்கள்: உருவாக்கப்பட்டது • திறக்கப்பட்டது • திருத்தப்பட்டது"
+
+msgid ""
+"This application comes with absolutely no warranty. See the GNU General "
+"Public License, version 3 or later for details."
+msgstr ""
+"இந்த பயன்பாட்டிற்கு எந்த உத்தரவாதமும் இல்லை. GNU பொது பொது உரிமம், பதிப்பு 3 அல்லது "
+"அதற்குப் பிறகான விவரங்களைப் பார்க்கவும்."
+
+msgid "Toggle Replace"
+msgstr "மாற்றுதலை மாற்று"
+
+msgid "Toggle Scroll Sync"
+msgstr "ஸ்க்ரோல் ஒத்திசைவை மாற்று"
+
+msgid "Toggle Scroll Sync (Ctrl+Alt+S)"
+msgstr "ஸ்க்ரோல் ஒத்திசைவை மாற்று (Ctrl+Alt+S)"
+
+msgid "Use Regular Expression"
+msgstr "வழக்கமான வெளிப்பாட்டைப் பயன்படுத்து"
+
+msgid "Website"
+msgstr "வலைத்தளம்"
+
+msgid "Whole Word"
+msgstr "முழு வார்த்தை"
+
+msgid "https://example.com"
+msgstr "https://example.com"
+
+msgid "×"
+msgstr "×"
+
+msgid "© 2024 ProPad Team"
+msgstr "© 2024 ProPad குழு"
+
+#, fuzzy
+msgid ""
+"If you enjoy using ProPad, consider buying me a coffee!\n"
+"Your support helps keep the project alive."
+msgstr ""
+"நீங்கள் ProPad ஐப் பயன்படுத்த விரும்பினால், எனக்கு ஒரு காபி வாங்கித் தருவதைப் பற்றி "
+"யோசித்துப் பாருங்கள்!\n"
+"உங்கள் ஆதரவு திட்டத்தை உயிர்ப்புடன் வைத்திருக்க உதவுகிறது."
+
+msgid "Scan with your phone or click these buttons to open the link"
+msgstr ""
+"உங்கள் தொலைபேசியைப் பயன்படுத்தி ஸ்கேன் செய்யவும் அல்லது இணைப்பைத் திறக்க இந்த பொத்தான்களைக் "
+"கிளிக் செய்யவும்."
+
+#, fuzzy
+msgid "Open Buy Me a Coffee"
+msgstr ""
+"#-#-#-#-#  ta.po (propad 2.0.0)  #-#-#-#-#\n"
+"Buy Me a Coffee-ஐ திற\n"
+"#-#-#-#-#  ta.po (propad 2.0.0)  #-#-#-#-#\n"
+"Buy Me a Coffee திறக்கவும்"
+
+msgid "<span size='xx-large' weight='bold'>☕ Support ProPad</span>"
+msgstr "<span size='xx-large' weight='bold'>☕ ProPad-ஐ ஆதரிக்கவும்</span>"
+
+msgid "☕ Open Buy Me a Coffee"
+msgstr "☕ Buy Me a Coffee திறக்கவும்"
+
+msgid "Details"
+msgstr "விவரங்கள்"
+
+msgid "💝 Support Development"
+msgstr "💝 ஆதரவு மேம்பாடு"
+
+msgid "Link"
+msgstr "இணைப்பு"

@@ -7,9 +7,9 @@ corresponding .blp file and regenerate this file with blueprint-compiler.
 <interface>
   <requires lib="gtk" version="4.0"/>
   <template class="Window" parent="AdwApplicationWindow">
-    <property name="title">ProPad</property>
-    <property name="default-width">853</property>
-    <property name="default-height">634</property>
+    <property name="title" translatable="yes">ProPad</property>
+    <property name="default-width">900</property>
+    <property name="default-height">750</property>
     <property name="content">
       <object class="AdwMultiLayoutView" id="adw_multi_layout_view">
         <child>
@@ -63,7 +63,7 @@ corresponding .blp file and regenerate this file with blueprint-compiler.
                     <child>
                       <object class="AdwViewStackPage">
                         <property name="name">webview_page</property>
-                        <property name="title">Preview</property>
+                        <property name="title" translatable="yes">Preview</property>
                         <property name="icon-name">media-view-subtitles-symbolic</property>
                         <property name="child">
                           <object class="AdwLayoutSlot">
@@ -75,7 +75,7 @@ corresponding .blp file and regenerate this file with blueprint-compiler.
                     <child>
                       <object class="AdwViewStackPage">
                         <property name="name">editor_page</property>
-                        <property name="title">Editor</property>
+                        <property name="title" translatable="yes">Editor</property>
                         <property name="icon-name">document-edit-symbolic</property>
                         <property name="child">
                           <object class="AdwLayoutSlot">
@@ -108,27 +108,27 @@ corresponding .blp file and regenerate this file with blueprint-compiler.
                 <child type="start">
                   <object class="GtkButton" id="toggle_sidebar_btn">
                     <property name="icon-name">sidebar-show-symbolic</property>
-                    <property name="tooltip-text">Toggle Sidebar</property>
+                    <property name="tooltip-text" translatable="yes">Toggle Sidebar</property>
                   </object>
                 </child>
                 <child type="start">
                   <object class="GtkButton" id="btn_new">
                     <property name="icon-name">document-new-symbolic</property>
-                    <property name="tooltip-text">New File (Ctrl+N)</property>
+                    <property name="tooltip-text" translatable="yes">New File (Ctrl+N)</property>
                     <property name="action-name">win.new-file</property>
                   </object>
                 </child>
                 <child type="start">
                   <object class="GtkButton" id="btn_open">
                     <property name="icon-name">document-open-symbolic</property>
-                    <property name="tooltip-text">Open File (Ctrl+O)</property>
+                    <property name="tooltip-text" translatable="yes">Open File (Ctrl+O)</property>
                     <property name="action-name">win.open-file</property>
                   </object>
                 </child>
                 <child type="start">
                   <object class="GtkButton" id="btn_save">
                     <property name="icon-name">document-save-symbolic</property>
-                    <property name="tooltip-text">Save (Ctrl+S)</property>
+                    <property name="tooltip-text" translatable="yes">Save (Ctrl+S)</property>
                     <property name="action-name">win.save-file</property>
                   </object>
                 </child>
@@ -140,13 +140,13 @@ corresponding .blp file and regenerate this file with blueprint-compiler.
                 <child type="start">
                   <object class="GtkButton" id="toggle_sync_scroll_btn">
                     <property name="icon-name">view-dual-symbolic</property>
-                    <property name="tooltip-text">Toggle Scroll Sync (Ctrl+Alt+S)</property>
+                    <property name="tooltip-text" translatable="yes">Toggle Scroll Sync (Ctrl+Alt+S)</property>
                   </object>
                 </child>
                 <child type="end">
                   <object class="GtkMenuButton" id="menu_btn">
                     <property name="icon-name">open-menu-symbolic</property>
-                    <property name="tooltip-text">Main Menu</property>
+                    <property name="tooltip-text" translatable="yes">Main Menu</property>
                     <property name="menu-model">main_menu</property>
                   </object>
                 </child>
@@ -192,55 +192,55 @@ corresponding .blp file and regenerate this file with blueprint-compiler.
   <menu id="main_menu">
     <section>
       <item>
-        <attribute name="label">New File</attribute>
+        <attribute name="label" translatable="yes">New File</attribute>
         <attribute name="action">win.new-file</attribute>
       </item>
       <item>
-        <attribute name="label">Open File...</attribute>
+        <attribute name="label" translatable="yes">Open File...</attribute>
         <attribute name="action">win.open-file</attribute>
       </item>
       <item>
-        <attribute name="label">Save</attribute>
+        <attribute name="label" translatable="yes">Save</attribute>
         <attribute name="action">win.save-file</attribute>
       </item>
       <item>
-        <attribute name="label">Save As...</attribute>
+        <attribute name="label" translatable="yes">Save As...</attribute>
         <attribute name="action">win.save-as</attribute>
       </item>
     </section>
     <section>
       <item>
-        <attribute name="label">File Manager</attribute>
+        <attribute name="label" translatable="yes">File Manager</attribute>
         <attribute name="action">app.file-manager</attribute>
       </item>
       <item>
-        <attribute name="label">Export...</attribute>
+        <attribute name="label" translatable="yes">Export...</attribute>
         <attribute name="action">app.export</attribute>
       </item>
     </section>
     <section>
       <item>
-        <attribute name="label">Find</attribute>
+        <attribute name="label" translatable="yes">Find</attribute>
         <attribute name="action">app.find</attribute>
       </item>
       <item>
-        <attribute name="label">Replace</attribute>
+        <attribute name="label" translatable="yes">Replace</attribute>
         <attribute name="action">app.replace</attribute>
       </item>
     </section>
     <section>
       <item>
-        <attribute name="label">Toggle Scroll Sync</attribute>
+        <attribute name="label" translatable="yes">Toggle Scroll Sync</attribute>
         <attribute name="action">win.toggle-sync-scroll</attribute>
       </item>
     </section>
     <section>
       <item>
-        <attribute name="label">Keyboard Shortcuts</attribute>
+        <attribute name="label" translatable="yes">Keyboard Shortcuts</attribute>
         <attribute name="action">app.shortcuts</attribute>
       </item>
       <item>
-        <attribute name="label">About ProPad</attribute>
+        <attribute name="label" translatable="yes">About ProPad</attribute>
         <attribute name="action">app.about</attribute>
       </item>
     </section>

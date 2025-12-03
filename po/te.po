@@ -1,0 +1,587 @@
+# Telugu translations for propad package.
+# Complete Native Translation
+msgid ""
+msgstr ""
+"Project-Id-Version: propad 2.0.0\n"
+"Report-Msgid-Bugs-To: your-email@example.com\n"
+"POT-Creation-Date: 2024-12-01 00:00+0000\n"
+"PO-Revision-Date: 2024-12-02 00:00+0530\n"
+"Last-Translator: Complete Translation\n"
+"Language-Team: Telugu <te@li.org>\n"
+"Language: te\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: main.py:100
+msgid "New Window"
+msgstr "కొత్త విండో"
+
+#: main.py:120
+msgid "File Manager"
+msgstr "ఫైల్ మేనేజర్"
+
+#: main.py:130
+msgid "Export"
+msgstr "ఎగుమతి"
+
+#: main.py:140 src/search_replace.py:100
+msgid "Find"
+msgstr "వెతకండి"
+
+#: main.py:150 src/search_replace.py:110
+msgid "Replace"
+msgstr "భర్తీ చేయండి"
+
+#: main.py:160
+msgid "Keyboard Shortcuts"
+msgstr "కీబోర్డ్ షార్ట్‌కట్‌లు"
+
+#: main.py:170
+msgid "About ProPad"
+msgstr "ProPad గురించి"
+
+#: src/window.py:200
+msgid "Welcome to ProPad"
+msgstr "ProPad కు స్వాగతం"
+
+#: src/window.py:202
+msgid "Features"
+msgstr "ఫీచర్‌లు"
+
+#: src/window.py:204
+msgid "Live Preview"
+msgstr "ప్రత్యక్ష ప్రివ్యూ"
+
+#: src/window.py:204
+msgid "with synchronized scrolling"
+msgstr "సమకాలీకరించబడిన స్క్రోలింగ్‌తో"
+
+#: src/window.py:205
+msgid "Markdown Tables"
+msgstr "మార్క్‌డౌన్ పట్టికలు"
+
+#: src/window.py:205
+msgid "support"
+msgstr "మద్దతు"
+
+#: src/window.py:206
+msgid "Mermaid Diagrams"
+msgstr "మెర్మైడ్ రేఖాచిత్రాలు"
+
+#: src/window.py:206
+msgid "rendering"
+msgstr "రెండరింగ్"
+
+#: src/window.py:207
+msgid "LaTeX Math"
+msgstr "LaTeX గణితం"
+
+#: src/window.py:207
+msgid "equations"
+msgstr "సమీకరణాలు"
+
+#: src/window.py:208
+msgid "GitHub Alerts"
+msgstr "GitHub హెచ్చరికలు"
+
+#: src/window.py:209
+msgid "File History"
+msgstr "ఫైల్ చరిత్ర"
+
+#: src/window.py:209
+msgid "with tags"
+msgstr "ట్యాగ్‌లతో"
+
+#: src/window.py:212
+msgid "This is a GitHub-style note alert!"
+msgstr "ఇది GitHub-శైలి నోట్ హెచ్చరిక!"
+
+#: src/window.py:214
+msgid "Start editing to see the preview!"
+msgstr "ప్రివ్యూ చూడటానికి ఎడిటింగ్ ప్రారంభించండి!"
+
+#: src/window.py:300
+msgid "Save Changes?"
+msgstr "మార్పులను సేవ్ చేయాలా?"
+
+#: src/window.py:301
+msgid "The document has unsaved changes. Do you want to save them?"
+msgstr "డాక్యుమెంట్‌లో సేవ్ చేయని మార్పులు ఉన్నాయి. వాటిని సేవ్ చేయాలనుకుంటున్నారా?"
+
+#: src/window.py:302
+msgid "Discard"
+msgstr "విస్మరించండి"
+
+#: src/window.py:303
+msgid "Cancel"
+msgstr "రద్దు చేయండి"
+
+#: src/window.py:304
+msgid "Save"
+msgstr "సేవ్ చేయండి"
+
+#: src/window.py:350
+msgid "Open Markdown File"
+msgstr "మార్క్‌డౌన్ ఫైల్‌ను తెరవండి"
+
+#: src/window.py:352
+msgid "Markdown Files"
+msgstr "మార్క్‌డౌన్ ఫైల్‌లు"
+
+#: src/window.py:356
+msgid "All Files"
+msgstr "అన్ని ఫైల్‌లు"
+
+#: src/window.py:400
+msgid "Save Markdown File"
+msgstr "మార్క్‌డౌన్ ఫైల్‌ను సేవ్ చేయండి"
+
+#: src/window.py:450
+msgid "Untitled"
+msgstr "శీర్షిక లేనిది"
+
+#: src/window.py:500
+msgid "ProPad"
+msgstr "ProPad"
+
+#: src/window.py:550
+msgid "Sync Scroll Enabled"
+msgstr "స్క్రోల్ సమకాలీకరణ ప్రారంభించబడింది"
+
+#: src/window.py:552
+msgid "Sync Scroll Disabled"
+msgstr "స్క్రోల్ సమకాలీకరణ నిలిపివేయబడింది"
+
+#: src/window.py:600
+msgid "Hide Preview"
+msgstr "ప్రివ్యూను దాచండి"
+
+#: src/window.py:602
+msgid "Show Preview"
+msgstr "ప్రివ్యూను చూపండి"
+
+#: src/export_dialog.py:100
+msgid "Export as HTML"
+msgstr "HTML గా ఎగుమతి చేయండి"
+
+#: src/export_dialog.py:110
+msgid "HTML Files"
+msgstr "HTML ఫైల్‌లు"
+
+#: src/export_dialog.py:150
+msgid "HTML Export Successful"
+msgstr "HTML ఎగుమతి విజయవంతమైంది"
+
+#: src/export_dialog.py:151
+msgid "Document exported to:"
+msgstr "డాక్యుమెంట్ దీనికి ఎగుమతి చేయబడింది:"
+
+#: src/export_dialog.py:200
+msgid "Export as PDF"
+msgstr "PDF గా ఎగుమతి చేయండి"
+
+#: src/export_dialog.py:250
+msgid "PDF Export Successful"
+msgstr "PDF ఎగుమతి విజయవంతమైంది"
+
+#: src/export_dialog.py:300
+msgid "Export as Image"
+msgstr "చిత్రంగా ఎగుమతి చేయండి"
+
+#: src/export_dialog.py:310
+msgid "Image Files"
+msgstr "చిత్ర ఫైల్‌లు"
+
+#: src/export_dialog.py:350
+msgid "Image Export Successful"
+msgstr "చిత్రం ఎగుమతి విజయవంతమైంది"
+
+#: src/export_dialog.py:400
+msgid "Export Failed"
+msgstr "ఎగుమతి విఫలమైంది"
+
+#: src/file_manager.py:100
+msgid "Clear History?"
+msgstr "చరిత్రను చెరిపివేయాలా?"
+
+#: src/file_manager.py:101
+msgid "This will remove all file history. This action cannot be undone."
+msgstr "ఇది అన్ని ఫైల్ చరిత్రను తొలగిస్తుంది. ఈ చర్యను రద్దు చేయలేము."
+
+#: src/file_manager.py:102
+msgid "Clear History"
+msgstr "చరిత్రను చెరిపివేయండి"
+
+#: src/file_manager.py:150
+msgid "Remove from history"
+msgstr "చరిత్ర నుండి తొలగించండి"
+
+#: src/file_manager.py:200
+msgid "Created"
+msgstr "సృష్టించబడింది"
+
+#: src/file_manager.py:201
+msgid "Opened"
+msgstr "తెరవబడింది"
+
+#: src/file_manager.py:202
+msgid "Edited"
+msgstr "సవరించబడింది"
+
+#: src/file_manager.py:250
+msgid "Opened {count}x"
+msgstr "{count} సార్లు తెరవబడింది"
+
+#: src/formatting_toolbar.py:100
+msgid "Insert Table"
+msgstr "పట్టికను చొప్పించండి"
+
+#: src/formatting_toolbar.py:150
+msgid "Rows"
+msgstr "వరుసలు"
+
+#: src/formatting_toolbar.py:151
+msgid "Cols"
+msgstr "నిలువు వరుసలు"
+
+#: src/formatting_toolbar.py:200 src/shortcuts_window.py:73
+msgid "Insert Link"
+msgstr "లింక్‌ను చొప్పించండి"
+
+#: src/formatting_toolbar.py:201
+msgid "Link Text:"
+msgstr "లింక్ టెక్స్ట్:"
+
+#: src/formatting_toolbar.py:202
+msgid "Click here"
+msgstr "ఇక్కడ క్లిక్ చేయండి"
+
+#: src/formatting_toolbar.py:203
+msgid "URL:"
+msgstr "URL:"
+
+#: src/formatting_toolbar.py:250
+msgid "Select Image"
+msgstr "చిత్రాన్ని ఎంచుకోండి"
+
+#: src/search_replace.py:120
+msgid "Replace All"
+msgstr "అన్నింటినీ భర్తీ చేయండి"
+
+#: src/sidebar.py:100
+msgid "Words"
+msgstr "పదాలు"
+
+#: src/sidebar.py:101
+msgid "Letters"
+msgstr "అక్షరాలు"
+
+#: src/sidebar.py:102
+msgid "Paragraphs"
+msgstr "పేరాలు"
+
+#: src/shortcuts_window.py:50
+msgid "File Operations"
+msgstr "ఫైల్ కార్యకలాపాలు"
+
+#: src/shortcuts_window.py:51
+msgid "New File"
+msgstr "కొత్త ఫైల్"
+
+#: src/shortcuts_window.py:52
+msgid "Open File"
+msgstr "ఫైల్‌ను తెరవండి"
+
+#: src/shortcuts_window.py:53
+msgid "Save File"
+msgstr "ఫైల్‌ను సేవ్ చేయండి"
+
+#: src/shortcuts_window.py:54
+msgid "Save As"
+msgstr "గా సేవ్ చేయండి"
+
+#: src/shortcuts_window.py:60
+msgid "Text Formatting"
+msgstr "టెక్స్ట్ ఫార్మాటింగ్"
+
+#: src/shortcuts_window.py:61
+msgid "Bold"
+msgstr "బోల్డ్"
+
+#: src/shortcuts_window.py:62
+msgid "Italic"
+msgstr "ఇటాలిక్"
+
+#: src/shortcuts_window.py:63
+msgid "Strikethrough"
+msgstr "కొట్టివేసిన"
+
+#: src/shortcuts_window.py:64
+msgid "Code"
+msgstr "కోడ్"
+
+#: src/shortcuts_window.py:70
+msgid "Editing"
+msgstr "ఎడిటింగ్"
+
+#: src/shortcuts_window.py:71
+msgid "Find Text"
+msgstr "టెక్స్ట్‌ను వెతకండి"
+
+#: src/shortcuts_window.py:72
+msgid "Find and Replace"
+msgstr "వెతకండి మరియు భర్తీ చేయండి"
+
+#: src/shortcuts_window.py:80
+msgid "View"
+msgstr "చూడండి"
+
+#: src/shortcuts_window.py:81
+msgid "Toggle Sidebar"
+msgstr "సైడ్‌బార్‌ను టోగుల్ చేయండి"
+
+#: src/shortcuts_window.py:82
+msgid "Toggle Sync Scroll"
+msgstr "స్క్రోల్ సమకాలీకరణను టోగుల్ చేయండి"
+
+#: src/shortcuts_window.py:83
+msgid "Show Shortcuts"
+msgstr "షార్ట్‌కట్‌లను చూపండి"
+
+msgid "About"
+msgstr "గురించి"
+
+msgid "Application"
+msgstr "అప్లికేషన్"
+
+msgid "Block Quote"
+msgstr "బ్లాక్ కోట్"
+
+msgid "Bold (Ctrl+B)"
+msgstr "బోల్డ్ (Ctrl+B)"
+
+msgid "Bullet List"
+msgstr "బుల్లెట్ జాబితా"
+
+msgid "Case Sensitive"
+msgstr "కేస్ సెన్సిటివ్"
+
+msgid "Close"
+msgstr "మూసివేయండి"
+
+msgid "Close all windows and quit"
+msgstr "అన్ని విండోలను మూసివేసి నిష్క్రమించండి"
+
+msgid "Code Block"
+msgstr "కోడ్ బ్లాక్"
+
+msgid "Cols: 0"
+msgstr "నిలువు వరుసలు: 0"
+
+msgid "Create Standalone File"
+msgstr "స్వతంత్ర ఫైల్‌ను సృష్టించండి"
+
+msgid "Create a new markdown file"
+msgstr "కొత్త మార్క్‌డౌన్ ఫైల్‌ను సృష్టించండి"
+
+msgid "Current File:"
+msgstr "ప్రస్తుత ఫైల్:"
+
+msgid "Editor"
+msgstr "ఎడిటర్"
+
+msgid "Export Document"
+msgstr "డాక్యుమెంట్‌ను ఎగుమతి చేయండి"
+
+msgid "Export Format:"
+msgstr "ఎగుమతి ఫార్మాట్:"
+
+msgid "Export Options:"
+msgstr "ఎగుమతి ఎంపికలు:"
+
+msgid "Export document"
+msgstr "డాక్యుమెంట్‌ను ఎగుమతి చేయండి"
+
+msgid "Export..."
+msgstr "ఎగుమతి..."
+
+msgid "Find and replace text"
+msgstr "టెక్స్ట్‌ను వెతకండి మరియు భర్తీ చేయండి"
+
+msgid "Formatting"
+msgstr "ఫార్మాటింగ్"
+
+msgid "H1"
+msgstr "H1"
+
+msgid "H2"
+msgstr "H2"
+
+msgid "H3"
+msgstr "H3"
+
+msgid "H4"
+msgstr "H4"
+
+msgid "HTML"
+msgstr "HTML"
+
+msgid "Heading 1"
+msgstr "శీర్షిక 1"
+
+msgid "Heading 2"
+msgstr "శీర్షిక 2"
+
+msgid "Heading 3"
+msgstr "శీర్షిక 3"
+
+msgid "Heading 4"
+msgstr "శీర్షిక 4"
+
+msgid "Headings"
+msgstr "శీర్షికలు"
+
+msgid "Image"
+msgstr "చిత్రం"
+
+msgid "Image Format:"
+msgstr "చిత్ర ఫార్మాట్:"
+
+msgid "Include Custom CSS"
+msgstr "కస్టమ్ CSS ని చేర్చండి"
+
+msgid "Inline Code"
+msgstr "ఇన్లైన్ కోడ్"
+
+msgid "Insert"
+msgstr "చొప్పించండి"
+
+msgid "Italic (Ctrl+I)"
+msgstr "ఇటాలిక్ (Ctrl+I)"
+
+msgid "Lists & Blocks"
+msgstr "జాబితాలు & బ్లాక్‌లు"
+
+msgid "Main Menu"
+msgstr "ప్రధాన మెనూ"
+
+msgid "Mermaid Diagram"
+msgstr "మెర్మైడ్ రేఖాచిత్రం"
+
+msgid "New File (Ctrl+N)"
+msgstr "కొత్త ఫైల్ (Ctrl+N)"
+
+msgid "Next Match"
+msgstr "తరువాతి సరిపోలిక"
+
+msgid "No file loaded"
+msgstr "ఫైల్ లోడ్ చేయబడలేదు"
+
+msgid "Numbered List"
+msgstr "సంఖ్యా జాబితా"
+
+msgid "Open File (Ctrl+O)"
+msgstr "ఫైల్‌ను తెరవండి (Ctrl+O)"
+
+msgid "Open File..."
+msgstr "ఫైల్‌ను తెరవండి..."
+
+msgid "Open a new window"
+msgstr "కొత్త విండోను తెరవండి"
+
+msgid "Open an existing file"
+msgstr "ఇప్పటికే ఉన్న ఫైల్‌ను తెరవండి"
+
+msgid "Open file manager"
+msgstr "ఫైల్ మేనేజర్‌ను తెరవండి"
+
+msgid "PDF"
+msgstr "PDF"
+
+msgid "Preview"
+msgstr "ప్రివ్యూ"
+
+msgid "Previous Match"
+msgstr "మునుపటి సరిపోలిక"
+
+msgid "Quit"
+msgstr "నిష్క్రమించండి"
+
+msgid "Recent Files:"
+msgstr "ఇటీవలి ఫైల్‌లు:"
+
+msgid "Replace with..."
+msgstr "దీనితో భర్తీ చేయండి..."
+
+msgid "Rows: 0"
+msgstr "వరుసలు: 0"
+
+msgid "Save (Ctrl+S)"
+msgstr "సేవ్ చేయండి (Ctrl+S)"
+
+msgid "Save As..."
+msgstr "గా సేవ్ చేయండి..."
+
+msgid "Save file with a new name"
+msgstr "కొత్త పేరుతో ఫైల్‌ను సేవ్ చేయండి"
+
+msgid "Save the current file"
+msgstr "ప్రస్తుత ఫైల్‌ను సేవ్ చేయండి"
+
+msgid "Search in document"
+msgstr "డాక్యుమెంట్‌లో వెతకండి"
+
+msgid "Search..."
+msgstr "వెతకండి..."
+
+msgid "Show or hide sidebar"
+msgstr "సైడ్‌బార్‌ను చూపండి లేదా దాచండి"
+
+msgid "Show this help dialog"
+msgstr "ఈ సహాయ డైలాగ్‌ను చూపండి"
+
+msgid "Support ProPad"
+msgstr "ProPad కు మద్దతు ఇవ్వండి"
+
+msgid "Sync editor and preview scrolling"
+msgstr "ఎడిటర్ మరియు ప్రివ్యూ స్క్రోలింగ్‌ను సమకాలీకరించండి"
+
+msgid "Table"
+msgstr "పట్టిక"
+
+msgid "Tags: Created • Opened • Edited"
+msgstr "ట్యాగ్‌లు: సృష్టించబడింది • తెరవబడింది • సవరించబడింది"
+
+msgid "Toggle Replace"
+msgstr "భర్తీని టోగుల్ చేయండి"
+
+msgid "Toggle Scroll Sync"
+msgstr "స్క్రోల్ సమకాలీకరణను టోగుల్ చేయండి"
+
+msgid "Toggle Scroll Sync (Ctrl+Alt+S)"
+msgstr "స్క్రోల్ సమకాలీకరణను టోగుల్ చేయండి (Ctrl+Alt+S)"
+
+msgid "Use Regular Expression"
+msgstr "సాధారణ వ్యక్తీకరణను ఉపయోగించండి"
+
+msgid "Whole Word"
+msgstr "మొత్తం పదం"
+
+msgid "If you enjoy using ProPad, consider buying me a coffee!"
+msgstr "ProPad ఉపయోగించడం మీకు నచ్చితే, నాకు ఒక కాఫీ కొనిపెట్టడం గురించి ఆలోచించండి!"
+
+msgid "Your support helps keep the project alive."
+msgstr "మీ మద్దతు ఈ ప్రాజెక్ట్ కొనసాగడానికి సహాయపడుతుంది."
+
+msgid "Scan with your phone"
+msgstr "మీ ఫోన్‌తో స్కాన్ చేయండి"
+
+msgid "Open Buy Me a Coffee"
+msgstr "Buy Me a Coffee తెరవండి"
+
+msgid "<span size='xx-large' weight='bold'>☕ Support ProPad</span>"
+msgstr "<span size='xx-large' weight='bold'>☕ ProPad కి మద్దతివ్వండి</span>"
+
+msgid "☕ Open Buy Me a Coffee"
+msgstr "☕ Buy Me a Coffee తెరవండి"

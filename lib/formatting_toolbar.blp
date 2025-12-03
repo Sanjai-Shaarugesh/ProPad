@@ -10,7 +10,7 @@ template $FormattingToolbar: Popover {
     margin-bottom: 12;
 
     Label {
-      label: "Text Formatting";
+      label: _("Text Formatting");
       styles ["heading"]
       halign: start;
     }
@@ -22,29 +22,29 @@ template $FormattingToolbar: Popover {
 
       Button btn_bold {
         icon-name: "format-text-bold-symbolic";
-        tooltip-text: "Bold (Ctrl+B)";
+        tooltip-text: _("Bold (Ctrl+B)");
       }
 
       Button btn_italic {
         icon-name: "format-text-italic-symbolic";
-        tooltip-text: "Italic (Ctrl+I)";
+        tooltip-text: _("Italic (Ctrl+I)");
       }
 
       Button btn_strikethrough {
         icon-name: "format-text-strikethrough-symbolic";
-        tooltip-text: "Strikethrough";
+        tooltip-text: _("Strikethrough");
       }
 
       Button btn_code {
         icon-name: "text-x-generic-symbolic";
-        tooltip-text: "Inline Code";
+        tooltip-text: _("Inline Code");
       }
     }
 
     Separator {}
 
     Label {
-      label: "Headings";
+      label: _("Headings");
       styles ["heading"]
       halign: start;
     }
@@ -55,30 +55,30 @@ template $FormattingToolbar: Popover {
       homogeneous: true;
 
       Button btn_h1 {
-        label: "H1";
-        tooltip-text: "Heading 1";
+        label: _("H1");
+        tooltip-text: _("Heading 1");
       }
 
       Button btn_h2 {
-        label: "H2";
-        tooltip-text: "Heading 2";
+        label: _("H2");
+        tooltip-text: _("Heading 2");
       }
 
       Button btn_h3 {
-        label: "H3";
-        tooltip-text: "Heading 3";
+        label: _("H3");
+        tooltip-text: _("Heading 3");
       }
 
       Button btn_h4 {
-        label: "H4";
-        tooltip-text: "Heading 4";
+        label: _("H4");
+        tooltip-text: _("Heading 4");
       }
     }
 
     Separator {}
 
     Label {
-      label: "Lists & Blocks";
+      label: _("Lists & Blocks");
       styles ["heading"]
       halign: start;
     }
@@ -90,29 +90,29 @@ template $FormattingToolbar: Popover {
 
       Button btn_bullet_list {
         icon-name: "view-list-symbolic";
-        tooltip-text: "Bullet List";
+        tooltip-text: _("Bullet List");
       }
 
       Button btn_numbered_list {
         icon-name: "view-list-ordered-symbolic";
-        tooltip-text: "Numbered List";
+        tooltip-text: _("Numbered List");
       }
 
       Button btn_quote {
         icon-name: "format-indent-more-symbolic";
-        tooltip-text: "Block Quote";
+        tooltip-text: _("Block Quote");
       }
 
       Button btn_code_block {
         icon-name: "utilities-terminal-symbolic";
-        tooltip-text: "Code Block";
+        tooltip-text: _("Code Block");
       }
     }
 
     Separator {}
 
     Label {
-      label: "Insert";
+      label: _("Insert");
       styles ["heading"]
       halign: start;
     }
@@ -130,7 +130,7 @@ template $FormattingToolbar: Popover {
           }
           
           Label {
-            label: "Link";
+            label:_( "Link");
             hexpand: true;
             halign: start;
           }
@@ -146,7 +146,7 @@ template $FormattingToolbar: Popover {
           }
           
           Label {
-            label: "Image";
+            label: _("Image");
             hexpand: true;
             halign: start;
           }
@@ -162,7 +162,7 @@ template $FormattingToolbar: Popover {
           }
           
           Label {
-            label: "Table";
+            label: _("Table");
             hexpand: true;
             halign: start;
           }
@@ -178,7 +178,7 @@ template $FormattingToolbar: Popover {
           }
           
           Label {
-            label: "Mermaid Diagram";
+            label: _("Mermaid Diagram");
             hexpand: true;
             halign: start;
           }
@@ -194,7 +194,7 @@ template $FormattingToolbar: Popover {
           }
           
           Label {
-            label: "LaTeX Math";
+            label: _("LaTeX Math");
             hexpand: true;
             halign: start;
           }

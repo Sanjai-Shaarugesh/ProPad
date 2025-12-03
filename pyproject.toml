@@ -5,12 +5,16 @@ description = "Add your description here"
 readme = "README.md"
 requires-python = ">=3.12"
 dependencies = [
+    "aiohttp>=3.13.2",
     "comrak>=0.0.9",
+    "deep-translator>=1.11.4",
     "html2pdf4doc>=0.0.22",
     "markdown>=3.10",
+    "polib>=1.2.0",
     "pygobject>=3.54.5",
     "pygobject-stubs>=2.14.0",
     "pytest>=9.0.1",
+    "taichi>=1.7.4",
     "weasyprint>=66.0",
 ]
 

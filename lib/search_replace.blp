@@ -14,38 +14,38 @@ template $SearchReplaceBar: Gtk.Box {
     margin-bottom: 8;
 
     Gtk.SearchEntry search_entry {
-      placeholder-text: "Search...";
+      placeholder-text: _("Search...");
       hexpand: true;
     }
 
     Gtk.Button btn_prev {
       icon-name: "go-up-symbolic";
-      tooltip-text: "Previous Match";
+      tooltip-text: _("Previous Match");
     }
 
     Gtk.Button btn_next {
       icon-name: "go-down-symbolic";
-      tooltip-text: "Next Match";
+      tooltip-text: _("Next Match");
     }
 
     Gtk.ToggleButton btn_case_sensitive {
       icon-name: "format-text-bold-symbolic";
-      tooltip-text: "Case Sensitive";
+      tooltip-text: _("Case Sensitive");
     }
 
     Gtk.ToggleButton btn_whole_word {
       icon-name: "edit-find-symbolic";
-      tooltip-text: "Whole Word";
+      tooltip-text: _("Whole Word");
     }
 
     Gtk.ToggleButton btn_regex {
       icon-name: "accessories-text-editor-symbolic";
-      tooltip-text: "Use Regular Expression";
+      tooltip-text: _("Use Regular Expression");
     }
 
     Gtk.Button btn_close {
       icon-name: "view-conceal-symbolic";
-      tooltip-text: "Close";
+      tooltip-text: _("Close");
     }
   }
 
@@ -60,21 +60,21 @@ template $SearchReplaceBar: Gtk.Box {
       margin-bottom: 8;
 
       Gtk.Entry replace_entry {
-        placeholder-text: "Replace with...";
+        placeholder-text: _("Replace with...");
         hexpand: true;
       }
 
       Gtk.Button btn_replace {
-        label: "Replace";
+        label: _("Replace");
       }
 
       Gtk.Button btn_replace_all {
-        label: "Replace All";
+        label: _("Replace All");
       }
 
       Gtk.ToggleButton btn_toggle_replace {
         icon-name: "edit-find-replace-symbolic";
-        tooltip-text: "Toggle Replace";
+        tooltip-text: _("Toggle Replace");
         active: false;
       }
     };

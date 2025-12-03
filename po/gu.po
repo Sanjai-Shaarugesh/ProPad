@@ -1,0 +1,505 @@
+# Gujarati translations for propad package.
+# Copyright (C) 2025 THE propad'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the propad package.
+# Automatically generated, 2025.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: propad 2.0.0\n"
+"Report-Msgid-Bugs-To: your-email@example.com\n"
+"POT-Creation-Date: 2024-12-01 00:00+0000\n"
+"PO-Revision-Date: 2025-12-02 00:00+0530\n"
+"Last-Translator: Complete Translation\n"
+"Language-Team: Gujarati <gu@li.org>\n"
+"Language: gu\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+# Window and Basic UI
+msgid "ProPad"
+msgstr "ProPad"
+
+msgid "Editor"
+msgstr "સંપાદક"
+
+msgid "Preview"
+msgstr "પૂર્વાવલોકન"
+
+msgid "New Window"
+msgstr "નવી વિન્ડો"
+
+msgid "New File"
+msgstr "નવી ફાઇલ"
+
+msgid "Open File"
+msgstr "ફાઇલ ખોલો"
+
+msgid "Open File..."
+msgstr "ફાઇલ ખોલો..."
+
+msgid "Save"
+msgstr "સાચવો"
+
+msgid "Save File"
+msgstr "ફાઇલ સાચવો"
+
+msgid "Save As"
+msgstr "આ રીતે સાચવો"
+
+msgid "Save As..."
+msgstr "આ રીતે સાચવો..."
+
+msgid "File Manager"
+msgstr "ફાઇલ મેનેજર"
+
+msgid "Export"
+msgstr "નિકાસ કરો"
+
+msgid "Export..."
+msgstr "નિકાસ કરો..."
+
+msgid "Find"
+msgstr "શોધો"
+
+msgid "Replace"
+msgstr "બદલો"
+
+msgid "Toggle Scroll Sync"
+msgstr "સ્ક્રોલ સિંક ટૉગલ કરો"
+
+msgid "Toggle Sidebar"
+msgstr "સાઇડબાર ટૉગલ કરો"
+
+msgid "Keyboard Shortcuts"
+msgstr "કીબોર્ડ શૉર્ટકટ્સ"
+
+msgid "About ProPad"
+msgstr "ProPad વિશે"
+
+msgid "Quit"
+msgstr "બહાર નીકળો"
+
+# File operations
+msgid "All Files"
+msgstr "બધી ફાઇલો"
+
+msgid "Markdown Files"
+msgstr "Markdown ફાઇલો"
+
+msgid "Open Markdown File"
+msgstr "Markdown ફાઇલ ખોલો"
+
+msgid "Save Markdown File"
+msgstr "Markdown ફાઇલ સાચવો"
+
+msgid "Untitled"
+msgstr "શીર્ષકવિહીન"
+
+msgid "Cancel"
+msgstr "રદ કરો"
+
+msgid "Discard"
+msgstr "રદ કરો"
+
+msgid "Close"
+msgstr "બંધ કરો"
+
+# Dialogs
+msgid "Save Changes?"
+msgstr "ફેરફારો સાચવો?"
+
+msgid "The document has unsaved changes. Do you want to save them?"
+msgstr "દસ્તાવેજમાં અસાચવેલા ફેરફારો છે. શું તમે તેને સાચવવા માંગો છો?"
+
+# Features
+msgid "Welcome to ProPad"
+msgstr "ProPad માં આપનું સ્વાગત છે"
+
+msgid "Features"
+msgstr "લક્ષણો"
+
+msgid "Live Preview"
+msgstr "લાઇવ પૂર્વાવલોકન"
+
+msgid "with synchronized scrolling"
+msgstr "સમન્વયિત સ્ક્રોલિંગ સાથે"
+
+msgid "Markdown Tables"
+msgstr "Markdown કોષ્ટકો"
+
+msgid "support"
+msgstr "સમર્થન"
+
+msgid "Mermaid Diagrams"
+msgstr "Mermaid આકૃતિઓ"
+
+msgid "rendering"
+msgstr "રેન્ડરિંગ"
+
+msgid "LaTeX Math"
+msgstr "LaTeX ગણિત"
+
+msgid "equations"
+msgstr "સમીકરણો"
+
+msgid "GitHub Alerts"
+msgstr "GitHub ચેતવણીઓ"
+
+msgid "File History"
+msgstr "ફાઇલ ઇતિહાસ"
+
+msgid "with tags"
+msgstr "ટેગ સાથે"
+
+msgid "Start editing to see the preview!"
+msgstr "પૂર્વાવલોકન જોવા માટે સંપાદન શરૂ કરો!"
+
+msgid "This is a GitHub-style note alert!"
+msgstr "આ GitHub-શૈલીની નોંધ ચેતવણી છે!"
+
+# Sync Scroll
+msgid "Sync Scroll Enabled"
+msgstr "સિંક સ્ક્રોલ સક્ષમ"
+
+msgid "Sync Scroll Disabled"
+msgstr "સિંક સ્ક્રોલ અક્ષમ"
+
+# Preview controls
+msgid "Hide Preview"
+msgstr "પૂર્વાવલોકન છુપાવો"
+
+msgid "Show Preview"
+msgstr "પૂર્વાવલોકન બતાવો"
+
+# Export
+msgid "Export as HTML"
+msgstr "HTML તરીકે નિકાસ કરો"
+
+msgid "Export as PDF"
+msgstr "PDF તરીકે નિકાસ કરો"
+
+msgid "Export as Image"
+msgstr "છબી તરીકે નિકાસ કરો"
+
+msgid "HTML Files"
+msgstr "HTML ફાઇલો"
+
+msgid "Image Files"
+msgstr "છબી ફાઇલો"
+
+msgid "Export Document"
+msgstr "દસ્તાવેજ નિકાસ કરો"
+
+msgid "Export Format:"
+msgstr "નિકાસ ફોર્મેટ:"
+
+msgid "Export Options:"
+msgstr "નિકાસ વિકલ્પો:"
+
+msgid "Include Custom CSS"
+msgstr "કસ્ટમ CSS શામેલ કરો"
+
+msgid "Create Standalone File"
+msgstr "સ્ટેન્ડઅલોન ફાઇલ બનાવો"
+
+msgid "Image Format:"
+msgstr "છબી ફોર્મેટ:"
+
+msgid "HTML"
+msgstr "HTML"
+
+msgid "PDF"
+msgstr "PDF"
+
+msgid "Image"
+msgstr "છબી"
+
+# Formatting toolbar
+msgid "Text Formatting"
+msgstr "ટેક્સ્ટ ફોર્મેટિંગ"
+
+msgid "Formatting"
+msgstr "ફોર્મેટિંગ"
+
+msgid "Bold"
+msgstr "બોલ્ડ"
+
+msgid "Bold (Ctrl+B)"
+msgstr "બોલ્ડ (Ctrl+B)"
+
+msgid "Italic"
+msgstr "ઇટાલિક"
+
+msgid "Italic (Ctrl+I)"
+msgstr "ઇટાલિક (Ctrl+I)"
+
+msgid "Strikethrough"
+msgstr "સ્ટ્રાઇકથ્રૂ"
+
+msgid "Code"
+msgstr "કોડ"
+
+msgid "Inline Code"
+msgstr "ઇનલાઇન કોડ"
+
+msgid "Headings"
+msgstr "શીર્ષકો"
+
+msgid "Heading 1"
+msgstr "શીર્ષક 1"
+
+msgid "Heading 2"
+msgstr "શીર્ષક 2"
+
+msgid "Heading 3"
+msgstr "શીર્ષક 3"
+
+msgid "Heading 4"
+msgstr "શીર્ષક 4"
+
+msgid "H1"
+msgstr "H1"
+
+msgid "H2"
+msgstr "H2"
+
+msgid "H3"
+msgstr "H3"
+
+msgid "H4"
+msgstr "H4"
+
+msgid "Lists & Blocks"
+msgstr "સૂચિઓ અને બ્લોક્સ"
+
+msgid "Bullet List"
+msgstr "બુલેટ સૂચિ"
+
+msgid "Numbered List"
+msgstr "ક્રમાંકિત સૂચિ"
+
+msgid "Block Quote"
+msgstr "બ્લોક ટાંકણ"
+
+msgid "Code Block"
+msgstr "કોડ બ્લોક"
+
+msgid "Insert"
+msgstr "દાખલ કરો"
+
+msgid "Insert Link"
+msgstr "લિંક દાખલ કરો"
+
+msgid "Insert Table"
+msgstr "કોષ્ટક દાખલ કરો"
+
+msgid "Link Text:"
+msgstr "લિંક ટેક્સ્ટ:"
+
+msgid "Click here"
+msgstr "અહીં ક્લિક કરો"
+
+msgid "URL:"
+msgstr "URL:"
+
+msgid "https://example.com"
+msgstr "https://example.com"
+
+msgid "Select Image"
+msgstr "છબી પસંદ કરો"
+
+msgid "Table"
+msgstr "કોષ્ટક"
+
+msgid "Mermaid Diagram"
+msgstr "Mermaid આકૃતિ"
+
+msgid "Rows"
+msgstr "પંક્તિઓ"
+
+msgid "Cols"
+msgstr "સ્તંભો"
+
+msgid "Rows: 0"
+msgstr "પંક્તિઓ: 0"
+
+msgid "Cols: 0"
+msgstr "સ્તંભો: 0"
+
+msgid "×"
+msgstr "×"
+
+# Search and Replace
+msgid "Search..."
+msgstr "શોધો..."
+
+msgid "Replace with..."
+msgstr "આનાથી બદલો..."
+
+msgid "Previous Match"
+msgstr "અગાઉનું મેચ"
+
+msgid "Next Match"
+msgstr "આગળનું મેચ"
+
+msgid "Case Sensitive"
+msgstr "કેસ સંવેદનશીલ"
+
+msgid "Whole Word"
+msgstr "સંપૂર્ણ શબ્દ"
+
+msgid "Use Regular Expression"
+msgstr "નિયમિત અભિવ્યક્તિ વાપરો"
+
+msgid "Replace All"
+msgstr "બધું બદલો"
+
+msgid "Toggle Replace"
+msgstr "બદલો ટૉગલ કરો"
+
+# File Manager
+msgid "Current File:"
+msgstr "વર્તમાન ફાઇલ:"
+
+msgid "No file loaded"
+msgstr "કોઈ ફાઇલ લોડ નથી"
+
+msgid "Recent Files:"
+msgstr "તાજેતરની ફાઇલો:"
+
+msgid "Clear History"
+msgstr "ઇતિહાસ સાફ કરો"
+
+msgid "Clear History?"
+msgstr "ઇતિહાસ સાફ કરો?"
+
+msgid "This will remove all file history. This action cannot be undone."
+msgstr "આ બધા ફાઇલ ઇતિહાસને દૂર કરશે. આ ક્રિયા પૂર્વવત્ કરી શકાતી નથી."
+
+msgid "Remove from history"
+msgstr "ઇતિહાસમાંથી દૂર કરો"
+
+msgid "Created"
+msgstr "બનાવ્યું"
+
+msgid "Opened"
+msgstr "ખોલ્યું"
+
+msgid "Edited"
+msgstr "સંપાદિત"
+
+msgid "Opened {count}x"
+msgstr "{count} વખત ખોલ્યું"
+
+# Statistics
+msgid "Words"
+msgstr "શબ્દો"
+
+msgid "Letters"
+msgstr "અક્ષરો"
+
+msgid "Paragraphs"
+msgstr "ફકરાઓ"
+
+# Shortcuts Window
+msgid "File Operations"
+msgstr "ફાઇલ કામગીરી"
+
+msgid "Create a new markdown file"
+msgstr "નવી markdown ફાઇલ બનાવો"
+
+msgid "Open a new window"
+msgstr "નવી વિન્ડો ખોલો"
+
+msgid "Open an existing file"
+msgstr "હાલની ફાઇલ ખોલો"
+
+msgid "Save the current file"
+msgstr "વર્તમાન ફાઇલ સાચવો"
+
+msgid "Save file with a new name"
+msgstr "નવા નામ સાથે ફાઇલ સાચવો"
+
+msgid "Open file manager"
+msgstr "ફાઇલ મેનેજર ખોલો"
+
+msgid "Export document"
+msgstr "દસ્તાવેજ નિકાસ કરો"
+
+msgid "Editing"
+msgstr "સંપાદન"
+
+msgid "Search in document"
+msgstr "દસ્તાવેજમાં શોધો"
+
+msgid "Find and replace text"
+msgstr "ટેક્સ્ટ શોધો અને બદલો"
+
+msgid "Sync editor and preview scrolling"
+msgstr "સંપાદક અને પૂર્વાવલોકન સ્ક્રોલિંગ સિંક કરો"
+
+msgid "View"
+msgstr "જુઓ"
+
+msgid "Show or hide sidebar"
+msgstr "સાઇડબાર બતાવો અથવા છુપાવો"
+
+msgid "Application"
+msgstr "એપ્લિકેશન"
+
+msgid "Show this help dialog"
+msgstr "આ સહાય સંવાદ બતાવો"
+
+msgid "About"
+msgstr "વિશે"
+
+msgid "Close all windows and quit"
+msgstr "બધી વિન્ડો બંધ કરો અને બહાર નીકળો"
+
+msgid "Support ProPad"
+msgstr "ProPad ને સમર્થન આપો"
+
+# Tooltips
+msgid "New File (Ctrl+N)"
+msgstr "નવી ફાઇલ (Ctrl+N)"
+
+msgid "Open File (Ctrl+O)"
+msgstr "ફાઇલ ખોલો (Ctrl+O)"
+
+msgid "Save (Ctrl+S)"
+msgstr "સાચવો (Ctrl+S)"
+
+msgid "Toggle Scroll Sync (Ctrl+Alt+S)"
+msgstr "સ્ક્રોલ સિંક ટૉગલ કરો (Ctrl+Alt+S)"
+
+msgid "Main Menu"
+msgstr "મુખ્ય મેનુ"
+
+# Additional UI elements
+msgid "Tags: Created • Opened • Edited"
+msgstr "ટેગ: બનાવ્યું • ખોલ્યું • સંપાદિત"
+
+msgid "Find Text"
+msgstr "ટેક્સ્ટ શોધો"
+
+msgid "Find and Replace"
+msgstr "શોધો અને બદલો"
+
+msgid "If you enjoy using ProPad, consider buying me a coffee!"
+msgstr "જો તમને ProPad વાપરવું ગમે છે, તો મને એક કપ કૉફી અપાવવાનો વિચાર કરો!"
+
+msgid "Your support helps keep the project alive."
+msgstr "તમારો સહયોગ પ્રોજેક્ટને જીવંત રાખવામાં મદદ કરે છે."
+
+msgid "Scan with your phone"
+msgstr "તમારા ફોનથી સ્કેન કરો"
+
+msgid "Open Buy Me a Coffee"
+msgstr "Buy Me a Coffee ખોલો"
+
+msgid "<span size='xx-large' weight='bold'>☕ Support ProPad</span>"
+msgstr "<span size='xx-large' weight='bold'>☕ ProPad ને સપોર્ટ કરો</span>"
+
+msgid "☕ Open Buy Me a Coffee"
+msgstr "☕ Buy Me a Coffee ખોલો"
