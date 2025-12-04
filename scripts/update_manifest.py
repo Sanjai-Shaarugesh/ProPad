@@ -24,7 +24,7 @@ def main():
 
     print(f"✅ Found {len(wheels)} wheel files\n")
     print("=" * 70)
-    print("Copy this into your io.github.sanjai.ProPad.yaml manifest:")
+    
     print("=" * 70)
     print()
 

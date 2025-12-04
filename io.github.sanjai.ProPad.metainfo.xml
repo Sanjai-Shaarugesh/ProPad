@@ -29,7 +29,7 @@
       <li>Synchronized scrolling in preview modes</li>
       <li>File history tracking and versioning</li>
       <li>Support for tables, Mermaid diagrams, LaTeX math, and GitHub alerts</li>
-      <li>Multi-device synchronization (via user-configured service)</li>
+      
     </ul>
     <p>
       Whether you're taking notes, writing documentation, or editing markdown files,
@@ -80,6 +80,34 @@
     <screenshot>
       <caption>View of the file history tracking feature</caption>
       <image>https://raw.githubusercontent.com/Sanjai-Shaarugesh/ProPad/main/screenshots/file-history.png</image>
+    </screenshot>
+    <screenshot>
+      <caption>View of the keyboard shorcuts</caption>
+      <image>https://raw.githubusercontent.com/Sanjai-Shaarugesh/ProPad/main/screenshots/keyboard-shorcuts.png</image>
+    </screenshot>
+    <screenshot>
+      <caption>View of the formatting toolbar feature</caption>
+      <image>https://raw.githubusercontent.com/Sanjai-Shaarugesh/ProPad/main/screenshots/formatting.png</image>
+    </screenshot>
+    <screenshot>
+      <caption>View of the latext feature</caption>
+      <image>https://raw.githubusercontent.com/Sanjai-Shaarugesh/ProPad/main/screenshots/latex.png</image>
+    </screenshot>
+    <screenshot>
+      <caption>View of the mermaid feature</caption>
+      <image>https://raw.githubusercontent.com/Sanjai-Shaarugesh/ProPad/main/screenshots/mermaid.png</image>
+    </screenshot>
+    <screenshot>
+      <caption>View of the table insert feature</caption>
+      <image>https://raw.githubusercontent.com/Sanjai-Shaarugesh/ProPad/main/screenshots/tabley.png</image>
+    </screenshot>
+    <screenshot>
+         <caption>View of the light mode feature</caption>
+         <image>https://raw.githubusercontent.com/Sanjai-Shaarugesh/ProPad/main/screenshots/light.png</image>
+       </screenshot>
+    <screenshot>
+            <caption>View of the file export</caption>
+            <image>https://raw.githubusercontent.com/Sanjai-Shaarugesh/ProPad/main/screenshots/file-exporty.png</image>
     </screenshot>
   </screenshots>
 

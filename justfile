@@ -201,7 +201,7 @@ check-screenshots:
     #!/usr/bin/env bash
     echo "Checking screenshots..."
     missing=0
-    for img in main-window.png dark-mode.png file-manager.png mermaid-latex.png file-history.png; do
+    for img in main-window.png dark-mode.png file-manager.png mermaid-latex.png file-history.png formatting.png latext.png light.png mermaid.png table.png file-export.png; do
         if [ -f "screenshots/$img" ]; then
             if command -v identify &> /dev/null; then
                 size=$(identify -format "%wx%h" "screenshots/$img" 2>/dev/null || echo "unknown")
