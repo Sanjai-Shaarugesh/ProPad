@@ -104,13 +104,12 @@ def init_locale():
     """Initialize locale and gettext for translations with auto-detection."""
     global _
 
-    print(f"📂 Locale directory: {LOCALE_DIR}")
-    print(f"📦 App name: {APP_NAME}")
+    
 
-    # Set up locale
+    
     try:
         locale.setlocale(locale.LC_ALL, "")
-        print(f"✅ System locale set successfully")
+        
     except Exception as e:
         print(f"⚠️ Could not set locale: {e}")
         try:

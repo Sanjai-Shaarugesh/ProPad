@@ -111,7 +111,7 @@ class SidebarWidget(Gtk.Box):
                     if self._scroll_poll_id:
                         GLib.source_remove(self._scroll_poll_id)
                     self._scroll_poll_id = GLib.timeout_add(16, self._poll_scroll)
-                    print("✅ Sidebar scroll sync polling (60fps) setup successful!")
+                    
                     return False
             parent = parent.get_parent()
             depth += 1
@@ -199,9 +199,7 @@ class SidebarWidget(Gtk.Box):
 
         target_value = max_scroll * percentage
 
-        print(
-            f"📜 Sidebar scrolling to {percentage:.3f} (value: {target_value:.1f}/{max_scroll:.1f})"
-        )
+        
 
         # Use instant scroll for restoration
         self._scroll_adjustment.set_value(target_value)
@@ -217,7 +215,7 @@ class SidebarWidget(Gtk.Box):
 
     def connect_scroll_changed(self, callback):
         self._scroll_callbacks.append(callback)
-        print(f"✅ Scroll callback registered. Total: {len(self._scroll_callbacks)}")
+        
 
     def set_sync_scroll_enabled(self, enabled: bool):
         self.sync_scroll_enabled = enabled

@@ -1,19 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<component type="io.github.sanjai.ProPad">
+<component type="desktop-application">
   <id>io.github.sanjai.ProPad</id>
 
   <metadata_license>CC0-1.0</metadata_license>
   <project_license>GPL-3.0-or-later</project_license>
 
-  <name>ProPadp</name>
-  <summary>A modern, safe, and adaptive text editor with rich formatting and multi-device sync</summary>
+  <name>ProPad</name>
+  <summary>A modern, safe, and adaptive markdown editor with rich formatting and multi-device sync</summary>
 
   <description>
     <p>
-      ProPadp is a modern, user-friendly, and **adaptive** text editor built with GTK 4 and Libadwaita.
-      It provides a clean interface for writing and editing documents with rich formatting capabilities.
-      With **multi-device synchronization**, you can seamlessly access and edit your notes across different platforms.
-      The application is designed to be **safe and secure**, with a focus on data integrity.
+      ProPad is a modern, user-friendly, and adaptive markdown editor built with GTK 4 and Libadwaita.
+      It provides a clean interface for writing and editing markdown with rich formatting capabilities.
+      With synchronized scrolling, you can seamlessly view and edit your markdown content.
+      It has support for Mermaid and LaTeX with GitHub alert tags support in markdown with preview.
+      The application is designed to be safe and secure, with a focus on data integrity.
     </p>
     <p>Advanced features include:</p>
     <ul>
@@ -24,34 +25,34 @@
       <li>Export to multiple formats</li>
       <li>Dark mode support</li>
       <li>Auto-save functionality</li>
-      <li>**GPU-accelerated rendering** for smooth performance</li>
-      <li>**Synchronized scrolling** in preview modes</li>
-      <li>**File history tracking** and versioning</li>
-      <li>Support for **tables**, **Mermaid diagrams**, **LaTeX math** ($E=mc^2$), and **GitHub alerts**</li>
-      <li>**Multi-device synchronization** (via user-configured service)</li>
+      <li>GPU-accelerated rendering for smooth performance</li>
+      <li>Synchronized scrolling in preview modes</li>
+      <li>File history tracking and versioning</li>
+      <li>Support for tables, Mermaid diagrams, LaTeX math, and GitHub alerts</li>
+      <li>Multi-device synchronization (via user-configured service)</li>
     </ul>
     <p>
       Whether you're taking notes, writing documentation, or editing markdown files,
-      ProPadp provides all the tools you need in a distraction-free and highly capable environment.
+      ProPad provides all the tools you need in a distraction-free and highly capable environment.
     </p>
   </description>
 
-  <developer id="io.github.sanjai.ProPad">
+  <developer id="io.github.sanjai">
     <name>Sanjai Shaarugesh</name>
   </developer>
 
   <update_contact>shaarugesh6@gmail.com</update_contact>
 
-  <url type="homepage">https://github.com/Sanjai-Shaarugesh/propad</url>
-  <url type="bugtracker">https://github.com/Sanjai-Shaarugesh/propad/issues</url>
-  <url type="help">https://github.com/Sanjai-Shaarugesh/propad</url>
+  <url type="homepage">https://github.com/Sanjai-Shaarugesh/ProPad</url>
+  <url type="bugtracker">https://github.com/Sanjai-Shaarugesh/ProPad/issues</url>
+  <url type="help">https://github.com/Sanjai-Shaarugesh/ProPad</url>
   <url type="donation">https://buymeacoffee.com/sanjai</url>
-  <url type="vcs-browser">https://github.com/Sanjai-Shaarugesh/propad</url>
+  <url type="vcs-browser">https://github.com/Sanjai-Shaarugesh/ProPad</url>
 
   <launchable type="desktop-id">io.github.sanjai.ProPad.desktop</launchable>
 
   <provides>
-    <binary>ProPad</binary>
+    <binary>propad</binary>
   </provides>
 
   <content_rating type="oars-1.1">
@@ -62,23 +63,23 @@
   <screenshots>
     <screenshot type="default">
       <caption>Main window with editor</caption>
-      <image>https://example.com/screenshots/main-window.png</image>
+      <image>https://raw.githubusercontent.com/Sanjai-Shaarugesh/ProPad/main/screenshots/main-window.png</image>
     </screenshot>
     <screenshot>
       <caption>Dark mode interface</caption>
-      <image>https://example.com/screenshots/dark-mode.png</image>
+      <image>https://raw.githubusercontent.com/Sanjai-Shaarugesh/ProPad/main/screenshots/dark-mode.png</image>
     </screenshot>
     <screenshot>
       <caption>File manager sidebar</caption>
-      <image>https://example.com/screenshots/file-manager.png</image>
+      <image>https://raw.githubusercontent.com/Sanjai-Shaarugesh/ProPad/main/screenshots/file-manager.png</image>
     </screenshot>
     <screenshot>
-      <caption>Editing a document with a Mermaid diagram and LaTeX math</caption>
-      <image>https://example.com/screenshots/advanced-features.png</image>
+      <caption>Editing markdown with Mermaid diagram and LaTeX math</caption>
+      <image>https://raw.githubusercontent.com/Sanjai-Shaarugesh/ProPad/main/screenshots/mermaid-latex.png</image>
     </screenshot>
     <screenshot>
       <caption>View of the file history tracking feature</caption>
-      <image>https://example.com/screenshots/file-history.png</image>
+      <image>https://raw.githubusercontent.com/Sanjai-Shaarugesh/ProPad/main/screenshots/file-history.png</image>
     </screenshot>
   </screenshots>
 
@@ -137,18 +138,14 @@
     <keyword>markdown</keyword>
     <keyword>writing</keyword>
     <keyword>sync</keyword>
-    <keyword>multi-device</keyword>
-    <keyword>safe</keyword>
     <keyword>adaptive</keyword>
+    <keyword>safe</keyword>
     <keyword>latex</keyword>
     <keyword>mermaid</keyword>
   </keywords>
 
   <requires>
     <display_length compare="ge">360</display_length>
-    <hardware>
-      <display_feature>opengl</display_feature>
-    </hardware>
   </requires>
 
   <recommends>

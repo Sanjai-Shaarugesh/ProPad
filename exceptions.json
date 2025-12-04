@@ -1,0 +1,7 @@
+{
+  "io.github.sanjai.ProPad": {
+    "finish-args-dconf-talk-name": "App requires persistent settings storage via dconf",
+    "finish-args-direct-dconf-path": "App requires persistent settings storage via dconf",
+    "finish-args-portal-talk-name": "App requires portal access for file chooser and desktop integration"
+  }
+}

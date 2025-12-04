@@ -13,13 +13,13 @@ CONFIG_FILE = os.path.expanduser("~/.config/propad/file_history.json")
 
 
 class FileHistory:
-    """Manages file history with tags and metadata."""
+    
 
     def __init__(self):
         self.history = self.load_history()
 
     def load_history(self):
-        """Load file history from config."""
+        
         try:
             if os.path.exists(CONFIG_FILE):
                 with open(CONFIG_FILE, "r") as f:
@@ -28,12 +28,12 @@ class FileHistory:
             print(f"Error loading history: {e}")
 
         return {
-            "files": {},  # filepath -> {last_opened, last_edited, created, opened_count, tags}
-            "order": [],  # List of filepaths in order
+            "files": {},  
+            "order": [],  
         }
 
     def save_history(self):
-        """Save file history to config."""
+        
         try:
             os.makedirs(os.path.dirname(CONFIG_FILE), exist_ok=True)
             with open(CONFIG_FILE, "w") as f:
@@ -42,7 +42,7 @@ class FileHistory:
             print(f"Error saving history: {e}")
 
     def add_file(self, filepath, action="opened"):
-        """Add or update file in history with action tag."""
+        
         now = datetime.now().isoformat()
 
         if filepath not in self.history["files"]:
@@ -55,7 +55,7 @@ class FileHistory:
                 "tags": [action],
             }
         else:
-            # Update existing file
+            
             file_data = self.history["files"][filepath]
 
             if action == "opened":
@@ -67,21 +67,21 @@ class FileHistory:
                 if not file_data.get("created"):
                     file_data["created"] = now
 
-            # Add tag if not present
+            
             if action not in file_data.get("tags", []):
                 if "tags" not in file_data:
                     file_data["tags"] = []
                 file_data["tags"].append(action)
 
-        # Update order
+        
         if filepath in self.history["order"]:
             self.history["order"].remove(filepath)
         self.history["order"].insert(0, filepath)
 
-        # Keep only last 50 files
+       
         self.history["order"] = self.history["order"][:50]
 
-        # Clean up files not in order
+        
         files_to_remove = [
             f for f in self.history["files"] if f not in self.history["order"]
         ]
@@ -91,7 +91,7 @@ class FileHistory:
         self.save_history()
 
     def remove_file(self, filepath):
-        """Remove file from history."""
+        
         if filepath in self.history["files"]:
             del self.history["files"][filepath]
         if filepath in self.history["order"]:
@@ -99,7 +99,7 @@ class FileHistory:
         self.save_history()
 
     def clear_history(self):
-        """Clear all history."""
+        
         self.history = {"files": {}, "order": []}
         self.save_history()
 
@@ -135,7 +135,7 @@ class FileManagerDialog(Adw.Window):
         self.current_file = None
         self.file_history = FileHistory()
 
-        # Connect signals
+       
         self.btn_new.connect("clicked", self._on_new_clicked)
         self.btn_open.connect("clicked", self._on_open_clicked)
         self.btn_save.connect("clicked", self._on_save_clicked)
@@ -147,7 +147,7 @@ class FileManagerDialog(Adw.Window):
         self.populate_recent_files()
 
     def _on_clear_history(self, button):
-        """Clear all file history."""
+        
         dialog = Adw.MessageDialog.new(self)
         dialog.set_heading("Clear History?")
         dialog.set_body(
@@ -160,26 +160,25 @@ class FileManagerDialog(Adw.Window):
         dialog.present()
 
     def _on_clear_history_response(self, dialog, response):
-        """Handle clear history response."""
+        
         if response == "clear":
             self.file_history.clear_history()
             self.populate_recent_files()
 
     def populate_recent_files(self):
-        """Populate the recent files list with tags."""
-        # Clear existing items
+        
         while True:
             row = self.listbox_recent.get_row_at_index(0)
             if row is None:
                 break
             self.listbox_recent.remove(row)
 
-        # Add recent files
+       
         files = self.file_history.get_files()
         for file_data in files:
             filepath = file_data["filepath"]
 
-            # Check if file exists
+            
             if not os.path.exists(filepath):
                 continue
 
@@ -190,7 +189,7 @@ class FileManagerDialog(Adw.Window):
             main_box.set_margin_top(8)
             main_box.set_margin_bottom(8)
 
-            # Top box - icon, filename, and delete button
+            
             top_box = Gtk.Box(orientation=Gtk.Orientation.HORIZONTAL, spacing=8)
 
             icon = Gtk.Image.new_from_icon_name("document-open-symbolic")
@@ -199,7 +198,7 @@ class FileManagerDialog(Adw.Window):
             label.set_hexpand(True)
             label.add_css_class("heading")
 
-            # Delete button
+            
             delete_btn = Gtk.Button()
             delete_btn.set_icon_name("user-trash-symbolic")
             delete_btn.add_css_class("flat")
@@ -211,7 +210,7 @@ class FileManagerDialog(Adw.Window):
             top_box.append(label)
             top_box.append(delete_btn)
 
-            # Path box
+            
             path_box = Gtk.Box(orientation=Gtk.Orientation.HORIZONTAL, spacing=4)
             path_label = Gtk.Label(label=os.path.dirname(filepath))
             path_label.add_css_class("dim-label")
@@ -219,11 +218,11 @@ class FileManagerDialog(Adw.Window):
             path_label.set_ellipsize(3)  # PANGO_ELLIPSIZE_END
             path_box.append(path_label)
 
-            # Tags box
+            
             tags_box = Gtk.Box(orientation=Gtk.Orientation.HORIZONTAL, spacing=4)
             tags = file_data.get("tags", [])
 
-            # Tag colors
+            
             tag_colors = {"created": "success", "opened": "accent", "edited": "warning"}
 
             for tag in tags:
@@ -233,7 +232,7 @@ class FileManagerDialog(Adw.Window):
                     tag_label.add_css_class(tag_colors[tag])
                 tags_box.append(tag_label)
 
-            # Opened count
+            
             if file_data.get("opened_count", 0) > 0:
                 count_label = Gtk.Label(label=f"(Opened) {file_data['opened_count']}x")
                 count_label.add_css_class("dim-label")
@@ -392,7 +391,7 @@ class FileManagerDialog(Adw.Window):
                 if not filepath.endswith((".md", ".markdown", ".txt")):
                     filepath += ".md"
 
-                # Check if this is a new file
+                
                 is_new = not os.path.exists(filepath)
 
                 self.save_file(filepath, is_new=is_new)
